@@ -1,6 +1,6 @@
 # Datos · Distribuidora Andina S.A.S.
 
-Empresa **ficticia**. Todas las cifras se generan con `scripts/generar_dataset.py` (semilla 2026). Periodo: 1 de enero de 2024 a 31 de diciembre de 2025. Moneda: pesos colombianos.
+Empresa **ficticia**. Todas las cifras se generan con `scripts/generar_dataset.py` (semilla 2026). Periodo: 1 de enero de 2024 a 31 de diciembre de 2025, más enero de 2026 en `nuevo_mes/` (generado con una semilla aparte, así no altera los datos anteriores). Moneda: pesos colombianos.
 
 ## Modelo
 
@@ -20,12 +20,16 @@ metas ── id_sede + año + mes (se compara con ventas resumidas al mismo nive
 |---|---|---|
 | `ventas.csv` | 17.106 | Una fila por línea de factura (7.000 facturas) |
 | `clientes.csv` | 420 | Maestro de clientes |
-| `productos.csv` | 120 | Catálogo con precio y costo 2024 y 2025 |
+| `productos.csv` | 73 | Catálogo con precio y costo 2024 y 2025 |
 | `vendedores.csv` | 18 | Fuerza comercial, con ingresos y retiros |
 | `sedes.csv` | 6 | Sedes |
 | `metas.csv` | 144 | Meta mensual de venta neta por sede |
 | `ventas_erp_sucio.csv` | 1.854 | Exportación de ERP con defectos (para limpiar y cruzar) |
 | `Distribuidora_Andina_practica.xlsx` | — | Todo lo anterior como Tablas de Excel, la hoja `Reporte_Mal_Estructurado` y la hoja `ERP_Sucio` |
+| `Andina_listo_para_dinamicas.xlsx` | 17.106 | Una sola tabla `tVentas` con todo unido (ciudad, vendedor, cliente, segmento, línea, producto) y `tMetas`, más una hoja `Panel` vacía. Es la salida del Taller 2 |
+| `nuevo_mes/ventas_2026_01.csv` | 914 | Enero de 2026 con el mismo esquema de `ventas.csv` (Taller 3) |
+| `nuevo_mes/metas_2026_01.csv` | 6 | Metas de enero de 2026 |
+| `nuevo_mes/Andina_enero_2026_para_pegar.xlsx` | — | Enero de 2026 en el formato de `tVentas` y `tMetas`, listo para pegar debajo de las Tablas |
 
 ## Diccionario: `ventas.csv`
 
@@ -71,6 +75,10 @@ Son intencionales y reproducen lo que llega de un ERP real:
 * Ciudades escritas de varias formas (`Bogota`, `BOGOTÁ`, `Bogotá D.C.`, `B/quilla`).
 * Cantidades con unidad pegada (`49 und`).
 * Filas exportadas dos veces.
+
+## Cifra de control del Taller 3
+
+Venta neta de enero de 2026 sin facturas anuladas: **$ 1.204.089.720** (81,7 % de la meta de $ 1.473.000.000). Debe coincidir en Excel y en Colab.
 
 ## Reglas para analizar
 

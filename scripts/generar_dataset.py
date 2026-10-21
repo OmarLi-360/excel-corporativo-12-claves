@@ -241,8 +241,9 @@ PREFERENCIA_SEGMENTO = {
 }
 
 
-def crear_ventas(rng, sedes, vendedores, clientes, productos, n_facturas: int = 7000) -> pd.DataFrame:
-    dias = pd.date_range(INICIO, FIN, freq="D")
+def crear_ventas(rng, sedes, vendedores, clientes, productos, n_facturas: int = 7000,
+                 inicio=INICIO, fin=FIN, k0: int = 1, linea0: int = 1) -> pd.DataFrame:
+    dias = pd.date_range(inicio, fin, freq="D")
     peso_dia = np.array([
         ESTACIONALIDAD[d.month] * (1.12 if d.year == 2025 else 1.0) *
         (0.0 if d.weekday() == 6 else 0.45 if d.weekday() == 5 else 1.0) *
@@ -253,8 +254,8 @@ def crear_ventas(rng, sedes, vendedores, clientes, productos, n_facturas: int = 
     fechas = np.sort(fechas)
 
     prod = productos.reset_index(drop=True)
-    filas, linea = [], 1
-    for k, f in enumerate(fechas, start=1):
+    filas, linea = [], linea0
+    for k, f in enumerate(fechas, start=k0):
         f = pd.Timestamp(f)
         activos = clientes[clientes.fecha_alta <= f]
         cli = activos.sample(1, weights=activos._pop, random_state=int(rng.integers(1e9))).iloc[0]
@@ -282,8 +283,8 @@ def crear_ventas(rng, sedes, vendedores, clientes, productos, n_facturas: int = 
             rng.choice(["Transferencia", "Tarjeta", "Efectivo"], p=[0.55, 0.35, 0.10])
         for i in skus:
             p = prod.loc[i]
-            precio = p.precio_lista_2025 if f.year == 2025 else p.precio_lista_2024
-            costo = p.costo_unitario_2025 if f.year == 2025 else p.costo_unitario_2024
+            precio = p.precio_lista_2025 if f.year >= 2025 else p.precio_lista_2024
+            costo = p.costo_unitario_2025 if f.year >= 2025 else p.costo_unitario_2024
             base = 40 if precio < 30000 else 12 if precio < 150000 else 3 if precio < 1000000 else 1.6
             escala = {"Corporativo": 1.8, "Gobierno": 2.2, "Educación": 1.5, "Pyme": 1.0}[cli.segmento]
             cant = max(1, int(round(rng.gamma(1.6, base * escala / 1.6))))
@@ -532,7 +533,82 @@ def escribir_libro(ruta: Path, tablas: dict[str, pd.DataFrame], sucio: pd.DataFr
 # ---------------------------------------------------------------------------
 # Muestra compacta para el tablero web (index.html)
 # ---------------------------------------------------------------------------
-def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, sedes, sucio) -> None:
+MESES_ES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+
+
+def tabla_plana(ventas, clientes, productos, vendedores, sedes) -> pd.DataFrame:
+    """Una sola tabla con todo lo que necesita una tabla dinámica (lo que en Excel exigiría 8 BUSCARX)."""
+    d = (ventas.merge(sedes[["id_sede", "ciudad", "region"]], on="id_sede", validate="many_to_one")
+               .merge(vendedores[["id_vendedor", "nombre_vendedor"]], on="id_vendedor", validate="many_to_one")
+               .merge(clientes[["id_cliente", "razon_social", "segmento"]], on="id_cliente", validate="many_to_one")
+               .merge(productos[["sku", "producto", "categoria"]], on="sku", validate="many_to_one")
+               .sort_values("id_linea"))
+    return pd.DataFrame({
+        "fecha": d.fecha.dt.date, "anio": d.fecha.dt.year, "mes": d.fecha.dt.month,
+        "nombre_mes": d.fecha.dt.month.map(lambda m: MESES_ES[m - 1]), "trimestre": "T" + d.fecha.dt.quarter.astype(str),
+        "id_factura": d.id_factura, "ciudad": d.ciudad, "region": d.region, "vendedor": d.nombre_vendedor,
+        "cliente": d.razon_social, "segmento": d.segmento, "canal": d.canal, "categoria": d.categoria,
+        "producto": d.producto, "cantidad": d.cantidad, "subtotal": d.subtotal, "margen_bruto": d.margen_bruto,
+        "estado": d.estado,
+    })
+
+
+def metas_planas(metas, sedes) -> pd.DataFrame:
+    m = metas.merge(sedes[["id_sede", "ciudad"]], on="id_sede")
+    return pd.DataFrame({
+        "ciudad": m.ciudad, "anio": m.anio, "mes": m.mes, "nombre_mes": m.mes.map(lambda x: MESES_ES[x - 1]),
+        "fecha_mes": pd.to_datetime(dict(year=m.anio, month=m.mes, day=1)).dt.date, "meta_subtotal": m.meta_subtotal,
+    })
+
+
+def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool = False) -> None:
+    """Escribe un libro con cada DataFrame como Tabla de Excel con nombre (tVentas, tMetas...)."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill
+    from openpyxl.utils import get_column_letter
+    from openpyxl.worksheet.table import Table, TableStyleInfo
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "LEEME"
+    ws.sheet_view.showGridLines = False
+    ws.column_dimensions["A"].width = 3
+    ws.column_dimensions["B"].width = 120
+    for r, t in enumerate(leeme, start=2):
+        c = ws.cell(row=r, column=2, value=t)
+        c.font = Font(name="Arial", size=14 if r == 2 else 11, bold=(r == 2 or t.isupper()),
+                      color="00006A" if (r == 2 or t.isupper()) else "222222")
+    for nombre, (tabla, df) in hojas.items():
+        ws = wb.create_sheet(nombre)
+        ws.append(list(df.columns))
+        for fila in df.itertuples(index=False):
+            ws.append(list(fila))
+        t = Table(displayName=tabla, ref=f"A1:{get_column_letter(df.shape[1])}{len(df) + 1}")
+        t.tableStyleInfo = TableStyleInfo(name="TableStyleMedium2", showRowStripes=True)
+        ws.add_table(t)
+        ws.freeze_panes = "A2"
+        for j, col in enumerate(df.columns, start=1):
+            ancho = max(len(col), *(len(str(x)) for x in df[col].head(300))) + 2
+            ws.column_dimensions[get_column_letter(j)].width = min(max(ancho, 9), 38)
+            fmt = "#,##0" if col in ("subtotal", "margen_bruto", "meta_subtotal") else \
+                  "yyyy-mm-dd" if col in ("fecha", "fecha_mes") else None
+            if fmt:
+                for (c,) in ws.iter_rows(min_row=2, min_col=j, max_col=j):
+                    c.number_format = fmt
+    if panel:
+        ws = wb.create_sheet("Panel", 1)
+        ws.sheet_view.showGridLines = False
+        ws["B2"] = "PANEL COMERCIAL · DISTRIBUIDORA ANDINA"
+        ws["B2"].font = Font(name="Arial", size=18, bold=True, color="FFFFFF")
+        for col in "BCDEFGHIJKLMNOP":
+            ws[f"{col}2"].fill = PatternFill("solid", fgColor="00006A")
+        ws["B3"] = "Construye aquí tu tablero siguiendo el Taller 2 (segmentaciones a la izquierda, indicadores arriba, gráficos abajo)."
+        ws["B3"].font = Font(name="Arial", italic=True, color="566080")
+        ws.column_dimensions["A"].width = 2
+    wb.save(ruta)
+
+
+def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, sedes, sucio, metas, enero=None) -> None:
     v = ventas.merge(productos[["sku", "categoria"]], on="sku") \
               .merge(clientes[["id_cliente", "segmento"]], on="id_cliente") \
               .merge(sedes[["id_sede", "ciudad"]], on="id_sede") \
@@ -562,15 +638,41 @@ def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, se
         "cantidad": v.cantidad.tolist(),
         "factura": v.id_factura.str[3:].astype(int).tolist(),
     }
+    # Cliente de cada línea (para el gráfico de Pareto)
+    orden_cli = clientes.sort_values("id_cliente").id_cliente.tolist()
+    col["cliente"] = v.id_cliente.map({c: i for i, c in enumerate(orden_cli)}).tolist()
     # Muestra para el simulador de búsqueda (Clave 5)
     cli = clientes.sort_values("id_cliente").head(40)[["id_cliente", "razon_social", "segmento", "ciudad", "dias_credito"]]
     erp = sucio.head(14)[["Factura", "Cod Cliente", "Valor Neto"]].copy()
     erp["Valor Neto"] = erp["Valor Neto"].astype(str)
+    # Meta anual 2025 por ciudad (gráfico real vs meta)
+    m25 = metas[metas.anio == 2025].merge(sedes[["id_sede", "ciudad"]], on="id_sede") \
+                                   .groupby("ciudad").meta_subtotal.sum()
+    # Una factura real de 3 líneas para explicar «una factura = varias filas»
+    det = (ventas.merge(productos[["sku", "producto", "categoria"]], on="sku")
+                 .merge(clientes[["id_cliente", "razon_social", "segmento"]], on="id_cliente")
+                 .merge(sedes[["id_sede", "ciudad"]], on="id_sede")
+                 .merge(vendedores[["id_vendedor", "nombre_vendedor"]], on="id_vendedor"))
+    conteo = det[(det.estado == "Pagada") & (det.descuento_pct > 0)].groupby("id_factura").size()
+    fac = conteo[conteo == 3].index[5]
+    ej = det[det.id_factura == fac].sort_values("id_linea")
+    ej = ej.assign(fecha=ej.fecha.dt.strftime("%Y-%m-%d"))[
+        ["id_linea", "id_factura", "fecha", "id_cliente", "razon_social", "segmento", "id_vendedor", "nombre_vendedor",
+         "id_sede", "ciudad", "canal", "sku", "producto", "categoria", "cantidad", "precio_unitario", "descuento_pct",
+         "valor_bruto", "valor_descuento", "subtotal", "iva", "total", "costo_total", "margen_bruto", "medio_pago", "estado"]]
     data = {
         "dims": dims, "cols": col,
         "clientes": cli.values.tolist(),
+        "clientes_nombres": clientes.set_index("id_cliente").loc[orden_cli, "razon_social"].tolist(),
         "erp": erp.values.tolist(),
+        "metas2025": {k: int(x) for k, x in m25.items()},
+        "factura_ejemplo": {"columnas": ej.columns.tolist(),
+                            "filas": [[(x.item() if hasattr(x, "item") else x) for x in fila] for fila in ej.values.tolist()]},
+        "conteos": {"clientes": int(len(clientes)), "productos": int(len(productos)),
+                    "vendedores": int(len(vendedores)), "sedes": int(len(sedes)), "metas": int(len(metas)),
+                    "facturas": int(ventas.id_factura.nunique()), "erp": int(len(sucio))},
         "n_lineas": int(len(v)),
+        "enero2026": enero,
     }
     ruta.write_text("window.DATA_ANDINA = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n",
                     encoding="utf-8")
@@ -602,8 +704,58 @@ def main(salida: Path) -> None:
     sucio.to_csv(salida / "ventas_erp_sucio.csv", index=False, encoding="utf-8")
 
     escribir_libro(salida / "Distribuidora_Andina_practica.xlsx", publicos, sucio, ventas, productos, sedes)
+
+    # --- Laboratorio: libro listo para tablas dinámicas (salida del Taller 2) ---------------
+    plana = tabla_plana(ventas, clientes, productos, vendedores, sedes)
+    mplana = metas_planas(metas, sedes)
+    escribir_tablas_excel(
+        salida / "Andina_listo_para_dinamicas.xlsx",
+        {"Ventas": ("tVentas", plana), "Metas": ("tMetas", mplana)},
+        ["Distribuidora Andina S.A.S. — Libro listo para tablas dinámicas",
+         "Es el mismo resultado que produce el cuaderno del Taller 2 (Colab une las 5 tablas en una sola).",
+         "",
+         "HOJAS",
+         "Panel → aquí construyes tu tablero (Taller 2).",
+         "Ventas (tVentas) → una fila por línea de factura, con ciudad, vendedor, cliente, segmento, categoría y producto ya unidos.",
+         "Metas (tMetas) → meta mensual de venta neta (subtotal) por ciudad.",
+         "",
+         "RECUERDA",
+         "Filtra estado = Anulada antes de responder cualquier pregunta comercial.",
+         "subtotal es la venta neta sin IVA: es la cifra que se compara con la meta.",
+         "Datos ficticios generados por scripts/generar_dataset.py (semilla 2026)."],
+        panel=True)
+
+    # --- Laboratorio: un mes nuevo para practicar la actualización (Taller 3) ----------------
+    rng_nuevo = np.random.default_rng(SEMILLA + 1)          # semilla aparte: no altera 2024-2025
+    enero = crear_ventas(rng_nuevo, sedes, vendedores, clientes, productos, n_facturas=372,
+                         inicio=date(2026, 1, 2), fin=date(2026, 1, 31),
+                         k0=int(ventas.id_factura.str[3:].astype(int).max()) + 1,
+                         linea0=int(ventas.id_linea.max()) + 1)
+    enero["estado"] = np.where(enero.estado == "Anulada", "Anulada",
+                               np.where(rng_nuevo.random(len(enero)) < 0.35, "Pendiente", "Pagada"))
+    m_ene = metas[(metas.anio == 2025) & (metas.mes == 1)].assign(anio=2026)
+    m_ene["meta_subtotal"] = (m_ene.meta_subtotal * 1.08).round(-5).astype(int)
+    nuevo = salida / "nuevo_mes"
+    nuevo.mkdir(exist_ok=True)
+    enero.to_csv(nuevo / "ventas_2026_01.csv", index=False, encoding="utf-8", date_format="%Y-%m-%d")
+    m_ene.to_csv(nuevo / "metas_2026_01.csv", index=False, encoding="utf-8")
+    escribir_tablas_excel(
+        nuevo / "Andina_enero_2026_para_pegar.xlsx",
+        {"Ventas_enero": ("tVentasEnero", tabla_plana(enero, clientes, productos, vendedores, sedes)),
+         "Metas_enero": ("tMetasEnero", metas_planas(m_ene, sedes))},
+        ["Enero de 2026 — filas nuevas para practicar la actualización (Taller 3)",
+         "Copia las filas de datos (sin el encabezado) y pégalas debajo de la última fila de tVentas y tMetas",
+         "en Andina_listo_para_dinamicas.xlsx. La Tabla crece sola. Luego: Datos › Actualizar todo."])
+    print(f"Enero 2026: {len(enero):,} líneas | {enero.id_factura.nunique()} facturas")
+    ev = enero[enero.estado != "Anulada"].merge(sedes[["id_sede", "ciudad"]], on="id_sede")
+    resumen = {"venta": int(ev.subtotal.sum()), "meta": int(m_ene.meta_subtotal.sum()),
+               "lineas": int(len(enero)), "facturas": int(enero.id_factura.nunique()),
+               "por_ciudad": {c: {"venta": int(ev[ev.ciudad == c].subtotal.sum()),
+                                  "meta": int(m_ene.merge(sedes, on="id_sede").query("ciudad == @c").meta_subtotal.sum())}
+                              for c in sedes.ciudad}}
     web = salida.parent / "assets" / "datos-andina.js"
-    exportar_muestra_web(web, ventas, clientes, productos, vendedores, sedes, sucio)
+    exportar_muestra_web(web, ventas, clientes, productos, vendedores, sedes, sucio, metas, resumen)
+    print(f"Control enero 2026: venta {resumen['venta']:,} | meta {resumen['meta']:,} | {resumen['venta']/resumen['meta']:.1%}")
 
     validas = ventas[ventas.estado != "Anulada"]
     print(f"Líneas de venta: {len(ventas):,} | facturas: {ventas.id_factura.nunique():,}")
