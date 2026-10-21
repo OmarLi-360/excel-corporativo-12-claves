@@ -10,6 +10,7 @@ Construye el tablero a partir de src/.
 Uso:  python scripts/construir_tablero.py
 """
 import base64
+import hashlib
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -37,7 +38,9 @@ def main() -> None:
     fin_head = shell.index("</style>") + len("</style>")
     cabeza, cuerpo = shell[:fin_head], shell[fin_head:]
 
-    etiquetas = "\n".join(f'<script src="{s}"></script>' for s in SCRIPTS)
+    # ?v=<huella del contenido>: obliga al navegador a descargar el archivo cuando cambia
+    huella = lambda s: hashlib.sha1((RAIZ / s).read_bytes()).hexdigest()[:8]
+    etiquetas = "\n".join(f'<script src="{s}?v={huella(s)}"></script>' for s in SCRIPTS)
     index = (
         "<!doctype html>\n<html lang=\"es\">\n<head>\n<meta charset=\"utf-8\">\n"
         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n"

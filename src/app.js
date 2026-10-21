@@ -24,12 +24,13 @@ function viewInicio(){
       </div>
     </div>
 
-    <section class="block"><div class="sechead"><span class="eyebrow">Empieza aquí</span><h2>Cuatro pasos, en este orden</h2></div>
+    <section class="block"><div class="sechead"><span class="eyebrow">Empieza aquí</span><h2>Cinco pasos, en este orden</h2></div>
       <div class="path">
         <a href="#empresa"><span class="n">1</span><b>Conoce la empresa</b><span>Qué hace Distribuidora Andina, qué áreas producen los datos y cómo están organizados.</span></a>
         <a href="#diagnostico" data-go-diag><span class="n">2</span><b>Haz el diagnóstico</b><span>Ocho preguntas para saber por qué clave empezar.</span></a>
         <a href="#ruta"><span class="n">3</span><b>Estudia las claves</b><span>Cada una con su para qué, un caso real, práctica, Excel, Colab e IA.</span></a>
-        <a href="#laboratorio"><span class="n">4</span><b>Construye en el laboratorio</b><span>Talleres guiados para unir Excel y Colab en un tablero real.</span></a>
+        <a href="#colab"><span class="n">4</span><b>Aprende Colab en 25 minutos</b><span>Si nunca lo has usado: celdas de texto y de código, errores y librerías.</span></a>
+        <a href="#laboratorio"><span class="n">5</span><b>Construye en el laboratorio</b><span>Talleres guiados para unir Excel y Colab en un tablero real.</span></a>
       </div>
       <p class="muted small" style="margin-top:10px">¿Vas a hacer informes? La <a href="#graficos">capacitación rápida en gráficos</a> te sirve en cualquier momento.</p>
     </section>
@@ -66,7 +67,7 @@ function paintDiag(){
   if(!set.length){ el.innerHTML = `<h3>Tienes bases sólidas.</h3><p class="muted">Empieza por la clave 7 y usa las claves 1 y 5 como repaso rápido. Luego ve directo al laboratorio.</p><div class="row" style="margin-top:10px"><a class="btn primary" href="#clave-07">Ir a la clave 7</a><a class="btn" href="#laboratorio">Ir al laboratorio</a></div>`; return }
   const first = set.find(n=>MOD[n]) || set[0];
   el.innerHTML = `<h3>Tu ruta sugerida: ${set.map(n=>`clave ${n}`).join(" → ")}</h3>
-    <p class="muted" style="margin-top:4px">Empieza por la primera disponible. Las que aún no están completas aparecen como «en preparación», con su orientación y un ejemplo.</p>
+    <p class="muted" style="margin-top:4px">Estúdialas en este orden. Si una clave se apoya en otra anterior, repasa esa primero.</p>
     <div class="chips" style="margin-top:10px">${set.map(n=>{const k=CLAVES[n-1]; return `<a class="chip" href="#clave-${pad2(n)}">${n} · ${k.t}${MOD[n]?"":" (en preparación)"}</a>`}).join("")}</div>
     <div class="row" style="margin-top:12px"><a class="btn primary" href="#clave-${pad2(first)}">Empezar por la clave ${first}</a></div>`;
 }
@@ -75,7 +76,7 @@ function paintDiag(){
 function viewRuta(){
   app.innerHTML = `<div class="wrap">
     <div class="mhead"><span class="eyebrow">Ruta de aprendizaje</span><h1>12 claves de Excel corporativo</h1>
-      <p class="muted read">Cada clave nace de una brecha documentada en usuarios de Excel. El orden importa: cada tramo se apoya en el anterior. Las claves 1 a 5 y la 7 están completas; las demás ya tienen su orientación y un ejemplo de aplicación.</p></div>
+      <p class="muted read">Cada clave nace de una brecha documentada en usuarios de Excel. El orden importa: cada tramo se apoya en el anterior. Las 12 claves están completas: cada una tiene su caso real, simulador, práctica en Excel, cuaderno de Colab, apoyo de IA y autoevaluación.</p></div>
     ${TRAMOS.map((t,ti)=>`<div class="tramo">
       <div class="stack" style="gap:6px"><span class="eyebrow">Tramo ${ti+1}</span><h2>${t.t}</h2><p class="muted small">${t.d}</p></div>
       <div class="cards">${CLAVES.filter(k=>k.tramo===ti).map(card).join("")}</div></div>`).join("")}

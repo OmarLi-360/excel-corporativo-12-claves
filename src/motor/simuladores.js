@@ -1,5 +1,5 @@
 /* ======================================================================
-   Simuladores de práctica de las claves del piloto.
+   Simuladores de práctica de las claves 1, 5 y 7.
    SIMS[n](elemento) dibuja el simulador de la clave n.
    ====================================================================== */
 const SIMS = {};
