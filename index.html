@@ -306,6 +306,21 @@ pre.code{font-family:var(--f-mono); font-size:.84rem; background:var(--surface-2
 footer{border-top:1px solid var(--line); padding-block:22px; font-size:.86rem; color:var(--muted); background:var(--surface)}
 footer .wrap{display:flex; gap:18px; flex-wrap:wrap; justify-content:space-between}
 .toast{position:fixed; bottom:calc(16px + env(safe-area-inset-bottom,0px)); left:50%; transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:8px 14px; border-radius:8px; font-size:.88rem; z-index:40}
+
+/* anatomía de Colab (curso rápido) */
+.cp-svg{width:100%; height:auto; display:block}
+.cp-zone{fill:transparent; stroke:var(--s3); stroke-width:1.5; stroke-dasharray:5 4; opacity:.55; transition:opacity .15s, stroke-width .15s}
+.cp-num circle{fill:var(--s3)}
+.cp-line{fill:none; stroke:var(--s3); stroke-width:1.2; stroke-dasharray:3 3; opacity:.5; transition:opacity .15s}
+.cp-dot{fill:var(--s3); opacity:.7}
+.cp-hit{fill:transparent; transition:fill .15s}
+.cp-item{cursor:pointer; outline:none}
+.cp-focus .cp-zone, .cp-focus .cp-line, .cp-focus .cp-dot, .cp-focus .cp-num, .cp-focus .cp-item{opacity:.18}
+.cp-focus .on{opacity:1 !important}
+.cp-focus .cp-zone.on{stroke-width:3; stroke-dasharray:none; fill:color-mix(in srgb, var(--s3) 8%, transparent)}
+.cp-focus .cp-line.on{stroke-width:2; stroke-dasharray:none}
+.cp-item.on .cp-hit{fill:var(--surface-2)}
+.cp-item:focus-visible .cp-hit{stroke:var(--s1); stroke-width:2}
 </style>
 </head>
 <body>
@@ -350,7 +365,7 @@ footer .wrap{display:flex; gap:18px; flex-wrap:wrap; justify-content:space-betwe
 <script src="src/contenido/empresa.js?v=9ffde99e"></script>
 <script src="src/contenido/graficos.js?v=6d30984f"></script>
 <script src="src/contenido/laboratorio.js?v=5d3b1fef"></script>
-<script src="src/contenido/curso_colab.js?v=7e49e3d0"></script>
+<script src="src/contenido/curso_colab.js?v=33612211"></script>
 <script src="src/app.js?v=b64806eb"></script>
 </body>
 </html>

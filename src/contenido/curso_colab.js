@@ -3,43 +3,77 @@
    Presenta el cuaderno curso_rapido_colab.ipynb con la anatomía de Colab.
    ====================================================================== */
 
-/* Maqueta de la pantalla de Colab con llamadas numeradas */
+/* Maqueta de la pantalla de Colab: cada parte está marcada con su número y unida
+   con una línea a su explicación. Al pasar el mouse (o tocar) una parte o su
+   explicación, ambas se resaltan. */
+const PARTES_COLAB = [
+  {t:"Crear celdas", d:"Botones + Código y + Texto"},
+  {t:"Celda de texto", d:"Explica; doble clic para editar"},
+  {t:"Botón ▶ ejecutar", d:"O Shift + Enter"},
+  {t:"Orden de ejecución", d:"[2]: se ejecutó de segunda"},
+  {t:"Celda de código", d:"Lo que Colab va a hacer"},
+  {t:"Resultado", d:"Aparece debajo de la celda"},
+  {t:"Formulario", d:"Cambia controles y ejecuta ▶"},
+  {t:"Mensaje de error", d:"La última línea dice qué pasó"},
+];
 function anatomiaColab(){
-  const W=760, H=430, t=(x,y,s,o={})=>`<text x="${x}" y="${y}" ${o.a?`text-anchor="${o.a}"`:""} style="font-size:${o.z||12}px;${o.b?"font-weight:600;":""}${o.mono?"font-family:var(--f-mono);":""}fill:${o.f||"var(--ink)"}">${esc(s)}</text>`;
-  const badge=(x,y,n)=>`<circle cx="${x}" cy="${y}" r="11" fill="var(--s3)"/>`+t(x,y+4,String(n),{a:"middle",z:12,b:true,f:"#fff"});
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Partes de la pantalla de Google Colab">
-    <rect x="0" y="0" width="${W}" height="${H}" rx="12" fill="var(--surface)" stroke="var(--line)"/>
-    <rect x="0" y="0" width="${W}" height="40" rx="12" fill="var(--surface-2)"/>
-    ${t(16,25,"curso_rapido_colab.ipynb",{b:true})}${t(220,25,"Archivo   Editar   Ver   Insertar   Entorno de ejecución",{z:11.5,f:"var(--muted)"})}
-    <rect x="16" y="50" width="78" height="24" rx="6" fill="var(--surface)" stroke="var(--line)"/>${t(55,66,"+ Código",{a:"middle",z:11.5})}
-    <rect x="102" y="50" width="70" height="24" rx="6" fill="var(--surface)" stroke="var(--line)"/>${t(137,66,"+ Texto",{a:"middle",z:11.5})}
-    ${badge(190,62,1)}${t(208,66,"Crear celdas nuevas",{z:11.5,f:"var(--muted)"})}
-
-    ${t(40,108,"Lección 3 · Celdas de código",{z:17,b:true})}
-    ${t(40,130,"Una celda de código se ejecuta y muestra su resultado debajo.",{z:12})}
-    ${badge(560,118,2)}${t(578,122,"Celda de texto: se lee",{z:11.5,f:"var(--muted)"})}
-
-    <rect x="56" y="150" width="480" height="70" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
-    <circle cx="36" cy="168" r="12" fill="var(--s1)"/><path d="M32,162 L42,168 L32,174 Z" fill="#fff"/>
-    ${t(36,198,"[2]",{a:"middle",z:10.5,mono:true,f:"var(--muted)"})}
-    ${t(68,172,"precio = 21900",{mono:true,z:12})}${t(68,190,"total = precio * 40",{mono:true,z:12})}${t(68,208,"total",{mono:true,z:12})}
-    ${t(68,240,"876000",{mono:true,z:12})}
-    ${badge(560,168,3)}${t(578,172,"Botón ▶: ejecutar (Shift + Enter)",{z:11.5,f:"var(--muted)"})}
-    ${badge(560,200,4)}${t(578,204,"[2]: orden en que se ejecutó",{z:11.5,f:"var(--muted)"})}
-    ${badge(560,238,5)}${t(578,242,"Resultado de la celda",{z:11.5,f:"var(--muted)"})}
-
-    <rect x="56" y="268" width="480" height="96" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
-    <circle cx="36" cy="286" r="12" fill="var(--s1)"/><path d="M32,280 L42,286 L32,292 Z" fill="#fff"/>
-    ${t(68,292,"Calcular un pedido con formulario",{b:true,z:13})}${t(68,312,"Mostrar código",{z:10.5,f:"var(--s1)"})}
-    ${t(330,292,"sede:",{z:11.5})}<rect x="372" y="279" width="150" height="20" rx="4" fill="var(--surface)" stroke="var(--line)"/>${t(380,293,"Bogotá  ▾",{z:11.5})}
-    ${t(330,326,"descuento:",{z:11.5})}<line x1="400" x2="520" y1="322" y2="322" stroke="var(--line)" stroke-width="4" stroke-linecap="round"/><circle cx="440" cy="322" r="7" fill="var(--s1)"/>
-    ${t(68,352,"Pedido de Bogotá: 40 resmas con 5 % de descuento…",{mono:true,z:11})}
-    ${badge(560,300,6)}${t(578,296,"Formulario: el código está",{z:11.5,f:"var(--muted)"})}${t(578,312,"oculto; cambias los controles",{z:11.5,f:"var(--muted)"})}
-
-    <rect x="16" y="384" width="520" height="30" rx="6" fill="var(--bad-soft)" stroke="var(--bad)"/>
-    ${t(28,404,"NameError: name 'iva' is not defined",{mono:true,z:11.5,f:"var(--bad)"})}
-    ${badge(560,399,7)}${t(578,403,"Error: lee la última línea",{z:11.5,f:"var(--muted)"})}
-  </svg>`;
+  const W=820, H=490, LX=592, GX=560;
+  const t=(x,y,s,o={})=>`<text x="${x}" y="${y}" ${o.a?`text-anchor="${o.a}"`:""} style="font-size:${o.z||12}px;${o.b?"font-weight:600;":""}${o.mono?"font-family:var(--f-mono);":""}fill:${o.f||"var(--ink)"}">${esc(s)}</text>`;
+  const num=(x,y,n)=>`<g class="cp-num" data-p="${n}"><circle cx="${x}" cy="${y}" r="10"/>${t(x,y+4,String(n),{a:"middle",z:11,b:true,f:"#fff"})}</g>`;
+  /* zona resaltable de cada parte: rectángulo punteado + número en la esquina */
+  const zona=(n,x,y,w,h,r=8)=>`<rect class="cp-zone" data-p="${n}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}"/>`+num(x,y,n);
+  /* línea guía desde la parte (ax,ay) hasta su explicación, con codos por zonas libres */
+  const guia=(n,pts)=>`<polyline class="cp-line" data-p="${n}" points="${pts.map(p=>p.join(",")).join(" ")}"/><circle class="cp-dot" data-p="${n}" cx="${pts[0][0]}" cy="${pts[0][1]}" r="3.5"/>`;
+  const LY = [64, 123, 172, 214, 250, 300, 360, 452];   // altura de cada explicación
+  let s = `<rect x="0" y="0" width="${W}" height="${H}" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+    <rect x="1" y="1" width="${LX-30}" height="38" rx="11" fill="var(--surface-2)"/>
+    ${t(16,25,"curso_rapido_colab.ipynb",{b:true})}${t(210,25,"Archivo  Editar  Ver  Insertar  Entorno de ejecución",{z:11,f:"var(--muted)"})}
+    <rect x="16" y="52" width="76" height="24" rx="6" fill="var(--surface)" stroke="var(--line)"/>${t(54,68,"+ Código",{a:"middle",z:11.5})}
+    <rect x="100" y="52" width="70" height="24" rx="6" fill="var(--surface)" stroke="var(--line)"/>${t(135,68,"+ Texto",{a:"middle",z:11.5})}
+    ${t(84,118,"Lección 3 · Celdas de código",{z:16,b:true})}
+    ${t(84,138,"Una celda de código se ejecuta y muestra su resultado.",{z:12})}
+    <rect x="76" y="186" width="444" height="72" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+    <circle cx="44" cy="204" r="13" fill="var(--s1)"/><path d="M40,197 L51,204 L40,211 Z" fill="#fff"/>
+    ${t(44,240,"[2]",{a:"middle",z:11,mono:true,f:"var(--muted)"})}
+    ${t(90,208,"precio = 21900",{mono:true})}${t(90,226,"total = precio * 40",{mono:true})}${t(90,244,"total",{mono:true})}
+    ${t(90,300,"876000",{mono:true})}
+    <rect x="76" y="326" width="444" height="88" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+    <circle cx="44" cy="344" r="13" fill="var(--s1)"/><path d="M40,337 L51,344 L40,351 Z" fill="#fff"/>
+    ${t(90,350,"Calcular un pedido",{b:true,z:13})}${t(90,368,"Mostrar código",{z:10.5,f:"var(--s1)"})}
+    ${t(318,350,"sede:",{z:11.5})}<rect x="356" y="337" width="150" height="20" rx="4" fill="var(--surface)" stroke="var(--line)"/>${t(364,351,"Bogotá  ▾",{z:11.5})}
+    ${t(296,378,"descuento:",{z:11.5})}<line x1="366" x2="506" y1="374" y2="374" stroke="var(--line)" stroke-width="4" stroke-linecap="round"/><circle cx="410" cy="374" r="7" fill="var(--s1)"/>
+    ${t(90,402,"Pedido de Bogotá: 40 resmas…",{mono:true,z:11})}
+    <rect x="76" y="436" width="444" height="32" rx="6" fill="var(--bad-soft)" stroke="var(--bad)"/>
+    ${t(90,457,"NameError: name 'iva' is not defined",{mono:true,z:11.5,f:"var(--bad)"})}`;
+  /* líneas guía (debajo de las zonas) */
+  s += guia(1,[[170,64],[LX-12,LY[0]]])
+     + guia(2,[[520,123],[LX-12,LY[1]]])
+     + guia(3,[[44,190],[44,172],[LX-12,LY[2]]])
+     + guia(4,[[44,247],[44,270],[GX,270],[GX,LY[3]],[LX-12,LY[3]]])
+     + guia(5,[[520,250],[GX-14,250],[LX-12,LY[4]]])
+     + guia(6,[[150,296],[LX-12,LY[5]]])
+     + guia(7,[[520,360],[LX-12,LY[6]]])
+     + guia(8,[[520,452],[LX-12,LY[7]]]);
+  /* zonas resaltables con su número */
+  s += zona(1,12,48,162,32) + zona(2,74,96,450,54) + zona(3,27,187,34,34,17) + zona(4,28,226,32,22,4)
+     + zona(5,72,182,452,80) + zona(6,82,282,120,26,4) + zona(7,72,322,452,96) + zona(8,72,432,452,40);
+  /* explicaciones */
+  PARTES_COLAB.forEach((p,i)=>{ const y=LY[i];
+    s += `<g class="cp-item" data-p="${i+1}" tabindex="0" role="button" aria-label="${esc(p.t+": "+p.d)}">
+      <rect x="${LX-6}" y="${y-17}" width="${W-LX-6}" height="36" rx="8" class="cp-hit"/>
+      ${num(LX+8,y,i+1)}${t(LX+24,y-2,p.t,{b:true,z:12})}${t(LX+24,y+13,p.d,{z:10,f:"var(--muted)"})}</g>` });
+  return `<svg class="cp-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Partes de la pantalla de Google Colab">${s}</svg>
+    <p class="muted small" style="margin:8px 0 0">Pasa el mouse o toca una explicación para resaltar su parte en la pantalla.</p>`;
+}
+function wireAnatomia(root){
+  const svg = root.querySelector(".cp-svg"); if(!svg) return;
+  const on = n => { svg.classList.toggle("cp-focus", !!n); svg.querySelectorAll("[data-p]").forEach(e=>e.classList.toggle("on", e.dataset.p===String(n))) };
+  let fijo = null;   // el clic (o toque) deja una parte resaltada; el mouse resalta de paso
+  svg.querySelectorAll(".cp-item, .cp-zone").forEach(g=>{
+    g.addEventListener("mouseenter", ()=>on(g.dataset.p)); g.addEventListener("mouseleave", ()=>on(fijo));
+    g.addEventListener("focus", ()=>on(g.dataset.p)); g.addEventListener("blur", ()=>on(fijo));
+    g.addEventListener("click", ()=>{ fijo = fijo===g.dataset.p ? null : g.dataset.p; on(fijo) });
+  });
 }
 
 const PODERES = [
@@ -95,4 +129,5 @@ ventas.groupby("canal")["subtotal"].sum()             # resumir como una tabla d
 
     <section class="block" style="padding-bottom:40px"><div class="row"><a class="btn primary" href="${nb}" target="_blank" rel="noopener">Abrir el curso en Colab</a><a class="btn" href="#taller-0">Siguiente: Taller 0 · Monta tu laboratorio</a></div></section>
   </div>`;
+  wireAnatomia(app);
 }
