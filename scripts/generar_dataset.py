@@ -691,6 +691,99 @@ def metas_planas(metas, sedes) -> pd.DataFrame:
     })
 
 
+SEDES_ORDEN = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Bucaramanga", "Pereira"]
+
+
+def hojas_avanzadas(wb, ventas_planas) -> None:
+    """Hojas de práctica de las claves 10 (Top_Clientes) y 12 (Auditoria) en el libro listo."""
+    from openpyxl.comments import Comment
+    from openpyxl.styles import Font, PatternFill
+    from openpyxl.worksheet.datavalidation import DataValidation
+
+    gris = Font(name="Arial", italic=True, color="566080")
+    negrita = Font(name="Arial", bold=True)
+    celeste = PatternFill("solid", fgColor="D9F9FF")
+
+    # ---- Clave 10 · lista que se actualiza sola ----
+    ws = wb.create_sheet("Top_Clientes")
+    ws["A1"] = "TOP DE CLIENTES POR SEDE · fórmulas de matriz dinámica (clave 10)"
+    ws["A1"].font = Font(name="Arial", size=14, bold=True, color="00006A")
+    for fila, (etq, val) in enumerate([("Sede", "Bogotá"), ("Año", 2025), ("Cuántos", 10)], start=2):
+        ws.cell(row=fila, column=1, value=etq).font = negrita
+        c = ws.cell(row=fila, column=2, value=val)
+        c.fill, c.font = celeste, negrita
+    dv = DataValidation(type="list", formula1='"' + ",".join(SEDES_ORDEN) + '"', allow_blank=False)
+    ws.add_data_validation(dv)
+    dv.add("B2")
+    ws["A6"], ws["B6"] = "Cliente", "Venta neta"
+    ws["A6"].font = ws["B6"].font = negrita
+    pasos = [
+        "Paso 1 · En D6: =UNICOS(FILTRAR(tVentas[cliente];(tVentas[ciudad]=$B$2)*(tVentas[anio]=$B$3)*(tVentas[estado]<>\"Anulada\")))",
+        "Paso 2 · En E6: =SUMAR.SI.CONJUNTO(tVentas[subtotal];tVentas[cliente];D6#;tVentas[ciudad];$B$2;tVentas[anio];$B$3;tVentas[estado];\"<>Anulada\")",
+        "Paso 3 · En A7, todo en una fórmula: =TOMAR(ORDENAR(APILARH(D6#;E6#);2;-1);$B$4)",
+        "Paso 4 · Versión legible con LET: =LET(c;D6#;v;E6#;TOMAR(ORDENAR(APILARH(c;v);2;-1);$B$4))",
+        "D6# significa «todo el resultado que se derramó desde D6»: crece o se encoge solo.",
+        "Prueba: cambia la sede en B2 o escribe algo dentro del rango de resultados para ver #¡DESBORDAMIENTO!.",
+    ]
+    for i, t in enumerate(pasos, start=20):
+        ws.cell(row=i, column=1, value=t).font = gris
+    for col, w in zip("ABCDE", [44, 18, 4, 44, 18]):
+        ws.column_dimensions[col].width = w
+
+    # ---- Clave 12 · informe con cinco errores sembrados ----
+    v = ventas_planas
+    ok = v[(v.anio == 2025) & (v.estado != "Anulada")]
+    cali_2024 = int(v[(v.anio == 2024) & (v.estado != "Anulada") & (v.ciudad == "Cali")].subtotal.sum())
+    ws = wb.create_sheet("Auditoria")
+    ws["A1"] = "INFORME DE CUMPLIMIENTO 2025 · versión para revisar antes de enviar (clave 12)"
+    ws["A1"].font = Font(name="Arial", size=14, bold=True, color="00006A")
+    ws["F1"], ws["G1"] = "Año", 2025
+    ws["F1"].font, ws["G1"].font, ws["G1"].fill = negrita, negrita, celeste
+    ws["A2"] = "Este informe tiene 5 errores. Encuéntralos con las herramientas de Fórmulas › Auditoría de fórmulas y con un cuadre contra la fuente."
+    ws["A2"].font = gris
+    for j, t in enumerate(["Sede", "Venta 2025", "Meta 2025", "Cumplimiento", "Participación"], start=1):
+        ws.cell(row=4, column=j, value=t).font = negrita
+    venta = lambda r: f'=SUMIFS(Ventas!$P:$P,Ventas!$G:$G,$A{r},Ventas!$B:$B,$G$1,Ventas!$R:$R,"<>Anulada")'
+    meta = lambda r: f"=SUMIFS(Metas!$F:$F,Metas!$A:$A,$A{r},Metas!$B:$B,$G$1)"
+    for i, sede in enumerate(SEDES_ORDEN):
+        r = 5 + i
+        ws.cell(row=r, column=1, value=sede)
+        ws.cell(row=r, column=2, value=venta(r))
+        ws.cell(row=r, column=3, value=meta(r))
+        ws.cell(row=r, column=4, value=f"=B{r}/C{r}")
+        ws.cell(row=r, column=5, value=f"=B{r}/B$11")
+    # Error 1: valor pegado del informe anterior (venta 2024 de Cali)
+    ws["B7"] = cali_2024
+    # Error 2: fórmula sugerida por una IA, sin el criterio de estado
+    ws["B8"] = '=SUMIFS(Ventas!$P:$P,Ventas!$G:$G,$A8,Ventas!$B:$B,$G$1)'
+    ws["B8"].comment = Comment("Fórmula sugerida por un asistente de IA. ¿Alguien la probó?", "Analista")
+    # Error 3: meta escrita como texto
+    meta_bga = None
+    for fila in wb["Metas"].iter_rows(min_row=2, values_only=True):
+        if fila[0] == "Bucaramanga" and fila[1] == 2025:
+            meta_bga = (meta_bga or 0) + fila[5]
+    ws["C9"] = str(int(meta_bga))
+    # Error 4: cumplimiento de Pereira dividido por la meta de la fila de arriba
+    ws["D10"] = "=B10/C9"
+    # Error 5: el total omite la última sede
+    ws["A11"] = "Total"
+    ws["B11"], ws["C11"], ws["D11"], ws["E11"] = "=SUM(B5:B9)", "=SUM(C5:C10)", "=B11/C11", "=SUM(E5:E10)"
+    for r in range(5, 12):
+        for col, fmt in [("B", "#,##0"), ("C", "#,##0"), ("D", "0.0%"), ("E", "0.0%")]:
+            ws[f"{col}{r}"].number_format = fmt
+    for c in ["A11", "B11", "C11", "D11", "E11"]:
+        ws[c].font = negrita
+    ws["A13"] = "Cuadre contra la fuente"
+    ws["A13"].font = negrita
+    ws["A14"], ws["B14"] = "Venta neta 2025 en tVentas", '=SUMIFS(Ventas!$P:$P,Ventas!$B:$B,$G$1,Ventas!$R:$R,"<>Anulada")'
+    ws["A15"], ws["B15"] = "Diferencia con el informe", "=B11-B14"
+    ws["B14"].number_format = ws["B15"].number_format = "#,##0"
+    for col, w in zip("ABCDEFG", [26, 18, 18, 15, 15, 6, 8]):
+        ws.column_dimensions[col].width = w
+    wb.calculation.fullCalcOnLoad = True
+    assert int(ok.subtotal.sum()) > 0
+
+
 def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool = False, informe: bool = False) -> None:
     """Escribe un libro con cada DataFrame como Tabla de Excel con nombre (tVentas, tMetas...)."""
     from openpyxl import Workbook
@@ -753,6 +846,8 @@ def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool
             ws[f"A{r}"].font = Font(name="Arial", italic=True, color="566080")
         for col, w in zip("ABCDEFG", [16, 18, 18, 18, 18, 8, 10]):
             ws.column_dimensions[col].width = w
+    if informe:
+        hojas_avanzadas(wb, hojas["Ventas"][1])
     if panel:
         ws = wb.create_sheet("Panel", 1)
         ws.sheet_view.showGridLines = False
@@ -928,6 +1023,9 @@ def main(salida: Path) -> None:
          "Panel → aquí construyes tu tablero (Taller 2).",
          "Ventas (tVentas) → una fila por línea de factura, con ciudad, vendedor, cliente, segmento, categoría y producto ya unidos.",
          "Metas (tMetas) → meta mensual de venta neta (subtotal) por ciudad.",
+         "Informe_Mensual → plantilla del informe sede × canal con SUMAR.SI.CONJUNTO (clave 6).",
+         "Top_Clientes → lista de mejores clientes con fórmulas de matriz dinámica (clave 10).",
+         "Auditoria → informe con cinco errores para encontrar antes de enviar (clave 12).",
          "",
          "RECUERDA",
          "Filtra estado = Anulada antes de responder cualquier pregunta comercial.",

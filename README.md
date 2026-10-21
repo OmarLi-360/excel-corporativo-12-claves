@@ -56,6 +56,9 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 | `07_tablas_dinamicas` | Clave 7 · constructor de dinámicas y seis preguntas de negocio | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/07_tablas_dinamicas.ipynb) |
 | `08_limpieza_reproducible` | Clave 8 · qué corrige cada paso de Power Query y cuánto tiempo ahorra | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/08_limpieza_reproducible.ipynb) |
 | `09_validacion_y_formato` | Clave 9 · las variantes que evita una lista y las excepciones que resalta una regla | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/09_validacion_y_formato.ipynb) |
+| `10_matriz_dinamica` | Clave 10 · top de clientes que se actualiza solo y concentración de la venta | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/10_matriz_dinamica.ipynb) |
+| `11_graficos_y_narrativa` | Clave 11 · del gráfico por defecto al informe de una página | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/11_graficos_y_narrativa.ipynb) |
+| `12_auditoria_y_control` | Clave 12 · cuánto mueve cada error y cómo probar una fórmula de IA | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/12_auditoria_y_control.ipynb) |
 | `graficos_para_informes` | Galería de los 12 gráficos con su ficha | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/graficos_para_informes.ipynb) |
 | `taller_1_excel_a_colab` | Taller 1 | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/taller_1_excel_a_colab.ipynb) |
 | `taller_2_colab_a_excel` | Taller 2 | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/taller_2_colab_a_excel.ipynb) |
@@ -74,9 +77,9 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 | | 7 | Tablas dinámicas que responden preguntas | **Completa** |
 | | 8 | Limpieza reproducible con Power Query | **Completa** |
 | Control y comunicación | 9 | Datos que se validan solos | **Completa** |
-| | 10 | Fórmulas de matriz dinámica | Orientación y ejemplo |
-| | 11 | Gráficos y narrativa de resultados | Orientación y ejemplo |
-| | 12 | Auditoría, control y uso responsable de IA | Orientación y ejemplo |
+| | 10 | Fórmulas de matriz dinámica | **Completa** |
+| | 11 | Gráficos y narrativa de resultados | **Completa** |
+| | 12 | Auditoría, control y uso responsable de IA | **Completa** |
 
 La selección se basa en la evidencia sobre errores en hojas de cálculo y en lo que piden las vacantes de analista en Colombia: ver [docs/BRECHAS.md](docs/BRECHAS.md).
 

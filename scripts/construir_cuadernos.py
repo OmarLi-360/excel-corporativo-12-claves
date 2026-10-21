@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cuadernos.analisis import cuaderno_06, cuaderno_08, cuaderno_09  # noqa: E402
+from cuadernos.cierre import cuaderno_10, cuaderno_11, cuaderno_12  # noqa: E402
 from cuadernos.claves import cuaderno_00, cuaderno_01, cuaderno_05, cuaderno_07, cuaderno_graficos  # noqa: E402
 from cuadernos.comun import escribir  # noqa: E402
 from cuadernos.fundamentos import cuaderno_02, cuaderno_03, cuaderno_04  # noqa: E402
@@ -24,6 +25,9 @@ if __name__ == "__main__":
     escribir("07_tablas_dinamicas.ipynb", cuaderno_07())
     escribir("08_limpieza_reproducible.ipynb", cuaderno_08())
     escribir("09_validacion_y_formato.ipynb", cuaderno_09())
+    escribir("10_matriz_dinamica.ipynb", cuaderno_10())
+    escribir("11_graficos_y_narrativa.ipynb", cuaderno_11())
+    escribir("12_auditoria_y_control.ipynb", cuaderno_12())
     escribir("graficos_para_informes.ipynb", cuaderno_graficos())
     escribir("taller_1_excel_a_colab.ipynb", taller_1())
     escribir("taller_2_colab_a_excel.ipynb", taller_2())
