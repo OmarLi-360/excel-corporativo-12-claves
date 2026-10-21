@@ -36,12 +36,14 @@ def encabezado(etiqueta, titulo, sub, minutos, objetivos, archivo, ancla):
 
 [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)]({colab(archivo)}) &nbsp; [Volver al tablero]({PAGES}#{ancla})
 
+<sub>Si al abrir un enlace Google muestra «Redirect Notice», haz clic en el enlace azul de esa página: es un aviso de seguridad de Google, no un error.</sub>
+
 **Al terminar podrás:**
 {obj}
 
 ---
 ### Cómo usar este cuaderno (no necesitas programar)
-1. **Guarda tu copia:** *Archivo › Guardar una copia en Drive*. Así tus cambios no se pierden.
+1. **Guarda tu copia:** *Archivo › Guardar una copia en Drive*. Así tus cambios no se pierden. Si no lo haces, no pasa nada grave: el original está protegido y nadie puede dañarlo desde aquí, pero lo que cambies se borra al cerrar.
 2. **Ejecuta todo:** *Entorno de ejecución › Ejecutar todas* (Ctrl+F9). Si Colab avisa que el cuaderno no es de Google, elige *Ejecutar de todos modos*.
 3. **Juega con los controles:** las celdas con listas desplegables a la derecha se pueden cambiar. Elige una opción y pulsa el botón ▶ de esa celda para redibujar.
 

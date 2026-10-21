@@ -40,6 +40,8 @@ def curso_colab():
 
 [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)]({colab(ARCHIVO)}) &nbsp; [Volver al tablero]({PAGES}#colab)
 
+<sub>Si al abrir un enlace Google muestra «Redirect Notice», haz clic en el enlace azul de esa página: es un aviso de seguridad de Google, no un error.</sub>
+
 **Al terminar podrás:**
 1. Distinguir una celda de texto de una celda de código, y editar o ejecutar cada una.
 2. Leer lo que devuelve una celda, incluidos los mensajes de error.
@@ -48,7 +50,7 @@ def curso_colab():
 
 ---
 ### Antes de empezar
-1. **Guarda tu copia:** *Archivo › Guardar una copia en Drive*. Trabajarás en tu copia, no en la original.
+1. **Guarda tu copia:** *Archivo › Guardar una copia en Drive*. Se abre una pestaña nueva con tu copia: trabaja en esa. El original está protegido; si escribes en él, nadie más lo ve y tus cambios se borran al cerrar.
 2. **Ejecuta la celda de preparación** que está justo debajo: pasa el mouse sobre ella y haz clic en el botón ▶ de la izquierda. La primera vez tarda unos segundos porque Colab enciende una máquina para ti.
 """),
         code(PREPARAR),
