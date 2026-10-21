@@ -11,10 +11,12 @@ from cuadernos.analisis import cuaderno_06, cuaderno_08, cuaderno_09  # noqa: E4
 from cuadernos.cierre import cuaderno_10, cuaderno_11, cuaderno_12  # noqa: E402
 from cuadernos.claves import cuaderno_00, cuaderno_01, cuaderno_05, cuaderno_07, cuaderno_graficos  # noqa: E402
 from cuadernos.comun import escribir  # noqa: E402
+from cuadernos.curso_colab import curso_colab  # noqa: E402
 from cuadernos.fundamentos import cuaderno_02, cuaderno_03, cuaderno_04  # noqa: E402
 from cuadernos.talleres import taller_1, taller_2, taller_3  # noqa: E402
 
 if __name__ == "__main__":
+    escribir("curso_rapido_colab.ipynb", curso_colab())
     escribir("00_conoce_la_empresa.ipynb", cuaderno_00())
     escribir("01_estructura_y_tablas.ipynb", cuaderno_01())
     escribir("02_tipos_de_dato.ipynb", cuaderno_02())

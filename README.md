@@ -25,7 +25,8 @@ Requisitos: navegador, cuenta de Google (para Colab) y **Excel 365**.
 1. **[Conoce la empresa](https://omarli-360.github.io/excel-corporativo-12-claves/#empresa).** Distribuidora Andina S.A.S.: qué hace, qué área produce cada tabla, qué representa una fila y qué significa cada columna.
 2. **[Haz el diagnóstico](https://omarli-360.github.io/excel-corporativo-12-claves/#diagnostico).** Ocho preguntas para saber por qué clave empezar.
 3. **[Estudia las claves](https://omarli-360.github.io/excel-corporativo-12-claves/#ruta).** Ocho pasos cada una: para qué sirve (con un caso real), entender, ver el error, practicar en un simulador, hacerlo en Excel, visualizar en Colab, apoyarse en IA y autoevaluarse.
-4. **[Construye en el laboratorio](https://omarli-360.github.io/excel-corporativo-12-claves/#laboratorio).** Cuatro talleres para unir Excel y Colab en un proceso real.
+4. **[Aprende Colab en 25 minutos](https://omarli-360.github.io/excel-corporativo-12-claves/#colab)** si nunca lo has usado: celdas, errores y librerías.
+5. **[Construye en el laboratorio](https://omarli-360.github.io/excel-corporativo-12-claves/#laboratorio).** Cuatro talleres para unir Excel y Colab en un proceso real.
 
 La **[capacitación rápida en gráficos para informes](https://omarli-360.github.io/excel-corporativo-12-claves/#graficos)** (12 gráficos, cuándo usar cada uno y cómo hacerlo en Excel 365) sirve en cualquier momento.
 
@@ -46,6 +47,7 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 
 | Cuaderno | Para qué | Colab |
 |---|---|---|
+| `curso_rapido_colab` | Curso rápido: celdas de texto y de código, errores y librerías (el código se ve a propósito) | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/curso_rapido_colab.ipynb) |
 | `00_conoce_la_empresa` | Recorrido por los datos y prueba del laboratorio | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/00_conoce_la_empresa.ipynb) |
 | `01_estructura_y_tablas` | Clave 1 · reporte frente a tabla ordenada | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/01_estructura_y_tablas.ipynb) |
 | `02_tipos_de_dato` | Clave 2 · cuánto ignora una suma cuando hay textos | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/02_tipos_de_dato.ipynb) |

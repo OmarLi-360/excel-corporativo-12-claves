@@ -138,6 +138,8 @@ function viewLaboratorio(){
       <div class="callout tip" style="margin-top:12px"><span class="k">Python dentro de Excel</span><p>Algunas licencias de Microsoft 365 incluyen <b>Python en Excel</b> (<b>Fórmulas › Insertar Python</b>), que ejecuta código Python en una celda. Su disponibilidad depende de la licencia y la región. Este laboratorio no lo necesita: usa Colab, que es gratuito para cualquier estudiante.</p></div>
     </section>
 
+    <section class="block"><a class="tcard" href="#colab" style="display:block"><span class="tn">Antes de empezar · 25 min · Sin saber programar</span><h3>Curso rápido de Google Colab</h3><p>Celdas de texto y de código, cómo ejecutar, cómo leer un error y qué son las librerías, los «poderes» de Colab.</p></a></section>
+
     <section class="block" style="padding-bottom:40px"><div class="sechead"><h2>Los talleres</h2><p class="muted read">Hazlos en orden. Cada uno usa lo que produjo el anterior.</p></div>
       <div class="grid2">${TALLERES.map(x=>`<a class="tcard" href="#taller-${x.n}"><span class="tn">Taller ${x.n} · ${x.min} min · ${x.nivel}</span><h3>${x.t}</h3><p>${x.sub}</p>
         <div class="tags"><span class="tag">${x.her}</span>${pasosHechos(x)?`<span class="tag ok">${pasosHechos(x)} de ${x.pasos.length} pasos</span>`:""}</div><span class="small"><b>Entregable:</b> ${esc(x.ent)}</span></a>`).join("")}</div>

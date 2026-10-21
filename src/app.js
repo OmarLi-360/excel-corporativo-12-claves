@@ -149,7 +149,7 @@ function viewModulo(n){
             <div class="callout tip"><span class="k">Separador de argumentos</span><p>Con la configuración regional de Colombia, Excel separa los argumentos con punto y coma (<code>;</code>). Si tu equipo está en inglés o con otra región, usa coma y los nombres en inglés (ver Glosario).</p></div>
             <p class="muted small">Practica con <a href="${RAW}/data/${MOD_ARCHIVO[n]}">${MOD_ARCHIVO[n]}</a>.</p>
           </div></section>
-        ${sec("colab")}<div class="colab"><div class="stack" style="gap:8px"><span class="eyebrow">Cuaderno ${m.notebook}</span><p>${m.colabQue}</p><p class="muted small">Ábrelo, usa <b>Archivo › Guardar una copia en Drive</b> y luego <b>Entorno de ejecución › Ejecutar todas</b>. El código está oculto: solo eliges opciones en las listas desplegables. ¿Primera vez? Haz el <a href="#taller-0">Taller 0</a>.</p></div>
+        ${sec("colab")}<div class="colab"><div class="stack" style="gap:8px"><span class="eyebrow">Cuaderno ${m.notebook}</span><p>${m.colabQue}</p><p class="muted small">Ábrelo, usa <b>Archivo › Guardar una copia en Drive</b> y luego <b>Entorno de ejecución › Ejecutar todas</b>. El código está oculto: solo eliges opciones en las listas desplegables. ¿Primera vez? Haz el <a href="#colab">curso rápido de Colab</a> y el <a href="#taller-0">Taller 0</a>.</p></div>
             <div class="stack" style="gap:8px"><a class="btn primary" href="${colabURL(m.notebook)}" target="_blank" rel="noopener">Abrir en Colab</a></div></div></section>
         ${sec("ia")}<div class="stack">
             <p class="read">Úsalas con Claude, Gemini, ChatGPT o Copilot. Reemplaza lo que está entre corchetes. La regla: <b>la IA propone, tú verificas</b> con casos cuyo resultado ya conoces.</p>
@@ -186,7 +186,7 @@ function viewGlosario(){
 /* ---------- enrutador ---------- */
 function route(){
   const h = (location.hash||"#inicio").slice(1);
-  const navKey = h.startsWith("clave-") ? "ruta" : h.startsWith("taller-") ? "laboratorio" : h==="datos" ? "empresa" : h;
+  const navKey = h.startsWith("clave-") ? "ruta" : (h.startsWith("taller-")||h==="colab") ? "laboratorio" : h==="datos" ? "empresa" : h;
   document.querySelectorAll("nav.main a").forEach(a=>a.toggleAttribute("aria-current", a.dataset.nav===navKey));
   document.querySelectorAll("nav.main a[aria-current]").forEach(a=>a.setAttribute("aria-current","page"));
   if(h==="ruta") viewRuta();
@@ -194,6 +194,7 @@ function route(){
   else if(h==="graficos") viewGraficos();
   else if(h==="laboratorio") viewLaboratorio();
   else if(h.startsWith("taller-")) viewTaller(+h.slice(7));
+  else if(h==="colab") viewColab();
   else if(h==="glosario") viewGlosario();
   else if(h.startsWith("clave-")){ const n=+h.slice(6); MOD[n] ? viewModulo(n) : viewProximo(n) }
   else if(h==="diagnostico"){ viewInicio(); setTimeout(()=>$("#diagnostico").scrollIntoView(),0); return }

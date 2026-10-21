@@ -27,6 +27,7 @@ SCRIPTS = [
     "src/contenido/empresa.js",
     "src/contenido/graficos.js",
     "src/contenido/laboratorio.js",
+    "src/contenido/curso_colab.js",
     "src/app.js",
 ]
 
