@@ -88,7 +88,7 @@ function card(k){
     <div class="cell">${pad2(k.n)}</div>
     <h3>${k.t}</h3>
     <p>${k.brecha}</p>
-    <div class="tags"><span class="tag">${k.nivel}</span>${on?`<span class="tag av">Disponible</span>`:`<span class="tag">En preparación</span>`}${k.nueva?`<span class="tag new">Clave nueva</span>`:""}${done?`<span class="tag ok">✓ Completada</span>`:""}</div>
+    <div class="tags"><span class="tag">${k.nivel}</span>${on?"":`<span class="tag">En preparación</span>`}${done?`<span class="tag ok">✓ Completada</span>`:""}</div>
   </a>`;
 }
 
