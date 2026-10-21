@@ -1,0 +1,1042 @@
+<title>Excel Corporativo · 12 Claves</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Guía de estudio interactiva para corregir las brechas más comunes de Excel en entornos de análisis de datos e informes. Dr. Bits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: barra de fórmulas como cabecera + hoja de estudio en una columna de lectura,
+   con rejilla de celdas (letras de columna / números de fila) como motivo del tema. */
+:root{
+  --bg:#F4F6FB; --surface:#FFFFFF; --surface-2:#EBEFF8; --line:#D6DCEA; --grid:#E4E8F2;
+  --ink:#11153A; --muted:#566080; --brand:#00006A; --brand-ink:#00006A; --cyan:#45E7FF;
+  --cyan-soft:#D9F9FF; --on-brand:#FFFFFF; --sel:#E2FAFF;
+  --good:#15784A; --good-soft:#E3F4EB; --warn:#8E5A00; --warn-soft:#FBF0DA; --bad:#B42318; --bad-soft:#FBE7E5;
+  --f-display:"Lexend", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+  --r:10px; --shadow:0 1px 2px rgba(10,14,60,.06), 0 6px 18px rgba(10,14,60,.06);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0A0D26; --surface:#121641; --surface-2:#1A1F52; --line:#2B3274; --grid:#232966;
+  --ink:#E9ECFA; --muted:#A5ADD3; --brand:#2C34B8; --brand-ink:#A9B4FF; --cyan:#45E7FF;
+  --cyan-soft:#123A4E; --on-brand:#FFFFFF; --sel:#12324A;
+  --good:#5CCB95; --good-soft:#123628; --warn:#E8B657; --warn-soft:#3A2E12; --bad:#FF8A80; --bad-soft:#3E1A1F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.25); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0A0D26; --surface:#121641; --surface-2:#1A1F52; --line:#2B3274; --grid:#232966;
+  --ink:#E9ECFA; --muted:#A5ADD3; --brand:#2C34B8; --brand-ink:#A9B4FF; --cyan:#45E7FF;
+  --cyan-soft:#123A4E; --on-brand:#FFFFFF; --sel:#12324A;
+  --good:#5CCB95; --good-soft:#123628; --warn:#E8B657; --warn-soft:#3A2E12; --bad:#FF8A80; --bad-soft:#3E1A1F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.25); color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.55; margin:0}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--surface)}
+h1,h2,h3,h4{font-family:var(--f-display); line-height:1.2; text-wrap:balance; margin:0; color:var(--ink)}
+h1{font-size:clamp(1.9rem,4.2vw,2.8rem); font-weight:600; letter-spacing:-.02em}
+h2{font-size:clamp(1.35rem,2.6vw,1.7rem); font-weight:600; letter-spacing:-.01em}
+h3{font-size:1.12rem; font-weight:600}
+p{margin:0}
+a{color:var(--brand-ink)}
+code,.mono{font-family:var(--f-mono); font-size:.86em}
+p code, li code, span code, .callout code, .qitem, .opt, .why, .prompt pre{overflow-wrap:anywhere}
+:focus-visible{outline:3px solid var(--cyan); outline-offset:2px; border-radius:4px}
+.wrap{max-width:1120px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.read{max-width:760px}
+.eyebrow{font-family:var(--f-mono); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.muted{color:var(--muted)}
+.stack{display:flex; flex-direction:column; gap:14px}
+.row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+
+/* ---------- Cabecera ---------- */
+header.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:var(--surface); border-bottom:1px solid var(--line)}
+.top .wrap{display:flex; align-items:center; gap:16px; padding-block:10px; flex-wrap:wrap}
+.logo{background:#FFFFFF; border-radius:8px; padding:4px 8px; display:flex; align-items:center; border:1px solid var(--line)}
+.logo img{height:30px; width:auto; display:block}
+.brandtxt{display:flex; flex-direction:column; line-height:1.15; min-width:0}
+.brandtxt b{font-family:var(--f-display); font-weight:600; font-size:1rem}
+.brandtxt span{font-size:.8rem; color:var(--muted)}
+nav.main{display:flex; gap:4px; margin-left:auto; flex-wrap:wrap}
+nav.main a{font-family:var(--f-display); font-size:.9rem; text-decoration:none; color:var(--muted); padding:7px 12px; border-radius:8px}
+nav.main a:hover{background:var(--surface-2); color:var(--ink)}
+nav.main a[aria-current="page"]{background:var(--brand); color:var(--on-brand)}
+.progress-pill{display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--muted)}
+.meter{width:84px; height:8px; border-radius:99px; background:var(--surface-2); overflow:hidden; border:1px solid var(--line)}
+.meter i{display:block; height:100%; background:var(--cyan); width:0}
+
+/* ---------- Barra de fórmulas ---------- */
+.fx{display:flex; align-items:stretch; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface); font-family:var(--f-mono); font-size:.92rem; max-width:100%}
+.fx .namebox{padding:8px 12px; border-right:1px solid var(--line); color:var(--muted); min-width:64px; background:var(--surface-2)}
+.fx .fxl{padding:8px 10px; border-right:1px solid var(--line); color:var(--muted); font-style:italic}
+.fx .formula{padding:8px 12px; overflow-x:auto; white-space:nowrap; color:var(--ink); min-width:0; flex:1}
+.fx .fn{color:var(--brand-ink); font-weight:600}
+.fx .str{color:var(--good)}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:44px 28px; display:grid; grid-template-columns:1.25fr .9fr; gap:36px; align-items:start}
+.hero .lead{font-size:1.15rem; color:var(--muted); max-width:60ch}
+.stats{display:grid; gap:10px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; align-items:baseline}
+.stat b{font-family:var(--f-display); font-size:1.9rem; font-weight:600; color:var(--brand-ink); font-variant-numeric:tabular-nums; grid-row:span 2}
+.stat span{font-size:.95rem}
+.stat small{font-size:.78rem; color:var(--muted)}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+
+.btn{font-family:var(--f-display); font-size:.92rem; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:9px 14px; border-radius:8px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px}
+.btn:hover{border-color:var(--brand-ink)}
+.btn.primary{background:var(--brand); border-color:var(--brand); color:var(--on-brand)}
+.btn.primary:hover{filter:brightness(1.15)}
+.btn.small{font-size:.82rem; padding:6px 10px}
+.btn[aria-pressed="true"]{background:var(--cyan-soft); border-color:var(--cyan); color:var(--ink)}
+
+section.block{padding-block:28px; border-top:1px solid var(--line)}
+.sechead{display:flex; flex-direction:column; gap:6px; margin-bottom:18px}
+
+/* ---------- Diagnóstico ---------- */
+.diag{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+@media (max-width:760px){.diag{grid-template-columns:1fr}}
+.q{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px; display:flex; flex-direction:column; gap:10px}
+.q p{font-size:.98rem}
+.seg{display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; align-self:flex-start}
+.seg button{font:inherit; font-size:.85rem; padding:5px 14px; border:0; background:var(--surface); color:var(--ink); cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--brand); color:var(--on-brand)}
+.result{margin-top:16px; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--cyan); border-radius:var(--r); padding:16px 18px}
+
+/* ---------- Ruta ---------- */
+.tramo{display:grid; grid-template-columns:220px 1fr; gap:20px; padding-block:18px; border-top:1px dashed var(--line)}
+.tramo:first-of-type{border-top:0}
+@media (max-width:760px){.tramo{grid-template-columns:1fr}}
+.cards{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+@media (max-width:640px){.cards{grid-template-columns:1fr}}
+.kcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; text-decoration:none; color:inherit; position:relative}
+.kcard:hover{border-color:var(--brand-ink); box-shadow:var(--shadow)}
+.kcard .cell{grid-row:span 3; font-family:var(--f-mono); font-size:.8rem; width:46px; height:46px; display:grid; place-items:center; border:1px solid var(--line); background:var(--surface-2); border-radius:6px; color:var(--muted)}
+.kcard.on .cell{background:var(--brand); color:var(--on-brand); border-color:var(--brand)}
+.kcard h3{font-size:1rem}
+.kcard p{font-size:.9rem; color:var(--muted)}
+.tags{display:flex; gap:6px; flex-wrap:wrap}
+.tag{font-size:.72rem; font-family:var(--f-mono); padding:2px 7px; border-radius:99px; border:1px solid var(--line); color:var(--muted); background:var(--surface)}
+.tag.ok{border-color:var(--good); color:var(--good); background:var(--good-soft)}
+.tag.av{border-color:var(--cyan); color:var(--ink); background:var(--cyan-soft)}
+.tag.new{border-color:var(--warn); color:var(--warn); background:var(--warn-soft)}
+
+/* ---------- Módulo ---------- */
+.mhead{padding-block:32px 22px; display:flex; flex-direction:column; gap:14px}
+.mlayout{display:grid; grid-template-columns:200px minmax(0,1fr); gap:32px; align-items:start; padding-bottom:40px}
+.mlayout > *, .hero > *, .tramo > *, .two > *, .prose > *, .stack > *{min-width:0; max-width:100%}
+@media (max-width:900px){.mlayout{grid-template-columns:1fr} nav.toc{display:none}}
+.toc{position:sticky; top:calc(env(safe-area-inset-top,0px) + 80px); display:flex; flex-direction:column; gap:2px; font-size:.88rem}
+.toc a{text-decoration:none; color:var(--muted); padding:6px 10px; border-left:2px solid var(--line); display:flex; gap:8px}
+.toc a:hover{color:var(--ink); border-left-color:var(--cyan)}
+.toc a span{font-family:var(--f-mono); font-size:.75rem; padding-top:2px}
+.step{padding-block:22px; border-top:1px solid var(--line); scroll-margin-top:90px}
+.step:first-child{border-top:0; padding-top:0}
+.step > .sh{display:flex; align-items:baseline; gap:12px; margin-bottom:12px}
+.step > .sh .n{font-family:var(--f-mono); font-size:.8rem; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:1px 7px}
+.prose{display:flex; flex-direction:column; gap:12px; max-width:70ch}
+.prose ul,.prose ol{margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:6px}
+.callout{border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; background:var(--surface); display:flex; flex-direction:column; gap:6px}
+.callout.gap{border-left:4px solid var(--bad)}
+.callout.tip{border-left:4px solid var(--cyan)}
+.callout.warn{border-left:4px solid var(--warn)}
+.callout .k{font-family:var(--f-mono); font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.two{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+@media (max-width:700px){.two{grid-template-columns:1fr}}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; min-width:0}
+.panel.bad{border-top:3px solid var(--bad)}
+.panel.good{border-top:3px solid var(--good)}
+.objs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px}
+@media (max-width:760px){.objs{grid-template-columns:1fr}}
+.objs div{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:10px 12px; font-size:.92rem}
+
+/* hoja de cálculo simulada */
+.sheetwrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+table.sheet{border-collapse:collapse; font-size:.86rem; font-variant-numeric:tabular-nums; min-width:100%}
+table.sheet th,table.sheet td{border:1px solid var(--grid); padding:5px 9px; white-space:nowrap}
+table.sheet thead th{background:var(--surface-2); color:var(--muted); font-family:var(--f-mono); font-weight:400; font-size:.75rem; text-align:center}
+table.sheet td.rn{background:var(--surface-2); color:var(--muted); font-family:var(--f-mono); font-size:.75rem; text-align:center; width:34px}
+table.sheet td.num{text-align:right}
+table.sheet td.hd{background:var(--cyan-soft); font-weight:600; text-align:center}
+table.sheet td.tt{background:var(--brand); color:var(--on-brand); font-weight:600; text-align:center}
+table.sheet td.bold{font-weight:700}
+table.sheet td.note{font-style:italic; color:var(--bad)}
+table.sheet td[data-p]{cursor:pointer}
+table.sheet td[data-p]:hover{outline:2px solid var(--cyan); outline-offset:-2px}
+table.sheet td.found{box-shadow:inset 0 0 0 2px var(--bad); background:var(--bad-soft); color:var(--ink)}
+table.sheet tr.hit td{background:var(--sel)}
+table.sheet tr.miss td{background:var(--bad-soft)}
+.plist{display:flex; flex-direction:column; gap:8px; counter-reset:p}
+.plist li{list-style:none; border:1px solid var(--line); border-radius:8px; padding:9px 12px; background:var(--surface); font-size:.93rem}
+.plist li.locked{color:var(--muted); background:var(--surface-2)}
+.plist li b{font-family:var(--f-display); font-weight:600}
+.ctl{display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end}
+.ctl label{display:flex; flex-direction:column; gap:4px; font-size:.78rem; color:var(--muted); font-family:var(--f-mono); text-transform:uppercase; letter-spacing:.05em}
+select,input[type=search]{font:inherit; font-size:.92rem; padding:7px 10px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); text-transform:none; letter-spacing:0}
+.chk{flex-direction:row!important; align-items:center; gap:8px!important; text-transform:none!important; font-family:var(--f-body)!important; font-size:.92rem!important; color:var(--ink)!important; letter-spacing:0!important}
+.vis{font-family:var(--f-mono); background:var(--surface-2); padding:1px 5px; border-radius:4px}
+.sp{color:var(--bad); font-weight:700}
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{font-size:.85rem; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:99px; padding:6px 12px; cursor:pointer; text-align:left}
+.chip:hover{border-color:var(--brand-ink)}
+.chip[aria-pressed="true"]{background:var(--cyan-soft); border-color:var(--cyan)}
+.insight{font-size:.95rem; padding:10px 14px; border-radius:8px; background:var(--surface-2)}
+.chartbox{position:relative}
+.chartbox svg text{fill:var(--ink); font-family:var(--f-body)}
+.chartbox svg .axis{fill:var(--muted); font-size:11px}
+.tip-pop{position:absolute; pointer-events:none; background:var(--ink); color:var(--bg); font-size:.8rem; padding:6px 9px; border-radius:6px; white-space:nowrap; transform:translate(-50%,-110%)}
+
+pre.code{font-family:var(--f-mono); font-size:.84rem; background:var(--surface-2); border:1px solid var(--line); border-radius:8px; padding:12px 14px; overflow-x:auto; margin:0; white-space:pre}
+.steps{counter-reset:s; display:flex; flex-direction:column; gap:10px; padding:0; margin:0}
+.steps li{list-style:none; display:grid; grid-template-columns:30px 1fr; gap:10px; align-items:start}
+.steps li::before{counter-increment:s; content:counter(s); font-family:var(--f-mono); font-size:.8rem; width:26px; height:26px; display:grid; place-items:center; border-radius:6px; background:var(--brand); color:var(--on-brand)}
+.steps li > div{min-width:0; display:flex; flex-direction:column; gap:6px}
+.colab{display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px}
+@media (max-width:640px){.colab{grid-template-columns:1fr}}
+.prompt{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden}
+.prompt header{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 12px; background:var(--surface-2); border-bottom:1px solid var(--line); font-size:.88rem}
+.prompt pre{margin:0; padding:12px 14px; white-space:pre-wrap; font-family:var(--f-mono); font-size:.82rem}
+.quiz{display:flex; flex-direction:column; gap:14px}
+.qitem{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+.opts{display:flex; flex-direction:column; gap:6px}
+.opt{font:inherit; font-size:.95rem; text-align:left; border:1px solid var(--line); background:var(--surface); color:var(--ink); padding:8px 12px; border-radius:8px; cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--brand-ink)}
+.opt.right{border-color:var(--good); background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad); background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.why{font-size:.92rem; padding:8px 12px; border-radius:8px; background:var(--surface-2)}
+.datatbl{border-collapse:collapse; width:100%; font-size:.9rem}
+.datatbl th,.datatbl td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+.datatbl th{font-family:var(--f-mono); font-size:.74rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:400}
+.datatbl td.num{text-align:right; font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+footer{border-top:1px solid var(--line); padding-block:22px; font-size:.86rem; color:var(--muted); background:var(--surface)}
+footer .wrap{display:flex; gap:18px; flex-wrap:wrap; justify-content:space-between}
+.toast{position:fixed; bottom:calc(16px + env(safe-area-inset-bottom,0px)); left:50%; transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:8px 14px; border-radius:8px; font-size:.88rem; z-index:40}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Inicio"><img src="assets/logo-drbits.jpg" alt="Dr. Bits"></a>
+    <div class="brandtxt"><b>Excel Corporativo · 12 Claves</b><span>Guía de estudio interactiva</span></div>
+    <nav class="main" aria-label="Secciones">
+      <a href="#inicio" data-nav="inicio">Inicio</a>
+      <a href="#ruta" data-nav="ruta">Ruta de 12 claves</a>
+      <a href="#datos" data-nav="datos">Datos</a>
+      <a href="#glosario" data-nav="glosario">Glosario</a>
+    </nav>
+    <div class="progress-pill" title="Módulos del piloto completados en este navegador"><div class="meter"><i id="meterbar"></i></div><span id="metertxt">0 de 3</span></div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Dr. Bits · ADNBITS S.A.S. · Autor: Omar Libardo Acelas Angulo</span>
+    <span>Contenido CC BY-SA 4.0 · Código MIT · Datos 100 % ficticios</span>
+  </div>
+</footer>
+
+<script>
+/* ======================================================================
+   Excel Corporativo · 12 Claves — Dr. Bits
+   Todo el contenido vive en los objetos de abajo; la vista se dibuja con JS.
+   ====================================================================== */
+const REPO = "OmarLi-360/excel-corporativo-12-claves";
+const GH = `https://github.com/${REPO}`;
+const colabURL = f => `https://colab.research.google.com/github/${REPO}/blob/main/notebooks/${f}`;
+const D = window.DATA_ANDINA;
+const nf = new Intl.NumberFormat("es-CO");
+const pf = new Intl.NumberFormat("es-CO",{style:"percent", minimumFractionDigits:1, maximumFractionDigits:1});
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- progreso (solo en este navegador) ---------- */
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem("ec12")||"{}") }catch(e){ return {} } },
+  set(v){ try{ localStorage.setItem("ec12", JSON.stringify(v)) }catch(e){} }
+};
+let PROG = Object.assign({done:{}, quiz:{}}, store.get());
+function saveProg(){ store.set(PROG); paintMeter() }
+function paintMeter(){
+  const n = PILOTO.filter(k=>PROG.done[k]).length;
+  $("#meterbar").style.width = (n/PILOTO.length*100)+"%";
+  $("#metertxt").textContent = `${n} de ${PILOTO.length}`;
+}
+function toast(msg){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200) }
+
+/* ---------- las 12 claves ---------- */
+const PILOTO = [1,5,7];
+const CLAVES = [
+ {n:1, tramo:0, t:"Estructura antes que fórmulas", s:"Datos tabulares y Tablas de Excel", brecha:"Hojas armadas «para imprimir»: celdas combinadas, subtotales intercalados y filas en blanco que impiden filtrar, cruzar y resumir.", nivel:"Básico"},
+ {n:2, tramo:0, t:"Tipos de dato que no engañan", s:"Números, textos y fechas", brecha:"Números guardados como texto y fechas que no son fechas: sumas que omiten valores sin avisar.", nivel:"Básico", nueva:true},
+ {n:3, tramo:0, t:"Referencias que se copian bien", s:"Relativas, absolutas y mixtas", brecha:"Fórmulas que se rompen al arrastrarlas porque falta o sobra un $.", nivel:"Básico"},
+ {n:4, tramo:0, t:"Lógica condicional legible", s:"SI, Y, O, SI.CONJUNTO, SI.ERROR", brecha:"SI anidados de cinco niveles que nadie puede revisar, y SI.ERROR que esconde errores reales.", nivel:"Básico"},
+ {n:5, tramo:1, t:"Buscar y cruzar sin #N/D", s:"BUSCARX, INDICE+COINCIDIR, BUSCARV", brecha:"#N/D por espacios invisibles, BUSCARV con índice fijo y coincidencias aproximadas que devuelven datos equivocados en silencio.", nivel:"Intermedio"},
+ {n:6, tramo:1, t:"Agregar con condiciones", s:"SUMAR.SI.CONJUNTO y CONTAR.SI.CONJUNTO", brecha:"Totales hechos con filtros y calculadora, imposibles de repetir el mes siguiente.", nivel:"Intermedio"},
+ {n:7, tramo:1, t:"Tablas dinámicas que responden preguntas", s:"Resumir, comparar y porcentajes", brecha:"Dinámicas sin pregunta de negocio, que suman anuladas, confunden líneas con facturas y promedian porcentajes.", nivel:"Intermedio"},
+ {n:8, tramo:1, t:"Limpieza reproducible", s:"Power Query", brecha:"La misma limpieza manual repetida cada mes, con resultados distintos según quién la haga.", nivel:"Intermedio"},
+ {n:9, tramo:2, t:"Datos que se validan solos", s:"Validación de datos y formato condicional", brecha:"Listas escritas a mano con variantes («Bogota», «BOGOTÁ») y alertas visuales que nadie configuró.", nivel:"Intermedio"},
+ {n:10, tramo:2, t:"Fórmulas de matriz dinámica", s:"FILTRAR, ORDENAR, UNICOS, LET", brecha:"Copiar y pegar listas filtradas que quedan desactualizadas al cambiar la fuente.", nivel:"Avanzado"},
+ {n:11, tramo:2, t:"Gráficos y narrativa de resultados", s:"Del dato al informe que se explica solo", brecha:"Gráficos por defecto (tortas 3D, dos ejes) y informes sin un mensaje principal.", nivel:"Intermedio"},
+ {n:12, tramo:2, t:"Auditoría, control y uso responsable de IA", s:"Revisar antes de enviar", brecha:"Informes enviados sin revisión, versiones «final_final2.xlsx» y fórmulas de IA usadas sin verificar.", nivel:"Transversal"},
+];
+const TRAMOS = [
+ {t:"Fundamentos", d:"Lo que, si falla, hace que todo lo demás falle. Corrige aquí antes de avanzar."},
+ {t:"Análisis", d:"Cruzar, resumir y limpiar datos de varias fuentes como se hace en un área de análisis."},
+ {t:"Control y comunicación", d:"Que el resultado sea confiable, verificable y se pueda explicar a quien decide."},
+];
+
+/* ---------- diagnóstico ---------- */
+const DIAG = [
+ {q:"¿Combinas celdas o dejas filas en blanco dentro de tus bases de datos?", si:1},
+ {q:"¿Alguna vez una suma no incluyó números que en pantalla se veían bien?", si:2},
+ {q:"¿Dudas cuándo usar $A$1, A$1 o $A1 en una fórmula?", si:3},
+ {q:"¿Escribes a mano el número de columna en BUSCARV?", si:5},
+ {q:"¿Te ha salido #N/D aunque el código «sí está» en la otra tabla?", si:5},
+ {q:"¿Calculas porcentajes o totales de una tabla dinámica por fuera, con calculadora?", si:7},
+ {q:"¿Repites cada mes los mismos pasos manuales para limpiar un archivo?", si:8},
+ {q:"¿Envías informes sin que otra persona o una herramienta revise las fórmulas?", si:12},
+];
+let DIAGR = {};
+
+/* ======================================================================
+   CONTENIDO DE LOS MÓDULOS PILOTO
+   ====================================================================== */
+const MOD = {};
+
+MOD[1] = {
+ minutos:45, notebook:"01_estructura_y_tablas.ipynb",
+ objetivos:["Reconocer los 8 defectos de estructura que bloquean el análisis.","Reorganizar un reporte en formato tabular: una fila por registro.","Convertir un rango en Tabla de Excel y usar referencias estructuradas."],
+ entender:`
+  <p>Excel tiene dos usos que se confunden: <b>presentar</b> información (un reporte que alguien lee) y <b>almacenar</b> información (una base que alguien analiza). Un reporte puede tener títulos, colores y subtotales. Una base no. Casi todos los problemas de los niveles siguientes empiezan cuando se analiza un reporte como si fuera una base.</p>
+  <p>Una base analizable sigue tres reglas, las mismas que usa la ciencia de datos con el nombre de <i>datos ordenados</i> (<i>tidy data</i>):</p>
+  <ol><li><b>Cada columna es una variable</b>: fecha, ciudad, subtotal. Un trimestre no es una columna; es un valor de la variable «trimestre».</li>
+  <li><b>Cada fila es un registro</b>: una línea de factura, un cliente, una meta mensual. Nunca un subtotal.</li>
+  <li><b>Cada tipo de registro va en su propia tabla</b>: ventas en una, clientes en otra, unidas por una llave (<code>id_cliente</code>).</li></ol>
+  <p>Cuando el rango cumple estas reglas, conviértelo en <b>Tabla de Excel</b>. La Tabla crece sola al agregar filas, copia las fórmulas a toda la columna y tiene nombre propio (<code>tVentas</code>), que hace las fórmulas legibles: <code>=[@cantidad]*[@precio_unitario]</code> se entiende sin mirar las coordenadas.</p>`,
+ brechaTxt:"En las auditorías de hojas de cálculo reales casi todos los libros revisados tienen errores, y muchos nacen de la estructura: filas insertadas fuera del rango, subtotales sumados dos veces o fórmulas copiadas sobre celdas combinadas.",
+ excel:[
+  ["Separa presentar de almacenar", "Deja la base en una hoja (<code>Ventas</code>) y construye el reporte en otra. Nunca escribas totales dentro de la base."],
+  ["Revisa la forma", "Encabezados en <b>una sola fila</b>, sin celdas combinadas, sin filas ni columnas vacías en medio. Si hay una ciudad combinada en varias filas: selecciona el bloque, <b>Inicio › Combinar y centrar › Separar celdas</b>, luego <b>Ir a especial › Celdas en blanco</b> y escribe <code>=</code> y la celda de arriba con <b>Ctrl+Enter</b>."],
+  ["Convierte en Tabla", "Clic dentro del rango y <b>Ctrl+T</b> (o <b>Insertar › Tabla</b>). Marca «La tabla tiene encabezados»."],
+  ["Ponle nombre", "<b>Diseño de tabla › Nombre de la tabla</b>: <code>tVentas</code>. Usa un prefijo (<code>t</code>) para reconocer tablas en las fórmulas."],
+  ["Usa columnas calculadas", "En una columna nueva escribe <code>=[@cantidad]*[@precio_unitario]</code>. Excel la copia a todas las filas, presentes y futuras."],
+  ["Activa la fila de totales", "<b>Diseño de tabla › Fila de totales</b>. Usa <code>SUBTOTALES(109;[subtotal])</code>, que respeta los filtros: si filtras Bogotá, suma solo Bogotá."],
+ ],
+ colabQue:"Lee la hoja <i>Reporte_Mal_Estructurado</i> del libro de práctica, la reconstruye como tabla ordenada con <code>melt</code> y <code>ffill</code>, demuestra el doble conteo de los subtotales con una gráfica y hace un diagnóstico de calidad de <code>ventas.csv</code> (tipos, nulos, duplicados, rangos).",
+ ia:[
+  {t:"Diagnosticar la estructura de una hoja", p:`Actúa como analista de datos senior. Te pego el encabezado y 8 filas de muestra de una hoja de Excel (datos anonimizados).
+[PEGA AQUÍ]
+
+1. Lista los problemas de estructura que impedirían filtrarla, cruzarla o hacer una tabla dinámica.
+2. Propón la estructura tabular ideal: nombre de cada columna, tipo de dato y una fila de ejemplo.
+3. Dime los pasos en Excel (en español) para transformarla.
+No inventes datos que no aparezcan en la muestra.`},
+  {t:"Explicar una referencia estructurada", p:`Explícame paso a paso qué calcula esta fórmula de Excel y qué pasa si agrego 100 filas nuevas a la tabla:
+=SUMA(tVentas[subtotal]) - SUBTOTALES(109;tVentas[subtotal])
+Responde para alguien que está aprendiendo, con un ejemplo de 3 filas.`},
+ ],
+ iaCuidado:"Pega solo encabezados y unas filas de muestra, nunca la base completa. Quita nombres, cédulas, teléfonos y correos antes: en Colombia el tratamiento de datos personales está regulado por la Ley 1581 de 2012.",
+ quiz:[
+  {q:"En un reporte, la ciudad «Bogotá» ocupa una celda combinada sobre tres filas. Filtras la columna Línea por «Tecnología». ¿Qué ves en la columna Ciudad?",
+   o:["«Bogotá» repetido en cada fila filtrada","Celdas vacías: el valor combinado solo existe en la primera celda del bloque","Excel bloquea el filtro","Un error #REF!"], a:1,
+   w:"Una celda combinada guarda el valor solo en su esquina superior izquierda. Las demás quedan vacías, y al filtrar o cruzar esas filas pierden la ciudad."},
+  {q:"¿Por qué un subtotal escrito dentro de la base daña una tabla dinámica?",
+   o:["Porque la dinámica no acepta negritas","Porque la dinámica lo trata como un registro más y lo suma otra vez","Porque los subtotales se calculan con otra función","No la daña si está en otra fuente"], a:1,
+   w:"Para la tabla dinámica cada fila es un registro. Un subtotal es una fila más, así que su valor se suma junto con las filas que ya resume: el total queda inflado."},
+  {q:"¿Cuál de estas estructuras es tabular y está lista para analizar?",
+   o:["Una columna por trimestre (T1, T2, T3, T4)","Una hoja por ciudad con los mismos encabezados","Columnas ciudad, línea, trimestre y subtotal; una fila por combinación","Un bloque por ciudad separado por una fila en blanco"], a:2,
+   w:"El trimestre es una variable, así que va en una columna propia. Con esa forma, una tabla dinámica puede ponerlo en filas, columnas o filtros sin rehacer nada."},
+  {q:"¿Cuál es la ventaja principal de convertir un rango en Tabla (Ctrl+T)?",
+   o:["Calcula más rápido que una base de datos","Elimina duplicados automáticamente","Las fórmulas, dinámicas y gráficos que la usan se amplían solos al agregar filas","Impide que otras personas editen los datos"], a:2,
+   w:"La Tabla es un rango con nombre que crece. Todo lo que apunta a ella (fórmulas, tablas dinámicas, gráficos) incluye las filas nuevas sin cambiar referencias."},
+ ],
+};
+
+MOD[5] = {
+ minutos:60, notebook:"05_busqueda_y_cruce.ipynb",
+ objetivos:["Cruzar dos tablas con BUSCARX e INDICE+COINCIDIR.","Diagnosticar un #N/D: espacios, caracteres invisibles o llaves huérfanas.","Saber por qué BUSCARV con índice fijo y coincidencia aproximada es un riesgo."],
+ entender:`
+  <p>Cruzar es traer a una tabla un dato que vive en otra, usando una <b>llave</b> que ambas comparten. En la Distribuidora Andina, la exportación del ERP trae el <code>Cod Cliente</code>, y el maestro <code>tClientes</code> tiene la razón social y el segmento.</p>
+  <p>Una búsqueda solo funciona si la llave es <b>idéntica</b> en las dos tablas. «C-0005» y «C-0005 » (con un espacio al final) son textos distintos para Excel, aunque en pantalla se vean iguales. Las mayúsculas, en cambio, no le importan: Excel considera iguales «c-0002» y «C-0002». Python sí las distingue, así que en el cuaderno verás un caso más.</p>
+  <p><b>BUSCARX</b> (Microsoft 365 y Excel 2021 en adelante) es la opción recomendada: busca exacto por omisión, devuelve la columna que nombras (no un número de columna) y tiene un argumento para decir qué mostrar si no encuentra. En versiones anteriores usa <b>INDICE + COINCIDIR</b>. BUSCARV sigue en muchos libros heredados: conviene entender sus dos trampas.</p>
+  <pre class="code">=BUSCARX(valor_buscado; matriz_buscada; matriz_devuelta; [si_no_se_encuentra]; [modo_de_coincidencia]; [modo_de_búsqueda])</pre>`,
+ brechaTxt:"La función más conocida del Excel laboral es también la que más errores silenciosos produce: un BUSCARV sin el último argumento hace coincidencia aproximada y puede devolver un cliente equivocado sin mostrar ningún error.",
+ excel:[
+  ["Convierte ambas fuentes en Tablas", "<code>tERP</code> para la exportación y <code>tClientes</code> para el maestro. Así las fórmulas no dependen de rangos fijos."],
+  ["Escribe la búsqueda", "En una columna nueva de <code>tERP</code>: <code>=BUSCARX([@[Cod Cliente]];tClientes[id_cliente];tClientes[razon_social];\"No encontrado\")</code>."],
+  ["Cuenta los fallos", "<code>=CONTAR.SI(tERP[Cliente_maestro];\"No encontrado\")</code>. Un cruce sin este conteo no está terminado."],
+  ["Limpia la llave", "Columna auxiliar <code>=ESPACIOS(SUSTITUIR([@[Cod Cliente]];CARACTER(160);\" \"))</code>. ESPACIOS quita espacios normales; el espacio de no separación (carácter 160), común en datos copiados de la web o de un ERP, necesita SUSTITUIR."],
+  ["Si no tienes BUSCARX", "<code>=SI.ERROR(INDICE(tClientes[razon_social];COINCIDIR([@llave];tClientes[id_cliente];0));\"No encontrado\")</code>. El 0 de COINCIDIR exige coincidencia exacta."],
+  ["Revisa los huérfanos", "Los códigos que siguen sin aparecer no se arreglan con fórmulas: son clientes creados en el ERP y no en el maestro. Repórtalos a quien administra el maestro."],
+ ],
+ colabQue:"Cruza <code>ventas_erp_sucio.csv</code> con <code>clientes.csv</code> usando <code>merge</code> con <code>indicator=True</code> y <code>validate</code>; mide la tasa de cruce antes y después de normalizar llaves, muestra cómo un maestro con duplicados multiplica filas y grafica la venta por segmento una vez cruzada.",
+ ia:[
+  {t:"Diagnosticar un #N/D", p:`Mi fórmula de Excel devuelve #N/D:
+=BUSCARX(A2;tClientes[id_cliente];tClientes[razon_social])
+En A2 aparece "C-0005" y en tClientes también existe "C-0005".
+Dame una lista ordenada de causas posibles y, para cada una, una fórmula de Excel en español (con ; como separador) que me permita comprobarla. Ejemplo: =LARGO(A2).`},
+  {t:"Migrar BUSCARV heredados", p:`Tengo esta fórmula en un libro heredado:
+=BUSCARV(B2;Clientes!$A$2:$F$500;4)
+1. Explica qué riesgo tiene el último argumento omitido.
+2. Reescríbela con BUSCARX usando una Tabla llamada tClientes con las columnas id_cliente y segmento.
+3. Dame 3 casos de prueba para comprobar que la nueva fórmula devuelve lo mismo que la anterior cuando la anterior era correcta.`},
+ ],
+ iaCuidado:"Una IA puede escribir una fórmula que parece correcta y devuelve la columna equivocada. Prueba siempre con tres casos cuyo resultado conoces, incluido un código que no existe.",
+ quiz:[
+  {q:"=BUSCARX(\"C-0005 \";tClientes[id_cliente];tClientes[razon_social]) devuelve #N/D, aunque C-0005 está en el maestro. ¿Causa más probable?",
+   o:["BUSCARX distingue mayúsculas","El valor buscado tiene un espacio al final","Falta el argumento modo_de_búsqueda","La tabla tClientes no está ordenada"], a:1,
+   w:"El espacio forma parte del texto. Compruébalo con =LARGO(A2): «C-0005» tiene 6 caracteres; si da 7, sobra uno."},
+  {q:"=BUSCARV(A2;tClientes;2;FALSO) empezó a devolver el NIT en vez de la razón social. ¿Qué pasó?",
+   o:["Alguien insertó una columna en el maestro y el índice 2 ahora apunta a otra","FALSO cambió a coincidencia aproximada","El cliente se duplicó","Excel actualizó la función a BUSCARX"], a:0,
+   w:"BUSCARV usa la posición de la columna, no su nombre. Al insertar una columna, la posición 2 es otra. BUSCARX e INDICE apuntan a la columna por nombre y no se afectan."},
+  {q:"¿Qué hace BUSCARV si omites el cuarto argumento?",
+   o:["Busca coincidencia exacta","Muestra un aviso","Usa coincidencia aproximada y puede devolver un valor equivocado sin error","Devuelve siempre #N/D"], a:2,
+   w:"Sin el cuarto argumento BUSCARV asume VERDADERO (aproximada). Sobre una lista de códigos no ordenada devuelve la fila de otro cliente y no hay error que lo delate."},
+  {q:"En Excel, ¿«c-0002» encuentra a «C-0002» con BUSCARX?",
+   o:["Sí: las búsquedas de Excel no distinguen mayúsculas","No: hay que usar MAYUSC primero","Solo con modo_de_coincidencia = 2","Solo con INDICE+COINCIDIR"], a:0,
+   w:"BUSCARX, BUSCARV y COINCIDIR no distinguen mayúsculas. En Python (pandas) sí se distinguen: por eso el cuaderno normaliza con .str.upper()."},
+  {q:"El maestro tiene el código C-0010 dos veces, con razones sociales distintas. ¿Qué hace BUSCARX?",
+   o:["Muestra #N/D","Devuelve la primera coincidencia, sin avisar","Devuelve las dos separadas por coma","Suma los dos valores"], a:1,
+   w:"Devuelve la primera fila que encuentra. Por eso un maestro debe tener la llave única; en pandas, merge(validate=\"many_to_one\") detiene el proceso si no lo es."},
+ ],
+};
+
+MOD[7] = {
+ minutos:60, notebook:"07_tablas_dinamicas.ipynb",
+ objetivos:["Partir de una pregunta de negocio y elegir filas, columnas y valores.","Distinguir suma, recuento de líneas y recuento distinto de facturas.","Calcular porcentajes y márgenes sin errores de agregación."],
+ entender:`
+  <p>Una tabla dinámica resume una base sin escribir fórmulas: eliges qué va en <b>filas</b>, qué va en <b>columnas</b>, qué se <b>calcula</b> y qué se <b>filtra</b>. Su valor no está en la herramienta sino en la pregunta. Antes de arrastrar campos, escribe la pregunta completa: «¿Cuánto vendió cada sede en 2025, sin anuladas?».</p>
+  <p>Tres decisiones separan un resumen correcto de uno que se ve bien y está mal:</p>
+  <ol><li><b>Qué se cuenta.</b> Cada fila de <code>tVentas</code> es una línea de factura. Contar <code>id_factura</code> cuenta líneas, no facturas. Para facturas necesitas <i>Recuento distinto</i>, disponible al agregar los datos al Modelo de datos.</li>
+  <li><b>Qué se excluye.</b> Las facturas anuladas no son venta. Fíltralas siempre que la pregunta sea comercial.</li>
+  <li><b>Cómo se agregan los porcentajes.</b> El margen % de un grupo es la suma del margen dividida por la suma de la venta. El promedio de los porcentajes de cada línea da otro número, y es incorrecto.</li></ol>`,
+ brechaTxt:"La tabla dinámica es la frontera entre el usuario básico y el analista, y la que más se usa sin pregunta: resúmenes que incluyen anuladas, cuentan líneas como si fueran facturas o muestran totales de porcentajes que no cuadran.",
+ excel:[
+  ["Escribe la pregunta", "Una frase con medida, desglose, periodo y exclusiones: «Venta neta (subtotal) por sede y año, sin anuladas»."],
+  ["Inserta desde la Tabla", "Clic en <code>tVentas</code> › <b>Insertar › Tabla dinámica</b>. Si vas a contar facturas, marca <b>Agregar estos datos al Modelo de datos</b>."],
+  ["Arrastra los campos", "Ciudad a <b>Filas</b>, año a <b>Columnas</b>, subtotal a <b>Valores</b>, estado a <b>Filtros</b> (deja fuera «Anulada»)."],
+  ["Configura el valor", "Clic derecho en un valor › <b>Configuración de campo de valor</b>: elige Suma, Recuento o Recuento distinto y aplica formato de número."],
+  ["Muestra porcentajes", "Clic derecho › <b>Mostrar valores como › % del total general</b> (o de columna, o de fila). No calcules porcentajes al lado con calculadora."],
+  ["Agrega segmentaciones y actualiza", "<b>Analizar tabla dinámica › Insertar segmentación de datos</b> para filtrar con botones. Cuando cambian los datos: clic derecho › <b>Actualizar</b>."],
+ ],
+ colabQue:"Reproduce cada pregunta del simulador con <code>pivot_table</code> y <code>crosstab</code>, construye un mapa de calor ciudad × mes, compara 2024 con 2025, cruza la venta real con las metas por sede y explica por qué el promedio de porcentajes engaña.",
+ ia:[
+  {t:"De la pregunta a la tabla dinámica", p:`Tengo una Tabla de Excel llamada tVentas con estas columnas:
+fecha, id_factura, id_sede, canal, sku, cantidad, subtotal, margen_bruto, estado (Pagada, Pendiente, Anulada).
+Pregunta de negocio: "¿Qué canal ganó participación entre 2024 y 2025?"
+Dime qué campo va en Filas, Columnas, Valores y Filtros, qué "Mostrar valores como" debo usar y qué error de interpretación debo evitar.`},
+  {t:"Redactar el hallazgo para un informe", p:`Este es el resultado de mi tabla dinámica (venta neta en pesos):
+[PEGA LA TABLA]
+Escribe 3 frases para un informe gerencial: el hallazgo principal con su cifra, una comparación y una pregunta que habría que investigar. No agregues cifras que no estén en la tabla.`},
+ ],
+ iaCuidado:"Si le pides a la IA que interprete una tabla, verifica que cada cifra de su respuesta esté en la tabla. Los modelos pueden calcular mal porcentajes o inventar comparaciones.",
+ quiz:[
+  {q:"Quieres saber cuántas facturas emitió cada sede. En una dinámica clásica, «Recuento de id_factura» cuenta…",
+   o:["Facturas distintas","Líneas de factura: una factura con 4 productos cuenta 4","Solo facturas pagadas","Clientes distintos"], a:1,
+   w:"Cada fila de tVentas es una línea. Para contar facturas usa Recuento distinto, que aparece al agregar los datos al Modelo de datos."},
+  {q:"¿Cómo se calcula el margen % de toda la empresa?",
+   o:["Promedio del margen % de cada línea","Suma del margen bruto ÷ suma de la venta neta","Margen % de la sede más grande","Promedio del margen % de cada categoría"], a:1,
+   w:"El margen % es una razón: hay que sumar numerador y denominador por separado y dividir al final. Promediar porcentajes da el mismo peso a una venta de $5.000 que a una de $5 millones."},
+  {q:"Agregaste las ventas de diciembre a la Tabla y la dinámica no cambia. ¿Qué falta?",
+   o:["Volver a crear la dinámica","Actualizarla (clic derecho › Actualizar)","Cambiar el formato de número","Desactivar las segmentaciones"], a:1,
+   w:"Las dinámicas no recalculan solas. Como la fuente es una Tabla, el rango ya incluye las filas nuevas; solo hay que actualizar."},
+  {q:"Sumas el subtotal de 2025 sin filtrar el campo estado. ¿Qué incluye el total?",
+   o:["Solo facturas pagadas","Pagadas y pendientes","Pagadas, pendientes y anuladas, que no son venta","Nada distinto: Excel excluye anuladas"], a:2,
+   w:"Excel no sabe qué significa «Anulada». Si la pregunta es comercial, las anuladas se filtran. Las pendientes sí son venta, aunque no son recaudo."},
+ ],
+};
+
+/* ======================================================================
+   VISTAS
+   ====================================================================== */
+const app = $("#app");
+function route(){
+  const h = (location.hash||"#inicio").slice(1);
+  document.querySelectorAll("nav.main a").forEach(a=>a.removeAttribute("aria-current"));
+  let navKey = h.startsWith("clave-") ? "ruta" : h;
+  const cur = document.querySelector(`nav.main a[data-nav="${navKey}"]`); if(cur) cur.setAttribute("aria-current","page");
+  if(h==="ruta") viewRuta();
+  else if(h==="datos") viewDatos();
+  else if(h==="glosario") viewGlosario();
+  else if(h.startsWith("clave-")){ const n=+h.slice(6); MOD[n] ? viewModulo(n) : viewProximo(n) }
+  else viewInicio();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+
+function fxbar(name, html){ return `<div class="fx" role="img" aria-label="Barra de fórmulas"><div class="namebox">${name}</div><div class="fxl">fx</div><div class="formula">${html}</div></div>` }
+
+/* ---------- INICIO ---------- */
+function viewInicio(){
+  app.innerHTML = `
+  <div class="wrap">
+    <div class="hero">
+      <div class="stack" style="gap:18px">
+        ${fxbar("A1", `=<span class="fn">APRENDER</span>(<span class="str">"Excel"</span>; 12 claves; <span class="fn">VERIFICAR</span>())`)}
+        <h1>Excel que se puede filtrar, cruzar, resumir y explicar.</h1>
+        <p class="lead">Una guía de estudio para aprendices SENA y estudiantes que llegan a equipos de análisis de datos e informes. Corrige primero las brechas de lo básico y sube al nivel intermedio con datos de una empresa ficticia que funciona como una real.</p>
+        <div class="row"><a class="btn primary" href="#diagnostico" id="goDiag">Hacer el diagnóstico (2 min)</a><a class="btn" href="#ruta">Ver la ruta de 12 claves</a></div>
+      </div>
+      <div class="stats" aria-label="Por qué importa">
+        <div class="stat"><b>94&nbsp;%</b><span>de las hojas de cálculo revisadas en auditorías de campo tenían errores.</span><small>Panko, síntesis de auditorías (2008)</small></div>
+        <div class="stat"><b>5,2&nbsp;%</b><span>de las celdas con fórmula tenían error: en una hoja de 2.000 fórmulas son unas 100.</span><small>Panko (1998), citado en EuSpRIG</small></div>
+        <div class="stat"><b>71&nbsp;%</b><span>de los usuarios aprendió Excel por su cuenta, sin formación en verificación.</span><small>EuSpRIG 2016</small></div>
+        <a class="muted" style="font-size:.85rem" href="${GH}/blob/main/docs/BRECHAS.md">Fuentes y método de selección de las 12 claves →</a>
+      </div>
+    </div>
+
+    <section class="block" id="diagnostico">
+      <div class="sechead"><span class="eyebrow">Paso 1 · Diagnóstico</span><h2>¿Por dónde empiezo?</h2><p class="muted read">Responde con sinceridad: nadie más ve tus respuestas. El resultado ordena las claves que te conviene estudiar primero.</p></div>
+      <div class="diag">${DIAG.map((d,i)=>`
+        <div class="q"><p>${d.q}</p>
+          <div class="seg" role="group" aria-label="Respuesta">
+            <button type="button" data-d="${i}" data-v="1" aria-pressed="${DIAGR[i]===1}">Sí</button>
+            <button type="button" data-d="${i}" data-v="0" aria-pressed="${DIAGR[i]===0}">No</button>
+          </div></div>`).join("")}</div>
+      <div class="result" id="diagres"></div>
+    </section>
+
+    <section class="block">
+      <div class="sechead"><span class="eyebrow">Cómo funciona cada clave</span><h2>Siete pasos, del concepto al informe</h2></div>
+      <div class="objs" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+        <div><b>1. Entender</b><br><span class="muted">El concepto y por qué falla en la práctica.</span></div>
+        <div><b>2. Ver el error</b><br><span class="muted">La versión que circula en las empresas frente a la correcta.</span></div>
+        <div><b>3. Practicar</b><br><span class="muted">Un simulador con los datos de la Distribuidora Andina.</span></div>
+        <div><b>4. Hacerlo en Excel</b><br><span class="muted">Pasos con los nombres de menús y funciones en español.</span></div>
+        <div><b>5. Analizar en Colab</b><br><span class="muted">El mismo problema en Python, con gráficas de análisis.</span></div>
+        <div><b>6. Apoyarse en IA</b><br><span class="muted">Instrucciones listas para copiar, y cómo verificar lo que responde.</span></div>
+        <div><b>7. Autoevaluarse</b><br><span class="muted">Preguntas con explicación; 3 de 4 correctas completan la clave.</span></div>
+      </div>
+    </section>
+  </div>`;
+  $("#goDiag").onclick = e=>{ e.preventDefault(); $("#diagnostico").scrollIntoView() };
+  app.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{
+    DIAGR[b.dataset.d] = +b.dataset.v;
+    b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    paintDiag();
+  });
+  paintDiag();
+}
+function paintDiag(){
+  const el = $("#diagres"); if(!el) return;
+  const answered = Object.keys(DIAGR).length;
+  if(answered < DIAG.length){ el.innerHTML = `<span class="muted">Llevas ${answered} de ${DIAG.length} respuestas.</span>`; return }
+  const set = [...new Set(DIAG.filter((d,i)=>DIAGR[i]===1).map(d=>d.si))].sort((a,b)=>a-b);
+  if(!set.length){ el.innerHTML = `<h3>Tienes bases sólidas.</h3><p class="muted">Empieza por la clave 7 y usa las claves 1 y 5 como repaso rápido; los cuadernos de Colab te llevarán más lejos.</p><div class="row" style="margin-top:10px"><a class="btn primary" href="#clave-07">Ir a la clave 7</a></div>`; return }
+  const first = set.find(n=>MOD[n]) || set[0];
+  el.innerHTML = `<h3>Tu ruta sugerida: ${set.map(n=>`clave ${n}`).join(" → ")}</h3>
+    <p class="muted" style="margin-top:4px">Empieza por la primera disponible del piloto. Las demás aparecen como «en preparación» en la ruta.</p>
+    <div class="chips" style="margin-top:10px">${set.map(n=>{const k=CLAVES[n-1]; return `<a class="chip" href="#clave-${String(n).padStart(2,"0")}">${n} · ${k.t}${MOD[n]?"":" (en preparación)"}</a>`}).join("")}</div>
+    <div class="row" style="margin-top:12px"><a class="btn primary" href="#clave-${String(first).padStart(2,"0")}">Empezar por la clave ${first}</a></div>`;
+}
+
+/* ---------- RUTA ---------- */
+function viewRuta(){
+  app.innerHTML = `<div class="wrap">
+    <div class="mhead"><span class="eyebrow">Ruta de aprendizaje</span><h1>12 claves de Excel corporativo</h1>
+      <p class="muted read">Cada clave nace de una brecha documentada en usuarios de Excel. El orden importa: cada tramo se apoya en el anterior. Las claves 1, 5 y 7 forman el piloto; las demás tienen su temario definido.</p></div>
+    ${TRAMOS.map((t,ti)=>`<div class="tramo">
+      <div class="stack" style="gap:6px"><span class="eyebrow">Tramo ${ti+1}</span><h2>${t.t}</h2><p class="muted" style="font-size:.95rem">${t.d}</p></div>
+      <div class="cards">${CLAVES.filter(k=>k.tramo===ti).map(card).join("")}</div></div>`).join("")}
+  </div>`;
+}
+function card(k){
+  const on = !!MOD[k.n], done = PROG.done[k.n];
+  return `<a class="kcard ${on?"on":""}" href="#clave-${String(k.n).padStart(2,"0")}">
+    <div class="cell">${k.n<10?"0"+k.n:k.n}</div>
+    <h3>${k.t}</h3>
+    <p>${k.brecha}</p>
+    <div class="tags"><span class="tag">${k.nivel}</span>${on?`<span class="tag av">Disponible</span>`:`<span class="tag">En preparación</span>`}${k.nueva?`<span class="tag new">Clave nueva</span>`:""}${done?`<span class="tag ok">✓ Completada</span>`:""}</div>
+  </a>`;
+}
+function viewProximo(n){
+  const k = CLAVES[n-1]; if(!k){ location.hash="#ruta"; return }
+  app.innerHTML = `<div class="wrap read"><div class="mhead">
+    <a href="#ruta" class="muted" style="font-size:.9rem">← Ruta de 12 claves</a>
+    <span class="eyebrow">Clave ${n} · ${TRAMOS[k.tramo].t} · ${k.nivel}</span><h1>${k.t}</h1><p class="muted">${k.s}</p></div>
+    <div class="stack" style="padding-bottom:40px">
+      <div class="callout gap"><span class="k">La brecha que corrige</span><p>${k.brecha}</p></div>
+      <div class="callout"><span class="k">Estado</span><p>Esta clave está en preparación. Seguirá la misma estructura de siete pasos que las claves del piloto, con su cuaderno de Colab y el mismo conjunto de datos.</p></div>
+      <div class="row"><a class="btn primary" href="#clave-01">Ir a una clave disponible</a></div>
+    </div></div>`;
+}
+
+/* ---------- MÓDULO ---------- */
+const STEPS = [["entender","Entender"],["error","Ver el error"],["practicar","Practicar"],["excel","En Excel"],["colab","En Colab"],["ia","Con IA"],["quiz","Autoevaluación"]];
+function viewModulo(n){
+  const k = CLAVES[n-1], m = MOD[n];
+  app.innerHTML = `<div class="wrap">
+    <div class="mhead">
+      <a href="#ruta" class="muted" style="font-size:.9rem">← Ruta de 12 claves</a>
+      <span class="eyebrow">Clave ${n} de 12 · ${TRAMOS[k.tramo].t} · ${k.nivel} · ${m.minutos} min</span>
+      <h1>${k.t}</h1><p class="muted" style="font-size:1.1rem">${k.s}</p>
+      <div class="objs">${m.objetivos.map(o=>`<div>${o}</div>`).join("")}</div>
+    </div>
+    <div class="mlayout">
+      <nav class="toc" aria-label="Pasos del módulo">${STEPS.map((s,i)=>`<a href="#clave-${String(n).padStart(2,"0")}" data-go="${s[0]}"><span>${i+1}</span>${s[1]}</a>`).join("")}</nav>
+      <div>
+        <section class="step" id="s-entender"><div class="sh"><span class="n">1</span><h2>Entender</h2></div>
+          <div class="prose">${m.entender}</div></section>
+        <section class="step" id="s-error"><div class="sh"><span class="n">2</span><h2>Ver el error</h2></div>
+          <div class="stack"><div class="callout gap"><span class="k">La brecha</span><p>${k.brecha}</p><p class="muted" style="font-size:.93rem">${m.brechaTxt}</p></div>${ERRORES[n]()}</div></section>
+        <section class="step" id="s-practicar"><div class="sh"><span class="n">3</span><h2>Practicar</h2></div><div id="sim"></div></section>
+        <section class="step" id="s-excel"><div class="sh"><span class="n">4</span><h2>Hacerlo en Excel</h2></div>
+          <div class="stack">
+            <ol class="steps">${m.excel.map(([t,d])=>`<li><div><b>${t}</b><span>${d}</span></div></li>`).join("")}</ol>
+            <div class="callout tip"><span class="k">Separador de argumentos</span><p>Con la configuración regional de Colombia, Excel separa los argumentos con punto y coma (<code>;</code>). Si tu equipo está en inglés o con otra región, usa coma y los nombres en inglés (ver Glosario).</p></div>
+            <p class="muted" style="font-size:.93rem">Practica con el <a href="${GH}/raw/main/data/Distribuidora_Andina_practica.xlsx">libro de práctica Distribuidora_Andina_practica.xlsx</a>.</p>
+          </div></section>
+        <section class="step" id="s-colab"><div class="sh"><span class="n">5</span><h2>Analizar en Google Colab</h2></div>
+          <div class="colab"><div class="stack" style="gap:8px"><span class="eyebrow">Cuaderno ${m.notebook}</span><p>${m.colabQue}</p><p class="muted" style="font-size:.9rem">No necesitas instalar nada: el cuaderno descarga los datos del repositorio. Cada celda tiene una explicación arriba, y los retos se comprueban solos.</p></div>
+            <div class="stack" style="gap:8px"><a class="btn primary" href="${colabURL(m.notebook)}" target="_blank" rel="noopener">Abrir en Colab</a><a class="btn small" href="${GH}/blob/main/notebooks/${m.notebook}" target="_blank" rel="noopener">Ver en GitHub</a></div></div></section>
+        <section class="step" id="s-ia"><div class="sh"><span class="n">6</span><h2>Apoyarse en IA</h2></div>
+          <div class="stack">
+            <p class="read">Úsalas con Claude, Gemini, ChatGPT o Copilot. Reemplaza lo que está entre corchetes. La regla: <b>la IA propone, tú verificas</b> con casos cuyo resultado ya conoces.</p>
+            ${m.ia.map((x,i)=>`<div class="prompt"><header><b>${x.t}</b><button class="btn small" data-copy="${i}">Copiar</button></header><pre id="pr-${i}">${esc(x.p)}</pre></div>`).join("")}
+            <div class="callout warn"><span class="k">Antes de pegar datos</span><p>${m.iaCuidado}</p></div>
+          </div></section>
+        <section class="step" id="s-quiz"><div class="sh"><span class="n">7</span><h2>Autoevaluación</h2></div>
+          <div class="quiz" id="quiz"></div></section>
+      </div>
+    </div></div>`;
+  app.querySelectorAll("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); $("#s-"+a.dataset.go).scrollIntoView() });
+  app.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>{
+    const txt = m.ia[+b.dataset.copy].p;
+    const done = ()=>{ b.textContent="Copiado"; setTimeout(()=>b.textContent="Copiar",1600) };
+    if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(done).catch(()=>selectPre(b)) } else selectPre(b);
+  });
+  SIMS[n]($("#sim"));
+  renderQuiz(n);
+}
+function selectPre(b){ const pre=b.closest(".prompt").querySelector("pre"); const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Texto seleccionado: usa Ctrl+C") }
+
+function renderQuiz(n){
+  const m = MOD[n], el = $("#quiz"), ans = {};
+  el.innerHTML = m.quiz.map((q,i)=>`<div class="qitem" data-q="${i}"><b>${i+1}. ${esc(q.q)}</b>
+    <div class="opts">${q.o.map((o,j)=>`<button class="opt" data-j="${j}">${esc(o)}</button>`).join("")}</div><div class="why" hidden></div></div>`).join("") +
+    `<div class="result" id="qres"><span class="muted">Responde las ${m.quiz.length} preguntas. Con ${Math.ceil(m.quiz.length*.75)} correctas la clave queda completada.</span></div>`;
+  el.querySelectorAll(".qitem").forEach(item=>{
+    const i=+item.dataset.q, q=m.quiz[i];
+    item.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+      const j=+b.dataset.j; ans[i]=j===q.a;
+      item.querySelectorAll(".opt").forEach(x=>{ x.disabled=true; if(+x.dataset.j===q.a) x.classList.add("right") });
+      if(j!==q.a) b.classList.add("wrong");
+      const w=item.querySelector(".why"); w.hidden=false; w.innerHTML=`<b>${j===q.a?"Correcto.":"No es esa."}</b> ${esc(q.w)}`;
+      if(Object.keys(ans).length===m.quiz.length){
+        const ok=Object.values(ans).filter(Boolean).length, need=Math.ceil(m.quiz.length*.75);
+        PROG.quiz[n]=ok; if(ok>=need) PROG.done[n]=true; saveProg();
+        $("#qres").innerHTML = ok>=need
+          ? `<h3>${ok} de ${m.quiz.length}: clave ${n} completada.</h3><p class="muted">Tu progreso se guarda en este navegador.</p><div class="row" style="margin-top:10px">${nextLink(n)}</div>`
+          : `<h3>${ok} de ${m.quiz.length}.</h3><p class="muted">Repasa las explicaciones y vuelve a intentarlo.</p><div class="row" style="margin-top:10px"><button class="btn" id="retry">Intentar de nuevo</button></div>`;
+        const r=$("#retry"); if(r) r.onclick=()=>renderQuiz(n);
+      }
+    });
+  });
+}
+function nextLink(n){ const i=PILOTO.indexOf(n); const nx=PILOTO[i+1]; return nx?`<a class="btn primary" href="#clave-${String(nx).padStart(2,"0")}">Siguiente: clave ${nx}</a>`:`<a class="btn primary" href="#ruta">Volver a la ruta</a>` }
+
+/* ======================================================================
+   «VER EL ERROR»: antes y después
+   ====================================================================== */
+const ERRORES = {
+ 1: ()=>`<div class="two">
+   <div class="panel bad"><span class="eyebrow">Lo que circula</span><div class="sheetwrap" style="margin-top:8px"><table class="sheet">
+     <tr><td class="tt" colspan="3">VENTAS 2025</td></tr><tr><td class="hd">Ciudad</td><td class="hd">T1</td><td class="hd">T2</td></tr>
+     <tr><td rowspan="2" style="vertical-align:middle">Bogotá</td><td class="num">1.204.880.150</td><td class="num">998.341.020</td></tr>
+     <tr><td class="num">88.210.400</td><td class="num">4,2 M</td></tr><tr><td class="bold">Subtotal</td><td class="num bold">1.293.090.550</td><td class="num bold">998.341.020</td></tr></table></div>
+     <p class="muted" style="font-size:.9rem; margin-top:8px">Se lee bien impreso. No se puede filtrar, cruzar ni resumir.</p></div>
+   <div class="panel good"><span class="eyebrow">Lo que se analiza</span><div class="sheetwrap" style="margin-top:8px"><table class="sheet">
+     <tr><td class="hd">ciudad</td><td class="hd">linea</td><td class="hd">trimestre</td><td class="hd">subtotal</td></tr>
+     <tr><td>Bogotá</td><td>Tecnología</td><td>T1</td><td class="num">1204880150</td></tr><tr><td>Bogotá</td><td>Papelería</td><td>T1</td><td class="num">88210400</td></tr>
+     <tr><td>Bogotá</td><td>Tecnología</td><td>T2</td><td class="num">998341020</td></tr><tr><td>Bogotá</td><td>Papelería</td><td>T2</td><td class="num">4200000</td></tr></table></div>
+     <p class="muted" style="font-size:.9rem; margin-top:8px">Más filas, cero ambigüedad. El reporte se arma después, con una tabla dinámica.</p></div></div>`,
+ 5: ()=>`<div class="two">
+   <div class="panel bad"><span class="eyebrow">Lo que circula</span><pre class="code" style="margin-top:8px">=BUSCARV(B2;Clientes!$A$2:$F$500;4)</pre>
+     <ul class="prose" style="margin-top:10px; font-size:.93rem"><li>Sin cuarto argumento: coincidencia aproximada.</li><li>El 4 se rompe si alguien inserta una columna.</li><li>El rango fijo no incluye el cliente 501.</li><li>Si no encuentra, #N/D sin explicación.</li></ul></div>
+   <div class="panel good"><span class="eyebrow">Lo que se mantiene</span><pre class="code" style="margin-top:8px">=BUSCARX([@llave];
+  tClientes[id_cliente];
+  tClientes[segmento];
+  "No encontrado")</pre>
+     <ul class="prose" style="margin-top:10px; font-size:.93rem"><li>Exacta por omisión.</li><li>Devuelve la columna por nombre.</li><li>La Tabla crece con el maestro.</li><li>El fallo se ve y se puede contar.</li></ul></div></div>`,
+ 7: ()=>`<div class="two">
+   <div class="panel bad"><span class="eyebrow">Lo que circula</span>
+     <table class="datatbl" style="margin-top:8px"><tr><th>Sede</th><th>Recuento de id_factura</th><th>Margen % (promedio)</th></tr>
+     <tr><td>Bogotá</td><td class="num" id="e7l">…</td><td class="num" id="e7p">…</td></tr></table>
+     <p class="muted" style="font-size:.9rem; margin-top:8px">Cuenta líneas como si fueran facturas, incluye anuladas y promedia el margen de cada línea: una venta de un paquete de lápices pesa lo mismo que un lote de portátiles.</p></div>
+   <div class="panel good"><span class="eyebrow">Lo que responde la pregunta</span>
+     <table class="datatbl" style="margin-top:8px"><tr><th>Sede</th><th>Facturas (recuento distinto)</th><th>Margen % (Σ margen ÷ Σ venta)</th></tr>
+     <tr><td>Bogotá</td><td class="num" id="e7f">…</td><td class="num" id="e7m">…</td></tr></table>
+     <p class="muted" style="font-size:.9rem; margin-top:8px">Sin anuladas, contando facturas y con el margen ponderado por la venta. Cifras reales del conjunto de datos.</p></div></div>`,
+};
+
+/* ======================================================================
+   SIMULADORES
+   ====================================================================== */
+const C = D.cols, DM = D.dims;
+const SIMS = {};
+
+/* ---- Clave 1: encuentra los 8 problemas ---- */
+SIMS[1] = function(el){
+  const PROB = [
+   ["Título dentro del área de datos","La fila 1 combina A:F. Al seleccionar «toda la región» Excel la incluye y los encabezados quedan en la fila equivocada. Los títulos van fuera de la base o en el nombre de la hoja."],
+   ["Encabezado en dos filas","«Ventas por trimestre» está combinado sobre T1–T4. Una base necesita encabezados en una sola fila, cada uno con un nombre único."],
+   ["Ciudad en celda combinada","Solo la primera fila del bloque tiene «Bogotá». Al filtrar o cruzar, las demás filas quedan sin ciudad."],
+   ["Subtotales intercalados","Las filas «Subtotal» son resultados, no registros. Una suma o una tabla dinámica las cuenta dos veces."],
+   ["Fila en blanco","Corta el rango: Ctrl+T, los filtros y Ctrl+Flecha se detienen ahí y dejan fuera a Medellín."],
+   ["Número escrito como texto","«4,2 M» es texto. SUMA lo ignora sin avisar, así que el total cambia según cómo se escribió cada celda (clave 2)."],
+   ["Variable en los encabezados","T1, T2, T3 y T4 son valores de la variable «trimestre». Deben estar en una columna, no repartidos en cuatro."],
+   ["Nota dentro de los datos","Un comentario en una fila de datos se lee como registro. Usa un comentario de celda o una hoja de notas."],
+  ];
+  // Cifras reales de 2025 (sin anuladas) desde el conjunto de datos
+  const val = (ciudad, cat, q)=>{ let s=0; const ci=DM.ciudad.indexOf(ciudad), ca=DM.categoria.indexOf(cat), y=DM.anio.indexOf(2025);
+    for(let i=0;i<C.subtotal.length;i++){ if(C.ciudad[i]===ci&&C.categoria[i]===ca&&C.anio[i]===y&&C.estado[i]!==2&&Math.floor(C.mes[i]/3)===q) s+=C.subtotal[i] } return s };
+  const cats=["Papelería","Tecnología","Mobiliario"];
+  const block=(ciudad,txtRow)=>{ const rows=cats.map(c=>[0,1,2,3].map(q=>val(ciudad,c,q))); const tot=[0,1,2,3].map(q=>rows.reduce((a,r)=>a+r[q],0)); return {rows,tot,txtRow} };
+  const bog=block("Bogotá",2), med=block("Medellín",-1);
+  const cellNum=(v,p)=> p!=null ? `<td class="num" data-p="${p}">${(v/1e6).toFixed(1).replace(".",",")} M</td>` : `<td class="num">${nf.format(v)}</td>`;
+  let r=0; const rn=()=>`<td class="rn">${++r}</td>`;
+  const rowsHtml = (b,ciudad,first)=>b.rows.map((row,i)=>`<tr>${rn()}${i===0?`<td rowspan="3" data-p="2" style="vertical-align:middle">${ciudad}</td>`:""}<td>${cats[i]}</td>${row.map((v,q)=> (b.txtRow===i&&q===1)?cellNum(v,5):cellNum(v)).join("")}</tr>`).join("")
+     + `<tr>${rn()}<td colspan="2" class="bold" data-p="3">Subtotal ${ciudad}</td>${b.tot.map(v=>`<td class="num bold" data-p="3">${nf.format(v)}</td>`).join("")}</tr>`;
+  el.innerHTML = `<div class="stack">
+    <p class="read">Este es un fragmento del reporte que llega a tu correo, con cifras reales de 2025 del conjunto de datos. Tiene <b>8 problemas</b> que impiden analizarlo. Haz clic en las celdas donde los veas.</p>
+    <div class="sheetwrap"><table class="sheet" id="rep">
+      <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr></thead>
+      <tbody>
+      <tr>${rn()}<td class="tt" colspan="6" data-p="0">INFORME DE VENTAS 2025 – DISTRIBUIDORA ANDINA (pesos)</td></tr>
+      <tr>${rn()}<td class="hd" rowspan="2" data-p="1">Ciudad</td><td class="hd" rowspan="2" data-p="1">Línea</td><td class="hd" colspan="4" data-p="1">Ventas por trimestre</td></tr>
+      <tr>${rn()}${["T1","T2","T3","T4"].map(t=>`<td class="hd" data-p="6">${t}</td>`).join("")}</tr>
+      ${rowsHtml(bog,"Bogotá")}
+      <tr>${rn()}<td colspan="6" data-p="4">&nbsp;</td></tr>
+      ${rowsHtml(med,"Medellín")}
+      <tr>${rn()}<td colspan="6" class="note" data-p="7">Nota: T3 de Medellín incluye un ajuste manual pendiente de validar.</td></tr>
+      </tbody></table></div>
+    <div class="row"><span id="cnt" class="muted">0 de 8 encontrados</span><button class="btn small" id="showall">Mostrar todos</button><button class="btn small" id="tidy" aria-pressed="false">Ver versión ordenada</button></div>
+    <ol class="plist" id="pl"></ol>
+    <div id="tidyout" hidden></div></div>`;
+  const found=new Set();
+  const paint=()=>{
+    $("#pl").innerHTML = PROB.map((p,i)=> found.has(i)?`<li><b>${p[0]}.</b> ${p[1]}</li>`:`<li class="locked">Problema por encontrar</li>`).join("");
+    $("#cnt").textContent = `${found.size} de 8 encontrados`;
+    el.querySelectorAll("td[data-p]").forEach(td=>td.classList.toggle("found", found.has(+td.dataset.p)));
+  };
+  el.querySelectorAll("td[data-p]").forEach(td=>td.onclick=()=>{ const had=found.has(+td.dataset.p); found.add(+td.dataset.p); paint(); if(!had) toast(PROB[+td.dataset.p][0]) });
+  $("#showall").onclick=()=>{ PROB.forEach((_,i)=>found.add(i)); paint() };
+  $("#tidy").onclick=function(){ const on=this.getAttribute("aria-pressed")!=="true"; this.setAttribute("aria-pressed",on); const o=$("#tidyout"); o.hidden=!on;
+    if(on){ const rows=[]; [["Bogotá",bog],["Medellín",med]].forEach(([c,b])=>b.rows.forEach((row,i)=>row.forEach((v,q)=>rows.push([c,cats[i],"T"+(q+1),v]))));
+      o.innerHTML=`<p class="read" style="margin-bottom:8px">Los mismos datos, ordenados: <b>${rows.length} filas × 4 columnas</b>, sin subtotales, sin combinadas, con el trimestre como variable. Así quedan listos para Ctrl+T y una tabla dinámica.</p>
+      <div class="sheetwrap" style="max-height:280px; overflow:auto"><table class="sheet"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead><tbody>
+      <tr><td class="rn">1</td><td class="hd">ciudad</td><td class="hd">linea</td><td class="hd">trimestre</td><td class="hd">subtotal</td></tr>
+      ${rows.map((x,i)=>`<tr><td class="rn">${i+2}</td><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td class="num">${nf.format(x[3])}</td></tr>`).join("")}</tbody></table></div>` }
+  };
+  paint();
+};
+
+/* ---- Clave 5: laboratorio de búsqueda ---- */
+SIMS[5] = function(el){
+  // NIT ficticio, solo para el ejercicio de «insertar columna»
+  const maestro = D.clientes.slice(0,8).map((c,i)=>({id:c[0], rs:c[1], seg:c[2], ciu:c[3], nit:`9${String(10234567 + i*482713).slice(0,8)}-${(i*7+3)%10}`}));
+  const NB=" ";
+  const erp = [
+    {f:"FV-004120", k:"C-0003", d:"Llave limpia"},
+    {f:"FV-004131", k:"C-0005 ", d:"Espacio al final"},
+    {f:"FV-004138", k:"c-0002", d:"Minúsculas"},
+    {f:"FV-004146", k:" C-0007", d:"Espacio al inicio"},
+    {f:"FV-004152", k:"C-9137", d:"No existe en el maestro"},
+    {f:"FV-004159", k:"C-0004"+NB, d:"Espacio de no separación (carácter 160)"},
+  ];
+  let S = {fn:"BUSCARX", motor:"excel", limpia:0, nit:false, sel:1};
+  const show = k => esc(k).replace(/^ +| +$/g, m=>`<span class="sp">${"·".repeat(m.length)}</span>`).replace(/ /g,`<span class="sp">°</span>`);
+  const clean = k => {
+    if(S.motor==="excel"){
+      if(S.limpia>=2) k=k.replace(/ /g," ");
+      if(S.limpia>=1) k=k.replace(/ +/g," ").replace(/^ | $/g,"");   // ESPACIOS: solo el espacio normal (código 32)
+      return k;
+    }
+    if(S.limpia>=1) k=k.trim();            // Python .strip() también quita el carácter 160
+    if(S.limpia>=2) k=k.toUpperCase();
+    return k;
+  };
+  const find = k => S.motor==="excel" ? maestro.find(m=>m.id.toUpperCase()===k.toUpperCase()) : maestro.find(m=>m.id===k);
+  const cols = ()=> S.nit ? ["id_cliente","nit","razon_social","segmento","ciudad"] : ["id_cliente","razon_social","segmento","ciudad"];
+  const result = r => {
+    const m = find(clean(r.k));
+    if(S.motor==="pandas") return m ? {ok:true, v:m.rs} : {ok:false, v:"NaN (left_only)"};
+    if(!m) return {ok:false, v: S.fn==="BUSCARX" ? "No encontrado" : "#N/D"};
+    if(S.fn==="BUSCARV"){ const c=cols()[1]; const v = c==="nit"?m.nit:m.rs; return {ok:true, v, wrong:c==="nit"} }
+    return {ok:true, v:m.rs};
+  };
+  const llave = ()=> S.motor==="excel"
+     ? (S.limpia===0?"[@[Cod Cliente]]": S.limpia===1?"ESPACIOS([@[Cod Cliente]])":"ESPACIOS(SUSTITUIR([@[Cod Cliente]];CARACTER(160);\" \"))")
+     : (S.limpia===0?"erp['Cod Cliente']": S.limpia===1?"erp['Cod Cliente'].str.strip()":"erp['Cod Cliente'].str.strip().str.upper()");
+  const formula = ()=>{
+    const k=llave();
+    if(S.motor==="pandas") return `erp['llave'] = ${k}\nres = erp.merge(clientes, left_on='llave', right_on='id_cliente',\n                how='left', indicator=True, validate='many_to_one')`;
+    if(S.fn==="BUSCARX") return `=BUSCARX(${k};tClientes[id_cliente];tClientes[razon_social];"No encontrado")`;
+    if(S.fn==="BUSCARV") return `=BUSCARV(${k};tClientes;2;FALSO)`;
+    return `=INDICE(tClientes[razon_social];COINCIDIR(${k};tClientes[id_cliente];0))`;
+  };
+  const why = (r,res)=>{
+    const ck=clean(r.k);
+    if(res.wrong) return `Encontró al cliente, pero el índice 2 ahora apunta a la columna <b>nit</b>. BUSCARV no avisa: el dato está mal y parece correcto.`;
+    if(res.ok){
+      if(r.k!==ck) return `Cruza gracias a la limpieza: la llave quedó como «${esc(ck)}».`;
+      if(r.k!==r.k.toUpperCase()) return `Cruza: Excel no distingue mayúsculas, así que «c-0002» encuentra a «C-0002».`;
+      return `Llave idéntica en ambas tablas: cruce directo.`;
+    }
+    if(r.k==="C-9137") return `El código no existe en el maestro. Ninguna limpieza lo arregla: es un cliente creado en el ERP y no en el maestro. Repórtalo a quien administra los datos maestros.`;
+    if(ck.includes(" ")) return S.motor==="excel"
+      ? (S.limpia===1 ? `ESPACIOS no elimina el carácter 160 (°): solo quita el espacio normal. Elige la limpieza con SUSTITUIR.` : `La llave termina en un carácter 160 (°), un espacio que no es espacio. Aparece al copiar desde la web o un ERP.`)
+      : `Sin limpieza la llave conserva el carácter 160 (°). En Python, .str.strip() sí lo elimina.`;
+    if(S.motor==="pandas" && ck!==ck.toUpperCase()) return `pandas distingue mayúsculas: «${esc(ck)}» no es igual a «${esc(ck.toUpperCase())}». Normaliza con .str.upper().`;
+    return `La llave tiene espacios que en pantalla no se ven (·). Aplica ESPACIOS en Excel o .str.strip() en Python.`;
+  };
+  const draw = ()=>{
+    const lim = S.motor==="excel" ? ["Sin limpiar","ESPACIOS","ESPACIOS + SUSTITUIR(carácter 160)"] : ["Sin limpiar",".str.strip()",".str.strip().str.upper()"];
+    const res = erp.map(result), okN = res.filter(x=>x.ok&&!x.wrong).length;
+    const r = erp[S.sel], rr = res[S.sel], mk = rr.ok ? find(clean(r.k)) : null;
+    el.innerHTML = `<div class="stack">
+      <p class="read">Seis líneas de la exportación del ERP deben traer la razón social desde el maestro de clientes. Cada una tiene un problema distinto. Cambia la función, la limpieza y el motor, y mira qué filas cruzan. Los espacios se muestran como <span class="sp">·</span> y el carácter 160 como <span class="sp">°</span>.</p>
+      <div class="ctl">
+        <label for="s5m">Motor<select id="s5m"><option value="excel">Excel</option><option value="pandas">Python (pandas)</option></select></label>
+        <label for="s5f">Función<select id="s5f" ${S.motor==="pandas"?"disabled":""}><option>BUSCARX</option><option>INDICE+COINCIDIR</option><option>BUSCARV</option></select></label>
+        <label for="s5l">Limpieza de la llave<select id="s5l">${lim.map((t,i)=>`<option value="${i}">${t}</option>`).join("")}</select></label>
+        <label class="chk" for="s5n"><input type="checkbox" id="s5n" ${S.nit?"checked":""}> Insertar columna «nit» en el maestro</label>
+      </div>
+      ${fxbar(S.motor==="excel"?"G"+(S.sel+2):"In [5]", `<span class="mono">${esc(formula()).replace(/\n/g," ")}</span>`)}
+      <div class="two">
+        <div class="panel" style="padding:0"><div style="padding:10px 12px" class="eyebrow">tERP · exportación (clic para elegir fila)</div>
+          <div class="sheetwrap" style="border:0; border-top:1px solid var(--line); border-radius:0"><table class="sheet"><thead><tr><th>Factura</th><th>Cod Cliente</th><th>Resultado</th></tr></thead><tbody>
+          ${erp.map((x,i)=>`<tr data-r="${i}" class="${i===S.sel?(res[i].ok&&!res[i].wrong?"hit":"miss"):""}" style="cursor:pointer"><td>${x.f}</td><td class="mono">${show(x.k)}</td><td style="color:${res[i].ok&&!res[i].wrong?"var(--good)":"var(--bad)"}">${esc(res[i].v)}</td></tr>`).join("")}
+          </tbody></table></div></div>
+        <div class="panel" style="padding:0"><div style="padding:10px 12px" class="eyebrow">tClientes · maestro</div>
+          <div class="sheetwrap" style="border:0; border-top:1px solid var(--line); border-radius:0"><table class="sheet"><thead><tr>${cols().map((c,i)=>`<th>${i+1} · ${c}</th>`).join("")}</tr></thead><tbody>
+          ${maestro.map(m=>`<tr class="${mk&&mk.id===m.id?"hit":""}">${cols().map(c=>`<td class="${c==="id_cliente"?"mono":""}">${esc({id_cliente:m.id,nit:m.nit,razon_social:m.rs,segmento:m.seg,ciudad:m.ciu}[c])}</td>`).join("")}</tr>`).join("")}
+          </tbody></table></div></div>
+      </div>
+      <div class="insight"><b>${erp[S.sel].f} · ${erp[S.sel].d}.</b> ${why(r,rr)}</div>
+      <div class="row"><b style="font-family:var(--f-display)">${okN} de 6 filas cruzadas correctamente.</b><span class="muted">${okN===5?"La que falta es un huérfano: se reporta, no se fuerza.":""}</span></div>
+    </div>`;
+    $("#s5m").value=S.motor; $("#s5f").value=S.fn; $("#s5l").value=S.limpia;
+    $("#s5m").onchange=e=>{ S.motor=e.target.value; draw() };
+    $("#s5f").onchange=e=>{ S.fn=e.target.value; draw() };
+    $("#s5l").onchange=e=>{ S.limpia=+e.target.value; draw() };
+    $("#s5n").onchange=e=>{ S.nit=e.target.checked; if(S.nit&&S.motor==="excel") S.fn="BUSCARV"; draw() };
+    el.querySelectorAll("tr[data-r]").forEach(tr=>tr.onclick=()=>{ S.sel=+tr.dataset.r; draw() });
+  };
+  draw();
+};
+
+/* ---- Clave 7: constructor de tablas dinámicas ---- */
+const DIMS7 = {ciudad:"Ciudad", categoria:"Categoría", segmento:"Segmento", canal:"Canal", vendedor:"Vendedor", anio:"Año", mes:"Mes"};
+const MESES=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+const lbl = (d,i)=> d==="mes"?MESES[i]:String(DM[d][i]);
+const VALS = {sum:"Suma de subtotal (venta neta)", marg:"Suma de margen_bruto", mpct:"Margen % (Σ margen ÷ Σ venta)", lines:"Recuento de líneas", fact:"Recuento distinto de facturas", qty:"Suma de cantidad"};
+const PRESETS = [
+ {t:"¿Qué ciudad vendió más en 2025?", c:{f:"ciudad", c:"", v:"sum", sh:"val", y:"2025", an:false}},
+ {t:"¿Cuánto creció cada ciudad de 2024 a 2025?", c:{f:"ciudad", c:"anio", v:"sum", sh:"val", y:"", an:false}},
+ {t:"¿Qué línea deja más margen porcentual?", c:{f:"categoria", c:"", v:"mpct", sh:"val", y:"", an:false}},
+ {t:"¿El e-commerce ganó participación?", c:{f:"anio", c:"canal", v:"sum", sh:"row", y:"", an:false}},
+ {t:"¿Cuántas facturas emitió cada sede?", c:{f:"ciudad", c:"", v:"fact", sh:"val", y:"", an:false}},
+ {t:"¿En qué meses se concentra la venta?", c:{f:"mes", c:"anio", v:"sum", sh:"val", y:"", an:false}},
+];
+function pivot(cfg){
+  const n=C.subtotal.length, yI = cfg.y?DM.anio.indexOf(+cfg.y):-1;
+  const R={}, T={}, G={s:0,m:0,l:0,q:0,f:new Set()}, colKeys=new Set();
+  const acc = ()=>({s:0,m:0,l:0,q:0,f:new Set()});
+  const add=(a,i)=>{ a.s+=C.subtotal[i]; a.m+=C.margen[i]; a.l++; a.q+=C.cantidad[i]; if(cfg.v==="fact") a.f.add(C.factura[i]) };
+  for(let i=0;i<n;i++){
+    if(!cfg.an && C.estado[i]===2) continue;
+    if(yI>=0 && C.anio[i]!==yI) continue;
+    const r=C[cfg.f][i], c= cfg.c? C[cfg.c][i] : "_";
+    colKeys.add(c);
+    R[r]=R[r]||{_t:acc()}; R[r][c]=R[r][c]||acc(); add(R[r][c],i); add(R[r]._t,i);
+    T[c]=T[c]||acc(); add(T[c],i); add(G,i);
+  }
+  const val = a => !a?null: cfg.v==="sum"?a.s: cfg.v==="marg"?a.m: cfg.v==="mpct"?(a.s?a.m/a.s:null): cfg.v==="lines"?a.l: cfg.v==="fact"?a.f.size: a.q;
+  return {R,T,G,cols:[...colKeys].sort((a,b)=>a-b), val};
+}
+SIMS[7] = function(el){
+  let cfg = {...PRESETS[1].c}, preset=1;
+  const draw = ()=>{
+    const p = pivot(cfg), isPct = cfg.v==="mpct";
+    let rows = Object.keys(p.R).map(Number);
+    rows.sort(cfg.f==="mes"||cfg.f==="anio" ? (a,b)=>a-b : (a,b)=>(p.val(p.R[b]._t)||0)-(p.val(p.R[a]._t)||0));
+    const gTot = p.val(p.G);
+    const multi = !!cfg.c, cs = multi?p.cols:["_"];
+    // Da formato según «Mostrar valores como». r = clave de fila (null = fila de totales); c = clave de columna ("_" = total)
+    const fmt = (v, r, c)=>{
+      if(v==null) return "–";
+      if(isPct) return pf.format(v);
+      if(cfg.sh==="val") return nf.format(v);
+      if(cfg.sh==="tot") return pf.format(v/gTot);
+      if(cfg.sh==="col") return pf.format(v/(c==="_" ? gTot : p.val(p.T[c])));
+      return pf.format(v/(r==null ? gTot : p.val(p.R[r]._t)));   // % del total de fila
+    };
+    const growth = cfg.c==="anio" && p.cols.length===2 && !isPct && cfg.sh==="val";
+    const gcell = (a,b,strong)=> `<td class="num" style="color:${b>=a?"var(--good)":"var(--bad)"}">${strong?"<b>":""}${a?(b>=a?"▲ ":"▼ ")+pf.format(b/a-1):"–"}${strong?"</b>":""}</td>`;
+    let html = `<table class="datatbl"><thead><tr><th>${DIMS7[cfg.f]}</th>${multi?cs.map(c=>`<th style="text-align:right">${lbl(cfg.c,c)}</th>`).join(""):""}<th style="text-align:right">${multi?"Total general":VALS[cfg.v].split(" (")[0]}</th>${growth?`<th style="text-align:right">Var. %</th>`:""}</tr></thead><tbody>`;
+    rows.forEach(r=>{
+      html += `<tr><td>${lbl(cfg.f,r)}</td>${multi?cs.map(c=>`<td class="num">${fmt(p.val(p.R[r][c]),r,c)}</td>`).join(""):""}<td class="num"><b>${fmt(p.val(p.R[r]._t),r,"_")}</b></td>`;
+      if(growth) html += gcell(p.val(p.R[r][p.cols[0]]), p.val(p.R[r][p.cols[1]]));
+      html += `</tr>`;
+    });
+    html += `<tr><td><b>Total general</b></td>${multi?cs.map(c=>`<td class="num"><b>${fmt(p.val(p.T[c]),null,c)}</b></td>`).join(""):""}<td class="num"><b>${fmt(gTot,null,"_")}</b></td>${growth?gcell(p.val(p.T[p.cols[0]]),p.val(p.T[p.cols[1]]),true):""}</tr></tbody></table>`;
+
+    // Notas didácticas automáticas
+    const notes=[];
+    if(cfg.v==="fact"){ const sumRows=rows.reduce((s,r)=>s+p.R[r]._t.f.size,0); if(sumRows!==p.G.f.size) notes.push(`La suma de las filas (${nf.format(sumRows)}) no es igual al total (${nf.format(p.G.f.size)}): una misma factura aparece en varias filas. Por eso un recuento distinto nunca se suma.`); else notes.push(`Compara con «Recuento de líneas»: el conjunto tiene más líneas que facturas porque una factura tiene en promedio ${(p.G.l/p.G.f.size).toFixed(1).replace(".",",")} productos.`) }
+    if(isPct){ let s=0,k=0; for(let i=0;i<C.subtotal.length;i++){ if(!cfg.an&&C.estado[i]===2) continue; if(cfg.y&&DM.anio[C.anio[i]]!==+cfg.y) continue; s+=C.margen[i]/C.subtotal[i]; k++ } notes.push(`Margen % correcto de la empresa: ${pf.format(p.val(p.G))}. Si promedias el margen % de cada línea obtienes ${pf.format(s/k)}: las líneas pequeñas pesan igual que las grandes.`) }
+    if(cfg.an) notes.push(`Estás incluyendo facturas anuladas. Para una pregunta comercial, desmarca la casilla.`);
+    if(!cfg.an){ const an=pivot({...cfg, an:true}); if(cfg.v==="sum") notes.push(`Sin el filtro de estado el total sería ${nf.format(an.G.s)}: ${nf.format(an.G.s-p.G.s)} pesos de facturas anuladas contados como venta.`) }
+    if(growth){ const best=rows.map(r=>[r,p.val(p.R[r][p.cols[1]])/p.val(p.R[r][p.cols[0]])-1]).sort((a,b)=>b[1]-a[1])[0]; notes.unshift(`<b>Hallazgo:</b> ${lbl(cfg.f,best[0])} es la que más creció (${pf.format(best[1])}).`) }
+    else if(!multi && !isPct && rows.length && cfg.f!=="mes" && cfg.f!=="anio"){ const top=rows[0], tv=p.val(p.R[top]._t); notes.unshift(`<b>Hallazgo:</b> ${lbl(cfg.f,top)} lidera con ${nf.format(tv)}${cfg.v==="fact"?"":` (${pf.format(tv/gTot)} del total)`}.`) }
+    else if(isPct){ const s=[...rows].sort((a,b)=>p.val(p.R[b]._t)-p.val(p.R[a]._t)); notes.unshift(`<b>Hallazgo:</b> ${lbl(cfg.f,s[0])} tiene el mayor margen (${pf.format(p.val(p.R[s[0]]._t))}); ${lbl(cfg.f,s[s.length-1])}, el menor (${pf.format(p.val(p.R[s[s.length-1]]._t))}).`) }
+
+    // gráfico de barras (totales por fila)
+    const bars = rows.map(r=>({k:lbl(cfg.f,r), v: p.val(p.R[r]._t)}));
+    $("#pvt").innerHTML = html;
+    $("#pnotes").innerHTML = notes.map(n=>`<div class="insight">${n}</div>`).join("");
+    drawBars($("#pchart"), bars, isPct?pf.format: (cfg.sh==="tot"? v=>pf.format(v/gTot) : (cfg.v==="sum"||cfg.v==="marg"? v=>"$ "+nf.format(Math.round(v/1e6))+" M" : nf.format)), cfg.f==="mes"||cfg.f==="anio" ? false : true,
+      multi ? `Total por ${DIMS7[cfg.f].toLowerCase()}` : VALS[cfg.v]);
+  };
+  el.innerHTML = `<div class="stack">
+    <p class="read">Este constructor resume las <b>${nf.format(D.n_lineas)} líneas de venta</b> de 2024 y 2025, igual que una tabla dinámica de Excel. Empieza por una pregunta de negocio o arma tu propia combinación.</p>
+    <div class="chips" id="presets">${PRESETS.map((x,i)=>`<button class="chip" data-p="${i}" aria-pressed="${i===preset}">${x.t}</button>`).join("")}</div>
+    <div class="panel"><div class="ctl">
+      <label for="p-f">Filas<select id="p-f">${Object.entries(DIMS7).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></label>
+      <label for="p-c">Columnas<select id="p-c"><option value="">(ninguna)</option>${Object.entries(DIMS7).filter(([k])=>k!=="vendedor"&&k!=="mes").map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></label>
+      <label for="p-v">Valores<select id="p-v">${Object.entries(VALS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></label>
+      <label for="p-s">Mostrar valores como<select id="p-s"><option value="val">Valor</option><option value="tot">% del total general</option><option value="col">% del total de columna</option><option value="row">% del total de fila</option></select></label>
+      <label for="p-y">Filtro año<select id="p-y"><option value="">(Todos)</option><option>2024</option><option>2025</option></select></label>
+      <label class="chk" for="p-a"><input type="checkbox" id="p-a"> Incluir facturas anuladas</label>
+    </div></div>
+    <div class="two" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)">
+      <div class="panel scroll" id="pvt"></div>
+      <div class="panel"><div class="chartbox" id="pchart"></div></div>
+    </div>
+    <div class="stack" style="gap:8px" id="pnotes"></div>
+  </div>`;
+  const sync = ()=>{ $("#p-f").value=cfg.f; $("#p-c").value=cfg.c; $("#p-v").value=cfg.v; $("#p-s").value=cfg.sh; $("#p-y").value=cfg.y; $("#p-a").checked=cfg.an;
+    el.querySelectorAll("#presets .chip").forEach((b,i)=>b.setAttribute("aria-pressed", i===preset)) };
+  el.querySelectorAll("#presets .chip").forEach(b=>b.onclick=()=>{ preset=+b.dataset.p; cfg={...PRESETS[preset].c}; sync(); draw() });
+  const on = (id,key,cast=v=>v)=> $(id).onchange=e=>{ cfg[key]= e.target.type==="checkbox"?e.target.checked:cast(e.target.value); if(cfg.c===cfg.f) cfg.c=""; if(cfg.c==="anio") cfg.y=""; preset=-1; sync(); draw() };
+  on("#p-f","f"); on("#p-c","c"); on("#p-v","v"); on("#p-s","sh"); on("#p-y","y"); on("#p-a","an");
+  sync(); draw();
+};
+
+function drawBars(el, bars, fmt, sorted, title){
+  const W=520, lw=118, rw=92, rh=24, top=26, H=top+bars.length*rh+6;
+  const max=Math.max(...bars.map(b=>b.v||0))||1, sx=v=>(v/max)*(W-lw-rw);
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(title)}">
+    <text x="0" y="14" class="axis" style="font-size:12px">${esc(title)}</text>
+    ${bars.map((b,i)=>{ const y=top+i*rh, w=Math.max(2,sx(b.v||0)); return `<g data-i="${i}">
+      <rect x="0" y="${y}" width="${W}" height="${rh}" fill="transparent"></rect>
+      <text x="${lw-8}" y="${y+rh/2+4}" text-anchor="end" style="font-size:12px">${esc(b.k.length>16?b.k.slice(0,15)+"…":b.k)}</text>
+      <rect x="${lw}" y="${y+4}" width="${w}" height="${rh-8}" rx="4" fill="${i===0&&sorted?"var(--cyan)":"var(--brand-ink)"}" opacity="${i===0&&sorted?1:.85}"></rect>
+      <text x="${lw+w+6}" y="${y+rh/2+4}" class="axis" style="font-size:11.5px">${fmt(b.v)}</text></g>` }).join("")}
+  </svg><div class="tip-pop" hidden></div>`;
+  const tip=el.querySelector(".tip-pop");
+  el.querySelectorAll("g[data-i]").forEach(g=>{
+    g.onmousemove=e=>{ const b=bars[+g.dataset.i], r=el.getBoundingClientRect(); tip.hidden=false; tip.textContent=`${b.k}: ${fmt(b.v)}`; tip.style.left=(e.clientX-r.left)+"px"; tip.style.top=(e.clientY-r.top)+"px" };
+    g.onmouseleave=()=>tip.hidden=true;
+  });
+}
+
+/* ---------- DATOS ---------- */
+const DICC = [
+ ["id_linea","Entero","Identificador único de la línea de factura."],["id_factura","Texto","Número de factura (FV-000001). Una factura tiene 1 a 5 líneas."],
+ ["fecha","Fecha","Fecha de la factura, 2024-01-01 a 2025-12-31."],["id_cliente","Texto","Llave hacia Clientes."],["id_vendedor","Texto","Llave hacia Vendedores."],
+ ["id_sede","Texto","Sede que factura. Llave hacia Sedes y Metas."],["canal","Texto","Presencial, Televentas o E-commerce."],["sku","Texto","Llave hacia Productos."],
+ ["cantidad","Entero","Unidades o paquetes vendidos."],["precio_unitario","Pesos","Precio de lista del año de la venta (ajuste de 6,5 % en 2025)."],
+ ["descuento_pct","Porcentaje","0 %, 5 %, 10 % o 15 % según segmento, volumen y negociación."],["valor_bruto","Pesos","cantidad × precio_unitario."],
+ ["valor_descuento","Pesos","valor_bruto × descuento_pct."],["subtotal","Pesos","Venta neta sin IVA. Base de las metas comerciales."],
+ ["iva","Pesos","19 % del subtotal."],["total","Pesos","subtotal + iva: lo que paga el cliente."],["costo_total","Pesos","cantidad × costo unitario del año."],
+ ["margen_bruto","Pesos","subtotal − costo_total."],["medio_pago","Texto","Transferencia, Tarjeta, Efectivo o Crédito."],
+ ["estado","Texto","Pagada, Pendiente (cartera) o Anulada (no es venta)."],
+];
+function viewDatos(){
+  const n=C.subtotal.length; let fac=new Set(), an=0, s24=0, s25=0;
+  for(let i=0;i<n;i++){ fac.add(C.factura[i]); if(C.estado[i]===2){an++; continue} if(DM.anio[C.anio[i]]===2024) s24+=C.subtotal[i]; else s25+=C.subtotal[i] }
+  const files=[["ventas.csv","Hecho: una fila por línea de factura"],["clientes.csv","Maestro de 420 clientes (Pyme, Corporativo, Gobierno, Educación)"],["productos.csv","120 productos en 5 categorías, precios y costos 2024–2025"],["vendedores.csv","18 vendedores con ingresos y retiros en el periodo"],["sedes.csv","6 sedes"],["metas.csv","Meta mensual de venta neta por sede"],["ventas_erp_sucio.csv","Exportación de ERP con defectos reales (claves 2, 5 y 8)"],["Distribuidora_Andina_practica.xlsx","Todo lo anterior como Tablas de Excel, más el reporte mal estructurado"]];
+  app.innerHTML = `<div class="wrap">
+    <div class="mhead"><span class="eyebrow">Conjunto de datos</span><h1>Distribuidora Andina S.A.S.</h1>
+      <p class="muted read">Una distribuidora ficticia de suministros de oficina y tecnología con seis sedes en Colombia. Todas las cifras se generan con un script de semilla fija, así que el tablero, los cuadernos y tu libro de Excel dan exactamente los mismos resultados.</p></div>
+    <div class="objs" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+      <div><span class="eyebrow">Líneas de venta</span><br><b style="font-family:var(--f-display); font-size:1.4rem">${nf.format(n)}</b></div>
+      <div><span class="eyebrow">Facturas</span><br><b style="font-family:var(--f-display); font-size:1.4rem">${nf.format(fac.size)}</b></div>
+      <div><span class="eyebrow">Venta neta 2024</span><br><b style="font-family:var(--f-display); font-size:1.4rem">$ ${nf.format(Math.round(s24/1e6))} M</b></div>
+      <div><span class="eyebrow">Venta neta 2025</span><br><b style="font-family:var(--f-display); font-size:1.4rem">$ ${nf.format(Math.round(s25/1e6))} M</b></div>
+      <div><span class="eyebrow">Líneas anuladas</span><br><b style="font-family:var(--f-display); font-size:1.4rem">${nf.format(an)}</b></div>
+    </div>
+    <section class="block" style="margin-top:24px"><div class="sechead"><h2>Modelo de datos</h2><p class="muted read">Un hecho en el centro y cinco maestros alrededor, unidos por llaves. Es el modelo en estrella que encontrarás en Power BI y en cualquier bodega de datos.</p></div>
+      <div class="panel scroll">${modelo()}</div></section>
+    <section class="block"><div class="sechead"><h2>Qué tiene de realista</h2></div>
+      <div class="two"><ul class="prose" style="font-size:.95rem"><li>Temporada escolar en enero y febrero; cierre de presupuestos en noviembre y diciembre; bache a mitad de año.</li><li>Crecimiento entre años y ajuste de precios del 6,5 % en 2025.</li><li>Concentración tipo Pareto: pocos clientes explican gran parte de la venta.</li></ul>
+      <ul class="prose" style="font-size:.95rem"><li>Facturas anuladas y cartera pendiente al cierre de 2025.</li><li>Vendedores que se retiran y otros que ingresan durante el periodo.</li><li>Una exportación de ERP con espacios, textos con formato, fechas mezcladas, ciudades escritas de varias formas y duplicados.</li></ul></div></section>
+    <section class="block"><div class="sechead"><h2>Archivos</h2></div>
+      <div class="scroll"><table class="datatbl"><tr><th>Archivo</th><th>Contenido</th></tr>${files.map(f=>`<tr><td><a class="mono" href="${GH}/blob/main/data/${f[0]}" target="_blank" rel="noopener">${f[0]}</a></td><td>${f[1]}</td></tr>`).join("")}</table></div></section>
+    <section class="block" style="padding-bottom:40px"><div class="sechead"><h2>Diccionario de la tabla Ventas</h2></div>
+      <div class="scroll"><table class="datatbl"><tr><th>Columna</th><th>Tipo</th><th>Descripción</th></tr>${DICC.map(d=>`<tr><td class="mono">${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td></tr>`).join("")}</table></div></section>
+  </div>`;
+}
+function modelo(){
+  const box=(x,y,t,k,center)=>`<g><rect x="${x}" y="${y}" width="170" height="${center?96:62}" rx="8" fill="${center?"var(--brand)":"var(--surface-2)"}" stroke="${center?"var(--brand)":"var(--line)"}"></rect>
+    <text x="${x+14}" y="${y+24}" style="font-family:var(--f-display); font-size:14px; font-weight:600; fill:${center?"var(--on-brand)":"var(--ink)"}">${t}</text>
+    <text x="${x+14}" y="${y+44}" style="font-family:var(--f-mono); font-size:11px; fill:${center?"var(--cyan)":"var(--muted)"}">${k}</text>${center?`<text x="${x+14}" y="${y+62}" style="font-family:var(--f-mono); font-size:11px; fill:var(--cyan)">${nf.format(D.n_lineas)} filas</text><text x="${x+14}" y="${y+80}" style="font-family:var(--f-mono); font-size:11px; fill:var(--cyan)">una por línea de factura</text>`:""}</g>`;
+  const ln=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--muted)" stroke-width="1.5"></line>`;
+  return `<svg viewBox="0 0 760 330" width="100%" style="min-width:600px" role="img" aria-label="Modelo en estrella: Ventas unida a Clientes, Productos, Vendedores, Sedes y Metas">
+    ${ln(380,165,105,61)}${ln(380,165,655,61)}${ln(380,165,105,271)}${ln(380,165,655,271)}${ln(380,165,380,300)}
+    ${box(20,30,"Clientes","id_cliente")}${box(570,30,"Productos","sku")}${box(20,240,"Vendedores","id_vendedor")}${box(570,240,"Sedes","id_sede")}
+    ${box(295,117,"Ventas","id_linea · id_factura",true)}
+    <g><rect x="315" y="268" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"></rect><text x="329" y="289" style="font-family:var(--f-display); font-size:14px; font-weight:600; fill:var(--ink)">Metas</text><text x="329" y="307" style="font-family:var(--f-mono); font-size:10.5px; fill:var(--muted)">id_sede + año + mes</text></g>
+  </svg>`;
+}
+
+/* ---------- GLOSARIO ---------- */
+const GLOS = [
+ ["BUSCARX","XLOOKUP","Busca un valor y devuelve el de otra columna. Exacta por omisión.",5],["BUSCARV","VLOOKUP","Búsqueda vertical por posición de columna. Úsala con FALSO al final.",5],
+ ["INDICE","INDEX","Devuelve el valor en una posición de un rango.",5],["COINCIDIR","MATCH","Devuelve la posición de un valor. Con 0, coincidencia exacta.",5],
+ ["ESPACIOS","TRIM","Quita espacios al inicio, al final y repetidos en medio.",5],["SUSTITUIR","SUBSTITUTE","Reemplaza un texto por otro dentro de una celda.",5],
+ ["CARACTER","CHAR","Devuelve el carácter de un código. CARACTER(160) es el espacio de no separación.",5],["LIMPIAR","CLEAN","Quita caracteres no imprimibles.",8],
+ ["LARGO","LEN","Cuenta caracteres. Delata espacios invisibles.",2],["SI.ERROR","IFERROR","Devuelve otro valor si hay error. Úsala con cuidado: también oculta errores reales.",4],
+ ["SI","IF","Devuelve un valor u otro según una condición.",4],["SI.CONJUNTO","IFS","Varias condiciones sin anidar SI.",4],["Y / O","AND / OR","Combinan condiciones.",4],
+ ["SUMA","SUM","Suma un rango. Ignora números guardados como texto.",2],["SUBTOTALES","SUBTOTAL","Suma, cuenta o promedia respetando filtros (109 = suma visible).",1],
+ ["SUMAR.SI.CONJUNTO","SUMIFS","Suma con varias condiciones.",6],["CONTAR.SI.CONJUNTO","COUNTIFS","Cuenta con varias condiciones.",6],["CONTAR.SI","COUNTIF","Cuenta las celdas que cumplen una condición.",5],
+ ["PROMEDIO.SI.CONJUNTO","AVERAGEIFS","Promedio con varias condiciones.",6],["VALOR","VALUE","Convierte texto con forma de número en número.",2],
+ ["FECHA","DATE","Construye una fecha a partir de año, mes y día.",2],["TEXTO","TEXT","Da formato de texto a un número o fecha.",2],["MAYUSC","UPPER","Convierte a mayúsculas.",8],
+ ["FILTRAR","FILTER","Devuelve las filas que cumplen una condición (matriz dinámica).",10],["ORDENAR","SORT","Ordena un rango (matriz dinámica).",10],["UNICOS","UNIQUE","Devuelve valores sin repetir (matriz dinámica).",10],
+ ["LET","LET","Asigna nombres a cálculos dentro de una fórmula.",10],["Tabla dinámica","PivotTable","Resume una base sin fórmulas.",7],["Segmentación de datos","Slicer","Botones para filtrar dinámicas y tablas.",7],
+ ["Mostrar valores como","Show Values As","Convierte valores en % del total, de fila o de columna.",7],["Recuento distinto","Distinct Count","Cuenta valores únicos. Requiere el Modelo de datos.",7],
+];
+function viewGlosario(){
+  app.innerHTML = `<div class="wrap read"><div class="mhead"><span class="eyebrow">Glosario</span><h1>Funciones en español e inglés</h1>
+    <p class="muted">Los tutoriales en internet suelen estar en inglés. Esta tabla te ayuda a traducir. Recuerda: en español los argumentos se separan con punto y coma.</p>
+    <label for="gq" class="eyebrow" style="margin-top:6px">Buscar<input type="search" id="gq" placeholder="BUSCARX, SUMIFS, filtrar…" style="display:block; width:100%; margin-top:6px"></label></div>
+    <div class="scroll" style="padding-bottom:40px"><table class="datatbl" id="gt"></table></div></div>`;
+  const draw=q=>{ q=(q||"").toLowerCase(); $("#gt").innerHTML=`<tr><th>Español</th><th>Inglés</th><th>Para qué sirve</th><th>Clave</th></tr>`+
+    GLOS.filter(g=>!q||g.join(" ").toLowerCase().includes(q)).map(g=>`<tr><td class="mono"><b>${g[0]}</b></td><td class="mono">${g[1]}</td><td>${g[2]}</td><td><a href="#clave-${String(g[3]).padStart(2,"0")}">${g[3]}</a></td></tr>`).join("") };
+  $("#gq").oninput=e=>draw(e.target.value); draw();
+}
+
+/* ---------- arranque ---------- */
+function fillE7(){ // cifras reales para el panel «Ver el error» de la clave 7
+  const f=$("#e7f"), m=$("#e7m"); if(!f) return; const bi=DM.ciudad.indexOf("Bogotá");
+  let fs=new Set(), s=0, mg=0, lines=0, pctSum=0;
+  for(let i=0;i<C.subtotal.length;i++){
+    if(C.ciudad[i]!==bi) continue;
+    lines++; pctSum += C.margen[i]/C.subtotal[i];          // la versión equivocada: todo, y promedio de %
+    if(C.estado[i]===2) continue;
+    fs.add(C.factura[i]); s+=C.subtotal[i]; mg+=C.margen[i]; // la versión correcta
+  }
+  $("#e7l").textContent=nf.format(lines); $("#e7p").textContent=pf.format(pctSum/lines);
+  f.textContent=nf.format(fs.size); m.textContent=pf.format(mg/s);
+}
+const _vm = viewModulo; viewModulo = n=>{ _vm(n); if(n===7) fillE7() };
+paintMeter(); route();
+</script>
