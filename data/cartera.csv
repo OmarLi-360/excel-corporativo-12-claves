@@ -1,0 +1,195 @@
+id_factura,fecha,id_cliente,razon_social,segmento,ciudad,dias_credito,fecha_vencimiento,total
+FV-006292,2025-11-01,C-0284,Instituto Yarumo S.A.S.,Educación,Cali,30,2025-12-01,4229736
+FV-006301,2025-11-03,C-0368,Secretaría de Nogal,Gobierno,Cali,60,2026-01-02,10318490
+FV-006305,2025-11-03,C-0225,Servicios Altamira Ltda.,Pyme,Cali,30,2025-12-03,132090
+FV-006309,2025-11-03,C-0120,Laboratorios Santa Fe S.A.,Corporativo,Bogotá,30,2025-12-03,1922980
+FV-006314,2025-11-04,C-0398,Comercializadora Nogal S.A.S.,Pyme,Cali,30,2025-12-04,3289398
+FV-006315,2025-11-04,C-0340,Laboratorios Llanos S.A.S.,Corporativo,Bogotá,60,2026-01-03,6907950
+FV-006321,2025-11-04,C-0072,Notaría Tequendama S.A.S.,Gobierno,Cali,60,2026-01-03,5363431
+FV-006323,2025-11-05,C-0254,Grupo Magdalena Ltda.,Corporativo,Bucaramanga,30,2025-12-05,351359
+FV-006327,2025-11-05,C-0287,Transportes Caribe S.A.,Corporativo,Barranquilla,30,2025-12-05,4390976
+FV-006333,2025-11-05,C-0077,Alcaldía de Arrayán,Gobierno,Cali,60,2026-01-04,5322734
+FV-006346,2025-11-06,C-0214,Fundación Arrayán S.A.S.,Educación,Bogotá,30,2025-12-06,3551079
+FV-006345,2025-11-06,C-0317,Hotel Farallones Ltda.,Pyme,Bucaramanga,60,2026-01-05,1296148
+FV-006339,2025-11-06,C-0111,Alcaldía de Chicamocha,Gobierno,Bogotá,60,2026-01-05,2521128
+FV-006341,2025-11-06,C-0107,Inversiones Guadalupe S.A.,Pyme,Cali,60,2026-01-05,2787397
+FV-006342,2025-11-06,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2025-12-06,1872334
+FV-006359,2025-11-07,C-0200,Hotel Quimbaya S.A.S.,Pyme,Medellín,30,2025-12-07,2036090
+FV-006369,2025-11-08,C-0213,Laboratorios La Sabana S.A.S.,Corporativo,Cali,60,2026-01-07,7241982
+FV-006373,2025-11-10,C-0374,Fundación Llanos S.A.S.,Educación,Bogotá,30,2025-12-10,4272576
+FV-006378,2025-11-10,C-0080,Grupo Altamira Ltda.,Corporativo,Bogotá,30,2025-12-10,9705701
+FV-006404,2025-11-11,C-0045,Laboratorios Orquídea Ltda.,Corporativo,Medellín,30,2025-12-11,5438300
+FV-006396,2025-11-11,C-0088,Clínica Cóndor S.A.S.,Corporativo,Pereira,30,2025-12-11,2268462
+FV-006402,2025-11-11,C-0368,Secretaría de Nogal,Gobierno,Cali,60,2026-01-10,11248416
+FV-006393,2025-11-11,C-0156,Inversiones Arrayán S.A.S.,Pyme,Medellín,30,2025-12-11,3161830
+FV-006394,2025-11-11,C-0271,Alcaldía de Guayacán,Gobierno,Bogotá,60,2026-01-10,1028755
+FV-006408,2025-11-12,C-0315,Centro Médico Yarumo S.A.S.,Pyme,Pereira,60,2026-01-11,156860
+FV-006412,2025-11-12,C-0119,Grupo Orquídea S.A.S.,Corporativo,Barranquilla,30,2025-12-12,6301389
+FV-006413,2025-11-12,C-0139,Constructora Sinú S.A.S.,Corporativo,Medellín,30,2025-12-12,20097315
+FV-006419,2025-11-12,C-0396,Transportes El Prado S.A.S.,Corporativo,Barranquilla,60,2026-01-11,16453773
+FV-006422,2025-11-12,C-0049,Agencia Bambú S.A.S.,Pyme,Bogotá,30,2025-12-12,8547889
+FV-006438,2025-11-13,C-0076,Laboratorios Sinú S.A.,Corporativo,Pereira,60,2026-01-12,7047180
+FV-006429,2025-11-13,C-0396,Transportes El Prado S.A.S.,Corporativo,Bogotá,60,2026-01-12,2677024
+FV-006433,2025-11-13,C-0182,Secretaría de Altamira,Gobierno,Barranquilla,60,2026-01-12,498550
+FV-006435,2025-11-13,C-0120,Laboratorios Santa Fe S.A.,Corporativo,Bogotá,30,2025-12-13,2069172
+FV-006456,2025-11-14,C-0007,Colegio Guadalupe Ltda.,Educación,Bogotá,30,2025-12-14,3070200
+FV-006451,2025-11-14,C-0347,Secretaría de Horizonte,Gobierno,Bogotá,60,2026-01-13,8891495
+FV-006442,2025-11-14,C-0301,Laboratorios Palmas S.A.S.,Corporativo,Bucaramanga,30,2025-12-14,678639
+FV-006445,2025-11-14,C-0224,Alcaldía de Del Valle,Gobierno,Cali,60,2026-01-13,15691322
+FV-006447,2025-11-14,C-0221,Ferretería Santa Fe Ltda.,Pyme,Barranquilla,30,2025-12-14,1753465
+FV-006463,2025-11-15,C-0047,Transportes Orquídea S.A.S.,Corporativo,Cali,60,2026-01-14,6970008
+FV-006465,2025-11-15,C-0225,Servicios Altamira Ltda.,Pyme,Cali,30,2025-12-15,2501975
+FV-006476,2025-11-17,C-0375,Inversiones Los Andes Ltda.,Pyme,Bogotá,30,2025-12-17,1252356
+FV-006467,2025-11-17,C-0284,Instituto Yarumo S.A.S.,Educación,Cali,30,2025-12-17,2789360
+FV-006471,2025-11-17,C-0298,Colegio Monserrate S.A.,Educación,Cali,60,2026-01-16,2023631
+FV-006478,2025-11-17,C-0265,Agencia La Sabana S.A.S.,Pyme,Bogotá,30,2025-12-17,2865639
+FV-006488,2025-11-18,C-0252,Alcaldía de Sinú,Gobierno,Barranquilla,60,2026-01-17,2231607
+FV-006487,2025-11-18,C-0367,Servicios Farallones S.A.S.,Pyme,Bucaramanga,30,2025-12-18,128520
+FV-006503,2025-11-18,C-0209,Constructora Caribe Ltda.,Corporativo,Bogotá,30,2025-12-18,28161266
+FV-006482,2025-11-18,C-0198,Consultores Chicamocha S.A.,Pyme,Medellín,30,2025-12-18,1833195
+FV-006486,2025-11-18,C-0135,Inversiones Tequendama S.A.S.,Pyme,Barranquilla,60,2026-01-17,743869
+FV-006505,2025-11-19,C-0315,Centro Médico Yarumo S.A.S.,Pyme,Pereira,60,2026-01-18,5978798
+FV-006506,2025-11-19,C-0187,Laboratorios El Prado S.A.S.,Corporativo,Barranquilla,30,2025-12-19,3625286
+FV-006507,2025-11-19,C-0236,Colegio El Prado S.A.S.,Educación,Barranquilla,60,2026-01-18,833952
+FV-006509,2025-11-19,C-0115,Transportes Nogal Ltda.,Corporativo,Cali,60,2026-01-18,939612
+FV-006536,2025-11-20,C-0287,Transportes Caribe S.A.,Corporativo,Barranquilla,30,2025-12-20,2225955
+FV-006531,2025-11-20,C-0396,Transportes El Prado S.A.S.,Corporativo,Bogotá,60,2026-01-19,6728962
+FV-006527,2025-11-20,C-0242,Notaría Yarumo S.A.S.,Gobierno,Cali,60,2026-01-19,3928601
+FV-006532,2025-11-20,C-0287,Transportes Caribe S.A.,Corporativo,Barranquilla,30,2025-12-20,2949814
+FV-006521,2025-11-20,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2025-12-20,2569097
+FV-006520,2025-11-20,C-0139,Constructora Sinú S.A.S.,Corporativo,Medellín,30,2025-12-20,15062781
+FV-006526,2025-11-20,C-0312,Laboratorios Cordillera Ltda.,Corporativo,Bogotá,30,2025-12-20,4855462
+FV-006538,2025-11-21,C-0221,Ferretería Santa Fe Ltda.,Pyme,Barranquilla,30,2025-12-21,912611
+FV-006539,2025-11-21,C-0250,Clínica Llanos S.A.S.,Corporativo,Pereira,30,2025-12-21,2017942
+FV-006540,2025-11-21,C-0225,Servicios Altamira Ltda.,Pyme,Bogotá,30,2025-12-21,33652367
+FV-006542,2025-11-21,C-0301,Laboratorios Palmas S.A.S.,Corporativo,Bucaramanga,30,2025-12-21,11070439
+FV-006545,2025-11-21,C-0358,Agencia Yarumo S.A.,Pyme,Medellín,30,2025-12-21,2101034
+FV-006558,2025-11-24,C-0119,Grupo Orquídea S.A.S.,Corporativo,Barranquilla,30,2025-12-24,13070532
+FV-006559,2025-11-24,C-0380,Agencia Altamira S.A.S.,Pyme,Bogotá,60,2026-01-23,2979403
+FV-006560,2025-11-24,C-0139,Constructora Sinú S.A.S.,Corporativo,Medellín,30,2025-12-24,4908857
+FV-006563,2025-11-24,C-0347,Secretaría de Horizonte,Gobierno,Bogotá,60,2026-01-23,3425414
+FV-006574,2025-11-25,C-0389,Secretaría de La Sabana,Gobierno,Bogotá,60,2026-01-24,28941
+FV-006566,2025-11-25,C-0038,Transportes La Sabana S.A.,Corporativo,Bucaramanga,30,2025-12-25,2548147
+FV-006572,2025-11-25,C-0301,Laboratorios Palmas S.A.S.,Corporativo,Bucaramanga,30,2025-12-25,4730239
+FV-006564,2025-11-25,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2025-12-25,6894920
+FV-006565,2025-11-25,C-0021,Clínica Sinú S.A.S.,Corporativo,Barranquilla,30,2025-12-25,439764
+FV-006579,2025-11-26,C-0028,Clínica Del Valle S.A.S.,Corporativo,Cali,30,2025-12-26,3239447
+FV-006582,2025-11-26,C-0187,Laboratorios El Prado S.A.S.,Corporativo,Cali,30,2025-12-26,10475212
+FV-006583,2025-11-26,C-0209,Constructora Caribe Ltda.,Corporativo,Bogotá,30,2025-12-26,2858469
+FV-006584,2025-11-26,C-0173,Alcaldía de Palmas,Gobierno,Cali,60,2026-01-25,1238124
+FV-006588,2025-11-26,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2025-12-26,9592590
+FV-006597,2025-11-27,C-0198,Consultores Chicamocha S.A.,Pyme,Bogotá,30,2025-12-27,1782555
+FV-006600,2025-11-27,C-0216,Agencia Del Valle S.A.S.,Pyme,Bucaramanga,30,2025-12-27,7914571
+FV-006606,2025-11-27,C-0386,Colegio Guadalupe S.A.,Educación,Barranquilla,30,2025-12-27,157437
+FV-006607,2025-11-27,C-0139,Constructora Sinú S.A.S.,Corporativo,Medellín,30,2025-12-27,7497827
+FV-006609,2025-11-27,C-0367,Servicios Farallones S.A.S.,Pyme,Bucaramanga,30,2025-12-27,6916042
+FV-006630,2025-11-28,C-0243,Centro Médico Cóndor S.A.S.,Pyme,Bogotá,30,2025-12-28,2731050
+FV-006629,2025-11-28,C-0367,Servicios Farallones S.A.S.,Pyme,Bucaramanga,30,2025-12-28,354025
+FV-006613,2025-11-28,C-0195,Alcaldía de Farallones,Gobierno,Pereira,60,2026-01-27,260354
+FV-006619,2025-11-28,C-0036,Secretaría de Guadalupe,Gobierno,Cali,60,2026-01-27,295965
+FV-006624,2025-11-28,C-0119,Grupo Orquídea S.A.S.,Corporativo,Barranquilla,30,2025-12-28,4321604
+FV-006634,2025-11-29,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2025-12-29,1118064
+FV-006636,2025-11-29,C-0298,Colegio Monserrate S.A.,Educación,Cali,60,2026-01-28,5814459
+FV-006637,2025-11-29,C-0252,Alcaldía de Sinú,Gobierno,Bogotá,60,2026-01-28,14490874
+FV-006642,2025-12-01,C-0080,Grupo Altamira Ltda.,Corporativo,Bogotá,30,2025-12-31,4035885
+FV-006645,2025-12-01,C-0236,Colegio El Prado S.A.S.,Educación,Barranquilla,60,2026-01-30,4301493
+FV-006672,2025-12-02,C-0240,Alcaldía de Yarumo,Gobierno,Pereira,60,2026-01-31,6281170
+FV-006676,2025-12-02,C-0120,Laboratorios Santa Fe S.A.,Corporativo,Bogotá,30,2026-01-01,4430429
+FV-006673,2025-12-02,C-0228,Constructora Horizonte Ltda.,Corporativo,Cali,60,2026-01-31,3775192
+FV-006671,2025-12-02,C-0417,Grupo Horizonte S.A.S.,Corporativo,Medellín,30,2026-01-01,1907832
+FV-006667,2025-12-02,C-0225,Servicios Altamira Ltda.,Pyme,Cali,30,2026-01-01,2611931
+FV-006670,2025-12-02,C-0097,Colegio Orquídea S.A.S.,Educación,Medellín,30,2026-01-01,2591201
+FV-006665,2025-12-02,C-0135,Inversiones Tequendama S.A.S.,Pyme,Barranquilla,60,2026-01-31,14720776
+FV-006661,2025-12-02,C-0161,Centro Médico Cafetal Ltda.,Pyme,Barranquilla,30,2026-01-01,2852430
+FV-006679,2025-12-03,C-0071,Inversiones Cordillera S.A.,Pyme,Bucaramanga,30,2026-01-02,5056072
+FV-006681,2025-12-03,C-0419,Instituto Llanos S.A.S.,Educación,Barranquilla,60,2026-02-01,2545648
+FV-006682,2025-12-03,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2026-01-02,1345295
+FV-006692,2025-12-03,C-0231,Grupo Aurora S.A.S.,Corporativo,Bogotá,30,2026-01-02,6907950
+FV-006694,2025-12-04,C-0243,Centro Médico Cóndor S.A.S.,Pyme,Bogotá,30,2026-01-03,2771867
+FV-006700,2025-12-04,C-0080,Grupo Altamira Ltda.,Corporativo,Bogotá,30,2026-01-03,4941642
+FV-006702,2025-12-04,C-0207,Distribuciones Guadalupe S.A.S.,Pyme,Medellín,30,2026-01-03,1827483
+FV-006703,2025-12-04,C-0198,Consultores Chicamocha S.A.,Pyme,Bogotá,30,2026-01-03,1994202
+FV-006723,2025-12-05,C-0243,Centro Médico Cóndor S.A.S.,Pyme,Bogotá,30,2026-01-04,4815573
+FV-006719,2025-12-05,C-0175,Colegio Cafetal S.A.S.,Educación,Barranquilla,60,2026-02-03,4299470
+FV-006716,2025-12-05,C-0185,Constructora Yarumo Ltda.,Corporativo,Bogotá,60,2026-02-03,7194978
+FV-006710,2025-12-05,C-0334,Comercializadora Pacífico S.A.S.,Pyme,Bucaramanga,30,2026-01-04,11366761
+FV-006718,2025-12-05,C-0120,Laboratorios Santa Fe S.A.,Corporativo,Bogotá,30,2026-01-04,4883761
+FV-006730,2025-12-06,C-0287,Transportes Caribe S.A.,Corporativo,Barranquilla,30,2026-01-05,6252456
+FV-006732,2025-12-08,C-0119,Grupo Orquídea S.A.S.,Corporativo,Barranquilla,30,2026-01-07,5390225
+FV-006735,2025-12-08,C-0129,Grupo Palmas S.A.S.,Corporativo,Medellín,30,2026-01-07,1950564
+FV-006736,2025-12-08,C-0221,Ferretería Santa Fe Ltda.,Pyme,Barranquilla,30,2026-01-07,23170728
+FV-006740,2025-12-08,C-0199,Distribuciones Cóndor Ltda.,Pyme,Bogotá,30,2026-01-07,1049580
+FV-006742,2025-12-08,C-0038,Transportes La Sabana S.A.,Corporativo,Barranquilla,30,2026-01-07,10210926
+FV-006743,2025-12-08,C-0224,Alcaldía de Del Valle,Gobierno,Cali,60,2026-02-06,9464368
+FV-006756,2025-12-09,C-0317,Hotel Farallones Ltda.,Pyme,Bucaramanga,60,2026-02-07,781354
+FV-006753,2025-12-09,C-0120,Laboratorios Santa Fe S.A.,Corporativo,Bogotá,30,2026-01-08,13144752
+FV-006748,2025-12-09,C-0012,Agencia Aurora S.A.S.,Pyme,Bucaramanga,60,2026-02-07,1022686
+FV-006752,2025-12-09,C-0120,Laboratorios Santa Fe S.A.,Corporativo,Bogotá,30,2026-01-08,18978335
+FV-006762,2025-12-10,C-0129,Grupo Palmas S.A.S.,Corporativo,Barranquilla,30,2026-01-09,886312
+FV-006763,2025-12-10,C-0287,Transportes Caribe S.A.,Corporativo,Barranquilla,30,2026-01-09,6589101
+FV-006766,2025-12-10,C-0216,Agencia Del Valle S.A.S.,Pyme,Bucaramanga,30,2026-01-09,4878167
+FV-006783,2025-12-11,C-0161,Centro Médico Cafetal Ltda.,Pyme,Barranquilla,30,2026-01-10,370328
+FV-006771,2025-12-11,C-0410,Comercializadora Ceiba S.A.S.,Pyme,Bogotá,60,2026-02-09,783020
+FV-006772,2025-12-11,C-0049,Agencia Bambú S.A.S.,Pyme,Bogotá,30,2026-01-10,800489
+FV-006774,2025-12-11,C-0117,Distribuciones Aurora S.A.,Pyme,Bogotá,60,2026-02-09,616420
+FV-006777,2025-12-11,C-0248,Alcaldía de Ceiba,Gobierno,Barranquilla,60,2026-02-09,15565022
+FV-006797,2025-12-12,C-0129,Grupo Palmas S.A.S.,Corporativo,Barranquilla,30,2026-01-11,10066526
+FV-006796,2025-12-12,C-0355,Hotel Orquídea S.A.S.,Pyme,Pereira,60,2026-02-10,1378020
+FV-006795,2025-12-12,C-0381,Hotel El Prado S.A.S.,Pyme,Bucaramanga,30,2026-01-11,2323475
+FV-006788,2025-12-12,C-0083,Colegio Orquídea S.A.,Educación,Bogotá,60,2026-02-10,3245249
+FV-006791,2025-12-12,C-0285,Constructora Llanos S.A.S.,Corporativo,Medellín,30,2026-01-11,2848860
+FV-006787,2025-12-12,C-0157,Transportes Farallones S.A.S.,Corporativo,Pereira,60,2026-02-10,656029
+FV-006801,2025-12-12,C-0397,Servicios Caribe S.A.S.,Pyme,Bucaramanga,30,2026-01-11,4644689
+FV-006794,2025-12-12,C-0064,Clínica Horizonte S.A.S.,Corporativo,Bucaramanga,30,2026-01-11,3901356
+FV-006805,2025-12-12,C-0204,Distribuciones Chicamocha S.A.S.,Pyme,Medellín,60,2026-02-10,76636
+FV-006810,2025-12-13,C-0224,Alcaldía de Del Valle,Gobierno,Cali,60,2026-02-11,6758152
+FV-006824,2025-12-15,C-0005,Fundación Chicamocha S.A.S.,Educación,Bogotá,30,2026-01-14,2213638
+FV-006827,2025-12-15,C-0375,Inversiones Los Andes Ltda.,Pyme,Bogotá,30,2026-01-14,3380790
+FV-006822,2025-12-15,C-0242,Notaría Yarumo S.A.S.,Gobierno,Cali,60,2026-02-13,10051657
+FV-006819,2025-12-15,C-0198,Consultores Chicamocha S.A.,Pyme,Bogotá,30,2026-01-14,8985928
+FV-006818,2025-12-15,C-0348,Comercializadora Aurora S.A.S.,Pyme,Bogotá,60,2026-02-13,76160
+FV-006811,2025-12-15,C-0199,Distribuciones Cóndor Ltda.,Pyme,Bogotá,30,2026-01-14,1388730
+FV-006821,2025-12-15,C-0252,Alcaldía de Sinú,Gobierno,Pereira,60,2026-02-13,18850742
+FV-006834,2025-12-16,C-0139,Constructora Sinú S.A.S.,Corporativo,Medellín,30,2026-01-15,1794104
+FV-006844,2025-12-17,C-0321,Clínica Yarumo Ltda.,Corporativo,Bogotá,60,2026-02-15,4873133
+FV-006846,2025-12-17,C-0111,Alcaldía de Chicamocha,Gobierno,Bogotá,60,2026-02-15,16826005
+FV-006850,2025-12-17,C-0321,Clínica Yarumo Ltda.,Corporativo,Bogotá,60,2026-02-15,3606771
+FV-006851,2025-12-17,C-0182,Secretaría de Altamira,Gobierno,Barranquilla,60,2026-02-15,439764
+FV-006867,2025-12-18,C-0108,Transportes Horizonte S.A.S.,Corporativo,Bogotá,30,2026-01-17,27032111
+FV-006865,2025-12-18,C-0241,Agencia Ceiba S.A.S.,Pyme,Pereira,30,2026-01-17,311542
+FV-006860,2025-12-18,C-0340,Laboratorios Llanos S.A.S.,Corporativo,Bogotá,60,2026-02-16,14590608
+FV-006856,2025-12-18,C-0399,Ferretería Horizonte S.A.,Pyme,Cali,60,2026-02-16,1399440
+FV-006853,2025-12-18,C-0218,Fundación Del Valle Ltda.,Educación,Pereira,30,2026-01-17,412454
+FV-006859,2025-12-18,C-0399,Ferretería Horizonte S.A.,Pyme,Cali,60,2026-02-16,2144380
+FV-006889,2025-12-19,C-0363,Hotel Del Valle S.A.S.,Pyme,Bogotá,60,2026-02-17,685279
+FV-006881,2025-12-19,C-0396,Transportes El Prado S.A.S.,Corporativo,Bogotá,60,2026-02-17,3608556
+FV-006884,2025-12-19,C-0318,Distribuciones Cóndor S.A.,Pyme,Cali,60,2026-02-17,1950410
+FV-006887,2025-12-19,C-0038,Transportes La Sabana S.A.,Corporativo,Medellín,30,2026-01-18,2248338
+FV-006891,2025-12-19,C-0148,Centro Médico Palmas S.A.,Pyme,Medellín,30,2026-01-18,1167390
+FV-006896,2025-12-20,C-0328,Inversiones Monserrate S.A.,Pyme,Cali,60,2026-02-18,3743740
+FV-006901,2025-12-22,C-0312,Laboratorios Cordillera Ltda.,Corporativo,Pereira,30,2026-01-21,1944234
+FV-006903,2025-12-22,C-0097,Colegio Orquídea S.A.S.,Educación,Medellín,30,2026-01-21,8019886
+FV-006904,2025-12-22,C-0028,Clínica Del Valle S.A.S.,Corporativo,Bogotá,30,2026-01-21,789089
+FV-006906,2025-12-22,C-0054,Comercializadora Farallones S.A.S.,Pyme,Barranquilla,30,2026-01-21,1866039
+FV-006907,2025-12-22,C-0047,Transportes Orquídea S.A.S.,Corporativo,Cali,60,2026-02-20,5684267
+FV-006924,2025-12-23,C-0115,Transportes Nogal Ltda.,Corporativo,Cali,60,2026-02-21,11187655
+FV-006920,2025-12-23,C-0031,Fundación Pacífico S.A.S.,Educación,Bogotá,60,2026-02-21,343910
+FV-006926,2025-12-23,C-0393,Agencia Cóndor S.A.S.,Pyme,Bogotá,30,2026-01-22,2280040
+FV-006913,2025-12-23,C-0312,Laboratorios Cordillera Ltda.,Corporativo,Bogotá,30,2026-01-22,118238
+FV-006914,2025-12-23,C-0396,Transportes El Prado S.A.S.,Corporativo,Bogotá,60,2026-02-21,4736795
+FV-006933,2025-12-24,C-0182,Secretaría de Altamira,Gobierno,Barranquilla,60,2026-02-22,859745
+FV-006944,2025-12-25,C-0109,Hotel Llanos S.A.S.,Pyme,Medellín,30,2026-01-24,990318
+FV-006945,2025-12-25,C-0221,Ferretería Santa Fe Ltda.,Pyme,Barranquilla,30,2026-01-24,925820
+FV-006946,2025-12-26,C-0111,Alcaldía de Chicamocha,Gobierno,Bogotá,60,2026-02-24,726007
+FV-006953,2025-12-26,C-0063,Secretaría de Quimbaya,Gobierno,Barranquilla,60,2026-02-24,1281987
+FV-006954,2025-12-26,C-0327,Fundación Guayacán Ltda.,Educación,Barranquilla,30,2026-01-25,405076
+FV-006963,2025-12-27,C-0418,Centro Médico Arrayán S.A.S.,Pyme,Bogotá,30,2026-01-26,391748
+FV-006982,2025-12-29,C-0257,Centro Médico La Sabana S.A.S.,Pyme,Bucaramanga,60,2026-02-27,1858661
+FV-006984,2025-12-29,C-0236,Colegio El Prado S.A.S.,Educación,Barranquilla,60,2026-02-27,2755647
+FV-006980,2025-12-29,C-0272,Ferretería Los Andes S.A.S.,Pyme,Cali,30,2026-01-28,298809
+FV-006986,2025-12-29,C-0117,Distribuciones Aurora S.A.,Pyme,Bogotá,60,2026-02-27,18502715
+FV-006975,2025-12-29,C-0418,Centro Médico Arrayán S.A.S.,Pyme,Bogotá,30,2026-01-28,2860165
+FV-006974,2025-12-29,C-0016,Ferretería La Sabana Ltda.,Pyme,Bogotá,30,2026-01-28,3639020
+FV-006967,2025-12-29,C-0199,Distribuciones Cóndor Ltda.,Pyme,Bogotá,30,2026-01-28,496230
+FV-006976,2025-12-29,C-0198,Consultores Chicamocha S.A.,Pyme,Bogotá,30,2026-01-28,521220
+FV-007000,2025-12-30,C-0154,Fundación Del Valle S.A.S.,Educación,Cali,60,2026-02-28,14509075

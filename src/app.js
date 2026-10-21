@@ -3,7 +3,7 @@
    ====================================================================== */
 const app = $("#app");
 let DIAGR = {};
-const MOD_ARCHIVO = {1:"Distribuidora_Andina_practica.xlsx", 5:"Distribuidora_Andina_practica.xlsx", 7:"Andina_listo_para_dinamicas.xlsx"};
+const MOD_ARCHIVO = {1:"Distribuidora_Andina_practica.xlsx", 2:"Distribuidora_Andina_practica.xlsx", 3:"Distribuidora_Andina_practica.xlsx", 4:"Distribuidora_Andina_practica.xlsx", 5:"Distribuidora_Andina_practica.xlsx", 7:"Andina_listo_para_dinamicas.xlsx"};
 
 /* ---------- INICIO ---------- */
 function viewInicio(){
@@ -66,7 +66,7 @@ function paintDiag(){
   if(!set.length){ el.innerHTML = `<h3>Tienes bases sólidas.</h3><p class="muted">Empieza por la clave 7 y usa las claves 1 y 5 como repaso rápido. Luego ve directo al laboratorio.</p><div class="row" style="margin-top:10px"><a class="btn primary" href="#clave-07">Ir a la clave 7</a><a class="btn" href="#laboratorio">Ir al laboratorio</a></div>`; return }
   const first = set.find(n=>MOD[n]) || set[0];
   el.innerHTML = `<h3>Tu ruta sugerida: ${set.map(n=>`clave ${n}`).join(" → ")}</h3>
-    <p class="muted" style="margin-top:4px">Empieza por la primera disponible del piloto. Las demás aparecen como «en preparación» en la ruta, con su orientación y un ejemplo.</p>
+    <p class="muted" style="margin-top:4px">Empieza por la primera disponible. Las que aún no están completas aparecen como «en preparación», con su orientación y un ejemplo.</p>
     <div class="chips" style="margin-top:10px">${set.map(n=>{const k=CLAVES[n-1]; return `<a class="chip" href="#clave-${pad2(n)}">${n} · ${k.t}${MOD[n]?"":" (en preparación)"}</a>`}).join("")}</div>
     <div class="row" style="margin-top:12px"><a class="btn primary" href="#clave-${pad2(first)}">Empezar por la clave ${first}</a></div>`;
 }
@@ -75,7 +75,7 @@ function paintDiag(){
 function viewRuta(){
   app.innerHTML = `<div class="wrap">
     <div class="mhead"><span class="eyebrow">Ruta de aprendizaje</span><h1>12 claves de Excel corporativo</h1>
-      <p class="muted read">Cada clave nace de una brecha documentada en usuarios de Excel. El orden importa: cada tramo se apoya en el anterior. Las claves 1, 5 y 7 forman el piloto; las demás ya tienen su orientación y un ejemplo de aplicación.</p></div>
+      <p class="muted read">Cada clave nace de una brecha documentada en usuarios de Excel. El orden importa: cada tramo se apoya en el anterior. Las claves 1 a 5 y la 7 están completas; las demás ya tienen su orientación y un ejemplo de aplicación.</p></div>
     ${TRAMOS.map((t,ti)=>`<div class="tramo">
       <div class="stack" style="gap:6px"><span class="eyebrow">Tramo ${ti+1}</span><h2>${t.t}</h2><p class="muted small">${t.d}</p></div>
       <div class="cards">${CLAVES.filter(k=>k.tramo===ti).map(card).join("")}</div></div>`).join("")}
@@ -111,7 +111,7 @@ function viewProximo(n){
       <div class="callout gap"><span class="k">La brecha que corrige</span><p>${k.brecha}</p></div>
       <h2>Para qué sirve</h2>
       ${orientacion(k)}
-      <div class="callout"><span class="k">Estado</span><p>Esta clave está en preparación. Tendrá los mismos ocho pasos que las claves del piloto, con su cuaderno de Colab y los mismos datos.</p></div>
+      <div class="callout"><span class="k">Estado</span><p>Esta clave está en preparación. Tendrá los mismos ocho pasos que las claves disponibles, con su cuaderno de Colab y los mismos datos.</p></div>
       <div class="row"><a class="btn primary" href="#clave-01">Ir a una clave disponible</a></div>
     </div></div>`;
 }

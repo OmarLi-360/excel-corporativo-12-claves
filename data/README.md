@@ -25,8 +25,9 @@ metas ── id_sede + año + mes (se compara con ventas resumidas al mismo nive
 | `sedes.csv` | 6 | Sedes |
 | `metas.csv` | 144 | Meta mensual de venta neta por sede |
 | `ventas_erp_sucio.csv` | 1.854 | Exportación de ERP con defectos (para limpiar y cruzar) |
-| `Distribuidora_Andina_practica.xlsx` | — | Todo lo anterior como Tablas de Excel, la hoja `Reporte_Mal_Estructurado` y la hoja `ERP_Sucio` |
+| `Distribuidora_Andina_practica.xlsx` | — | Todo lo anterior como Tablas de Excel, más las hojas de práctica: `Reporte_Mal_Estructurado` (clave 1), `ERP_Sucio` (claves 2 y 5), `Referencias` (clave 3) y `Cartera` (clave 4) |
 | `Andina_listo_para_dinamicas.xlsx` | 17.106 | Una sola tabla `tVentas` con todo unido (ciudad, vendedor, cliente, segmento, línea, producto) y `tMetas`, más una hoja `Panel` vacía. Es la salida del Taller 2 |
+| `cartera.csv` | 194 | Facturas pendientes de cobro, una por fila, con fecha de vencimiento (clave 4). También como Tabla `tCartera` en el libro de práctica |
 | `nuevo_mes/ventas_2026_01.csv` | 914 | Enero de 2026 con el mismo esquema de `ventas.csv` (Taller 3) |
 | `nuevo_mes/metas_2026_01.csv` | 6 | Metas de enero de 2026 |
 | `nuevo_mes/Andina_enero_2026_para_pegar.xlsx` | — | Enero de 2026 en el formato de `tVentas` y `tMetas`, listo para pegar debajo de las Tablas |

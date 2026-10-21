@@ -391,7 +391,7 @@ def crear_export_sucio(rng, ventas, clientes, sedes, n=1800) -> pd.DataFrame:
 # Libro de práctica en Excel
 # ---------------------------------------------------------------------------
 def escribir_libro(ruta: Path, tablas: dict[str, pd.DataFrame], sucio: pd.DataFrame,
-                   ventas, productos, sedes) -> None:
+                   ventas, productos, sedes, cartera=None) -> None:
     from openpyxl import Workbook
     from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
     from openpyxl.utils import get_column_letter
@@ -522,6 +522,9 @@ def escribir_libro(ruta: Path, tablas: dict[str, pd.DataFrame], sucio: pd.DataFr
     for j, col in enumerate(sucio.columns, start=1):
         ws.column_dimensions[get_column_letter(j)].width = 14 if col != "Cliente" else 40
 
+    if cartera is not None:
+        hojas_fundamentos(wb, ventas, cartera, sedes)
+
     for hoja in wb.worksheets:
         for row in hoja.iter_rows(min_row=1, max_row=1):
             for c in row:
@@ -534,6 +537,85 @@ def escribir_libro(ruta: Path, tablas: dict[str, pd.DataFrame], sucio: pd.DataFr
 # Muestra compacta para el tablero web (index.html)
 # ---------------------------------------------------------------------------
 MESES_ES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+CORTE_CARTERA = date(2026, 1, 31)   # fecha de corte para la clave 4 (coincide con el escenario del Taller 3)
+
+
+def crear_cartera(ventas, clientes, sedes) -> pd.DataFrame:
+    """Facturas pendientes de cobro: una fila por factura (clave 4)."""
+    p = ventas[ventas.estado == "Pendiente"].groupby("id_factura").agg(
+        fecha=("fecha", "first"), id_cliente=("id_cliente", "first"), id_sede=("id_sede", "first"),
+        total=("total", "sum")).reset_index()
+    p = p.merge(clientes[["id_cliente", "razon_social", "segmento", "dias_credito"]], on="id_cliente") \
+         .merge(sedes[["id_sede", "ciudad"]], on="id_sede")
+    p["fecha_vencimiento"] = p.fecha + pd.to_timedelta(p.dias_credito, unit="D")
+    return p.sort_values("fecha")[["id_factura", "fecha", "id_cliente", "razon_social", "segmento", "ciudad",
+                                   "dias_credito", "fecha_vencimiento", "total"]].reset_index(drop=True)
+
+
+def hojas_fundamentos(wb, ventas, cartera, sedes) -> None:
+    """Hojas de práctica de las claves 3 (Referencias) y 4 (Cartera)."""
+    from openpyxl.styles import Font, PatternFill
+    from openpyxl.utils import get_column_letter
+    from openpyxl.worksheet.table import Table, TableStyleInfo
+    AZUL, CIAN = "00006A", "D9F9FF"
+    entrada = PatternFill("solid", fgColor="FFF4CC")
+
+    # --- Clave 3: Referencias ---------------------------------------------
+    ws = wb.create_sheet("Referencias")
+    ws.sheet_view.showGridLines = True
+    ws["A1"] = "CLAVE 3 · Referencias que se copian bien"
+    ws["A1"].font = Font(name="Arial", size=14, bold=True, color=AZUL)
+    ws["A2"] = ("Escribe UNA fórmula en la primera celda amarilla de cada ejercicio y cópiala a todo el rango. "
+                "Si la copia da resultados absurdos, revisa los $.")
+    ws["A2"].font = Font(name="Arial", italic=True, color="566080")
+    v = (ventas[(ventas.estado != "Anulada") & (ventas.fecha.dt.year == 2025)]
+         .merge(sedes[["id_sede", "ciudad"]], on="id_sede").groupby("ciudad").subtotal.sum()
+         .reindex(sedes.ciudad))
+    ws["A4"], ws["B4"] = "Sede", "Venta neta 2025"
+    ws["C3"] = "Ejercicio 1 · Proyección por escenario de crecimiento (fórmula en C5: =$B5*(1+C$4))"
+    for j, esc in enumerate([-0.05, 0, 0.05, 0.10]):
+        c = ws.cell(row=4, column=3 + j, value=esc); c.number_format = "+0%;-0%;0%"
+    ws["H3"] = "Ejercicio 2 · Participación (fórmula en H5: =B5/B$11)"
+    ws["H4"] = "% del total"
+    ws["J3"] = "Ejercicio 3 · Venta con IVA (fórmula en J5: =B5*(1+$K$1))"
+    ws["J1"], ws["K1"] = "IVA", 0.19
+    ws["K1"].number_format = "0%"; ws["K1"].fill = PatternFill("solid", fgColor=CIAN)
+    ws["J4"] = "Con IVA"
+    for i, (ciudad, val) in enumerate(v.items(), start=5):
+        ws.cell(row=i, column=1, value=ciudad)
+        ws.cell(row=i, column=2, value=int(val)).number_format = "#,##0"
+        for col in list(range(3, 7)) + [8, 10]:
+            cel = ws.cell(row=i, column=col); cel.fill = entrada
+            cel.number_format = "0.0%" if col == 8 else "#,##0"
+    ws["A11"] = "Total"; ws["B11"] = "=SUM(B5:B10)"; ws["B11"].number_format = "#,##0"
+    for c in ["A4", "B4", "C4", "D4", "E4", "F4", "H4", "J4", "A11", "B11"]:
+        ws[c].font = Font(name="Arial", bold=True)
+    for col, w in zip("ABCDEFGHIJK", [16, 18, 15, 15, 15, 15, 3, 13, 3, 18, 8]):
+        ws.column_dimensions[col].width = w
+
+    # --- Clave 4: Cartera ---------------------------------------------------
+    ws = wb.create_sheet("Cartera")
+    df = cartera.copy()
+    df["fecha"] = df.fecha.dt.date
+    df["fecha_vencimiento"] = df.fecha_vencimiento.dt.date
+    ws.append(list(df.columns))
+    for fila in df.itertuples(index=False):
+        ws.append(list(fila))
+    t = Table(displayName="tCartera", ref=f"A1:{get_column_letter(df.shape[1])}{len(df) + 1}")
+    t.tableStyleInfo = TableStyleInfo(name="TableStyleMedium2", showRowStripes=True)
+    ws.add_table(t)
+    ws.freeze_panes = "A2"
+    for j, col in enumerate(df.columns, start=1):
+        ws.column_dimensions[get_column_letter(j)].width = 40 if col == "razon_social" else 16
+        fmt = "#,##0" if col == "total" else "yyyy-mm-dd" if col.startswith("fecha") else None
+        if fmt:
+            for (c,) in ws.iter_rows(min_row=2, min_col=j, max_col=j):
+                c.number_format = fmt
+    n = df.shape[1] + 2
+    ws.cell(row=1, column=n, value="Fecha de corte").font = Font(name="Arial", bold=True)
+    c = ws.cell(row=2, column=n, value=CORTE_CARTERA); c.number_format = "yyyy-mm-dd"; c.fill = PatternFill("solid", fgColor=CIAN)
+    ws.cell(row=4, column=n, value="Agrega a tCartera las columnas dias_mora, rango y alerta (ver clave 4).").font = Font(name="Arial", italic=True, color="566080")
+    ws.column_dimensions[get_column_letter(n)].width = 18
 
 
 def tabla_plana(ventas, clientes, productos, vendedores, sedes) -> pd.DataFrame:
@@ -608,7 +690,24 @@ def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool
     wb.save(ruta)
 
 
-def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, sedes, sucio, metas, enero=None) -> None:
+def erp_tipos(sucio) -> list:
+    """12 filas de la exportación con la variedad de defectos de tipo de dato (clave 2)."""
+    s = sucio.reset_index(drop=True)
+    es_txt = s["Valor Neto"].map(lambda x: isinstance(x, str))
+    grupos = [
+        s[~es_txt & s["Fecha"].str.contains("/") & ~s["Cantidad"].str.contains("und")].head(4),
+        s[es_txt & s["Valor Neto"].notna()].head(3),
+        s[s["Fecha"].str.contains("-")].head(2),
+        s[s["Fecha"].str.fullmatch(r"\d{5}")].head(1),
+        s[s["Cantidad"].str.contains("und")].head(1),
+        s[s["Valor Neto"].isna()].head(1),
+    ]
+    m = pd.concat(grupos).drop_duplicates("Linea").sort_values("Linea")
+    return [[r.Factura, str(r.Fecha), str(r.Cantidad), "" if r._9 is None or (isinstance(r._9, float) and np.isnan(r._9)) else
+             (r._9 if isinstance(r._9, str) else int(r._9))] for r in m.itertuples()]
+
+
+def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, sedes, sucio, metas, enero=None, cartera=None) -> None:
     v = ventas.merge(productos[["sku", "categoria"]], on="sku") \
               .merge(clientes[["id_cliente", "segmento"]], on="id_cliente") \
               .merge(sedes[["id_sede", "ciudad"]], on="id_sede") \
@@ -673,6 +772,11 @@ def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, se
                     "facturas": int(ventas.id_factura.nunique()), "erp": int(len(sucio))},
         "n_lineas": int(len(v)),
         "enero2026": enero,
+        "cartera": None if cartera is None else {
+            "corte": str(CORTE_CARTERA),
+            "filas": [[r.id_factura, r.razon_social, r.ciudad, int(r.dias_credito), r.fecha.strftime("%Y-%m-%d"),
+                       r.fecha_vencimiento.strftime("%Y-%m-%d"), int(r.total)] for r in cartera.itertuples()]},
+        "erp_tipos": erp_tipos(sucio),
     }
     ruta.write_text("window.DATA_ANDINA = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n",
                     encoding="utf-8")
@@ -703,7 +807,10 @@ def main(salida: Path) -> None:
         df.to_csv(salida / f"{nombre.lower()}.csv", index=False, encoding="utf-8", date_format="%Y-%m-%d")
     sucio.to_csv(salida / "ventas_erp_sucio.csv", index=False, encoding="utf-8")
 
-    escribir_libro(salida / "Distribuidora_Andina_practica.xlsx", publicos, sucio, ventas, productos, sedes)
+    cartera = crear_cartera(ventas, clientes, sedes)
+    cartera.assign(fecha=cartera.fecha.dt.date, fecha_vencimiento=cartera.fecha_vencimiento.dt.date) \
+           .to_csv(salida / "cartera.csv", index=False, encoding="utf-8")
+    escribir_libro(salida / "Distribuidora_Andina_practica.xlsx", publicos, sucio, ventas, productos, sedes, cartera)
 
     # --- Laboratorio: libro listo para tablas dinámicas (salida del Taller 2) ---------------
     plana = tabla_plana(ventas, clientes, productos, vendedores, sedes)
@@ -754,7 +861,7 @@ def main(salida: Path) -> None:
                                   "meta": int(m_ene.merge(sedes, on="id_sede").query("ciudad == @c").meta_subtotal.sum())}
                               for c in sedes.ciudad}}
     web = salida.parent / "assets" / "datos-andina.js"
-    exportar_muestra_web(web, ventas, clientes, productos, vendedores, sedes, sucio, metas, resumen)
+    exportar_muestra_web(web, ventas, clientes, productos, vendedores, sedes, sucio, metas, resumen, cartera)
     print(f"Control enero 2026: venta {resumen['venta']:,} | meta {resumen['meta']:,} | {resumen['venta']/resumen['meta']:.1%}")
 
     validas = ventas[ventas.estado != "Anulada"]

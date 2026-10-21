@@ -48,6 +48,9 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 |---|---|---|
 | `00_conoce_la_empresa` | Recorrido por los datos y prueba del laboratorio | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/00_conoce_la_empresa.ipynb) |
 | `01_estructura_y_tablas` | Clave 1 · reporte frente a tabla ordenada | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/01_estructura_y_tablas.ipynb) |
+| `02_tipos_de_dato` | Clave 2 · cuánto ignora una suma cuando hay textos | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/02_tipos_de_dato.ipynb) |
+| `03_referencias` | Clave 3 · copiar una fórmula con y sin $ | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/03_referencias.ipynb) |
+| `04_logica_condicional` | Clave 4 · la cartera clasificada por reglas | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/04_logica_condicional.ipynb) |
 | `05_busqueda_y_cruce` | Clave 5 · lo que se pierde cuando un cruce falla | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/05_busqueda_y_cruce.ipynb) |
 | `07_tablas_dinamicas` | Clave 7 · constructor de dinámicas y seis preguntas de negocio | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/07_tablas_dinamicas.ipynb) |
 | `graficos_para_informes` | Galería de los 12 gráficos con su ficha | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/graficos_para_informes.ipynb) |
@@ -59,13 +62,13 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 
 | Tramo | # | Clave | Estado |
 |---|---|---|---|
-| Fundamentos | 1 | Estructura antes que fórmulas | **Piloto** |
-| | 2 | Tipos de dato que no engañan *(clave nueva)* | Orientación y ejemplo |
-| | 3 | Referencias que se copian bien | Orientación y ejemplo |
-| | 4 | Lógica condicional legible | Orientación y ejemplo |
-| Análisis | 5 | Buscar y cruzar sin #N/D | **Piloto** |
+| Fundamentos | 1 | Estructura antes que fórmulas | **Completa** |
+| | 2 | Tipos de dato que no engañan *(clave nueva)* | **Completa** |
+| | 3 | Referencias que se copian bien | **Completa** |
+| | 4 | Lógica condicional legible | **Completa** |
+| Análisis | 5 | Buscar y cruzar sin #N/D | **Completa** |
 | | 6 | Agregar con condiciones | Orientación y ejemplo |
-| | 7 | Tablas dinámicas que responden preguntas | **Piloto** |
+| | 7 | Tablas dinámicas que responden preguntas | **Completa** |
 | | 8 | Limpieza reproducible con Power Query | Orientación y ejemplo |
 | Control y comunicación | 9 | Datos que se validan solos | Orientación y ejemplo |
 | | 10 | Fórmulas de matriz dinámica | Orientación y ejemplo |

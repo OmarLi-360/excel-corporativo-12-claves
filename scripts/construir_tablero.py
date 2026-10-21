@@ -21,6 +21,7 @@ SCRIPTS = [
     "src/motor/graficos.js",
     "src/motor/simuladores.js",
     "src/contenido/claves.js",
+    "src/contenido/claves_fundamentos.js",
     "src/contenido/empresa.js",
     "src/contenido/graficos.js",
     "src/contenido/laboratorio.js",
