@@ -3,7 +3,7 @@
    Para agregar una clave completa: añade su objeto en MOD[n] siguiendo la
    plantilla de MOD[1], su simulador en SIMS[n] y su número en PILOTO.
    ====================================================================== */
-const PILOTO = [1,2,3,4,5,7];
+const PILOTO = [1,2,3,4,5,6,7,8,9];
 
 const TRAMOS = [
  {t:"Fundamentos", d:"Lo que, si falla, hace que todo lo demás falle. Corrige aquí antes de avanzar."},

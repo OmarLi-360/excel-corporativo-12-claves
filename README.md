@@ -52,7 +52,10 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 | `03_referencias` | Clave 3 · copiar una fórmula con y sin $ | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/03_referencias.ipynb) |
 | `04_logica_condicional` | Clave 4 · la cartera clasificada por reglas | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/04_logica_condicional.ipynb) |
 | `05_busqueda_y_cruce` | Clave 5 · lo que se pierde cuando un cruce falla | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/05_busqueda_y_cruce.ipynb) |
+| `06_agregar_con_condiciones` | Clave 6 · el informe mensual sede × canal y su cuadre | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/06_agregar_con_condiciones.ipynb) |
 | `07_tablas_dinamicas` | Clave 7 · constructor de dinámicas y seis preguntas de negocio | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/07_tablas_dinamicas.ipynb) |
+| `08_limpieza_reproducible` | Clave 8 · qué corrige cada paso de Power Query y cuánto tiempo ahorra | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/08_limpieza_reproducible.ipynb) |
+| `09_validacion_y_formato` | Clave 9 · las variantes que evita una lista y las excepciones que resalta una regla | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/09_validacion_y_formato.ipynb) |
 | `graficos_para_informes` | Galería de los 12 gráficos con su ficha | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/graficos_para_informes.ipynb) |
 | `taller_1_excel_a_colab` | Taller 1 | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/taller_1_excel_a_colab.ipynb) |
 | `taller_2_colab_a_excel` | Taller 2 | [Abrir](https://colab.research.google.com/github/OmarLi-360/excel-corporativo-12-claves/blob/main/notebooks/taller_2_colab_a_excel.ipynb) |
@@ -67,10 +70,10 @@ Todos tienen el código oculto: el estudiante ejecuta, elige opciones en listas 
 | | 3 | Referencias que se copian bien | **Completa** |
 | | 4 | Lógica condicional legible | **Completa** |
 | Análisis | 5 | Buscar y cruzar sin #N/D | **Completa** |
-| | 6 | Agregar con condiciones | Orientación y ejemplo |
+| | 6 | Agregar con condiciones | **Completa** |
 | | 7 | Tablas dinámicas que responden preguntas | **Completa** |
-| | 8 | Limpieza reproducible con Power Query | Orientación y ejemplo |
-| Control y comunicación | 9 | Datos que se validan solos | Orientación y ejemplo |
+| | 8 | Limpieza reproducible con Power Query | **Completa** |
+| Control y comunicación | 9 | Datos que se validan solos | **Completa** |
 | | 10 | Fórmulas de matriz dinámica | Orientación y ejemplo |
 | | 11 | Gráficos y narrativa de resultados | Orientación y ejemplo |
 | | 12 | Auditoría, control y uso responsable de IA | Orientación y ejemplo |
@@ -110,9 +113,9 @@ python scripts/construir_cuadernos.py   # notebooks/
 
 ### Cómo agregar una clave
 
-1. En `src/contenido/claves.js`: añade su objeto completo en `MOD[n]` (objetivos, explicación, pasos en Excel, instrucciones de IA, preguntas y guía docente) y su número en `PILOTO`. La orientación y el ejemplo ya están en `CLAVES`.
-2. En `src/motor/simuladores.js`: añade su simulador en `SIMS[n]`.
-3. En `scripts/cuadernos/claves.py`: crea su cuaderno con `encabezado`, `ficha`, `reto` y `cierre`.
+1. En `src/contenido/` (por ejemplo `claves_analisis_control.js`, que se registra en `scripts/construir_tablero.py`): añade su objeto completo en `MOD[n]` (objetivos, explicación, pasos en Excel, instrucciones de IA, preguntas y guía docente) y su número en `PILOTO`. La orientación y el ejemplo ya están en `CLAVES`.
+2. En el mismo archivo: su simulador en `SIMS[n]` y su «Ver el error» en `ERRORES[n]`; agrega el libro de práctica en `MOD_ARCHIVO` (`src/app.js`).
+3. En `scripts/cuadernos/` (por ejemplo `analisis.py`): crea su cuaderno con `encabezado`, `ficha`, `reto` y `cierre`.
 4. Ejecuta los constructores y prueba que cada reto acepte su respuesta correcta.
 
 ## Licencia y créditos

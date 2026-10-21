@@ -3,7 +3,7 @@
    ====================================================================== */
 const app = $("#app");
 let DIAGR = {};
-const MOD_ARCHIVO = {1:"Distribuidora_Andina_practica.xlsx", 2:"Distribuidora_Andina_practica.xlsx", 3:"Distribuidora_Andina_practica.xlsx", 4:"Distribuidora_Andina_practica.xlsx", 5:"Distribuidora_Andina_practica.xlsx", 7:"Andina_listo_para_dinamicas.xlsx"};
+const MOD_ARCHIVO = {1:"Distribuidora_Andina_practica.xlsx", 2:"Distribuidora_Andina_practica.xlsx", 3:"Distribuidora_Andina_practica.xlsx", 4:"Distribuidora_Andina_practica.xlsx", 5:"Distribuidora_Andina_practica.xlsx", 6:"Andina_listo_para_dinamicas.xlsx", 7:"Andina_listo_para_dinamicas.xlsx", 8:"Distribuidora_Andina_practica.xlsx", 9:"Distribuidora_Andina_practica.xlsx"};
 
 /* ---------- INICIO ---------- */
 function viewInicio(){

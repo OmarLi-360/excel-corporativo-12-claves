@@ -524,6 +524,7 @@ def escribir_libro(ruta: Path, tablas: dict[str, pd.DataFrame], sucio: pd.DataFr
 
     if cartera is not None:
         hojas_fundamentos(wb, ventas, cartera, sedes)
+        hojas_control(wb, productos, sedes)
 
     for hoja in wb.worksheets:
         for row in hoja.iter_rows(min_row=1, max_row=1):
@@ -550,6 +551,53 @@ def crear_cartera(ventas, clientes, sedes) -> pd.DataFrame:
     p["fecha_vencimiento"] = p.fecha + pd.to_timedelta(p.dias_credito, unit="D")
     return p.sort_values("fecha")[["id_factura", "fecha", "id_cliente", "razon_social", "segmento", "ciudad",
                                    "dias_credito", "fecha_vencimiento", "total"]].reset_index(drop=True)
+
+
+def hojas_control(wb, productos, sedes) -> None:
+    """Hojas de práctica de la clave 9: un formato de pedidos y sus listas válidas."""
+    from openpyxl.styles import Font, PatternFill
+    from openpyxl.utils import get_column_letter
+    from openpyxl.worksheet.table import Table, TableStyleInfo
+
+    ws = wb.create_sheet("Listas")
+    listas = {"tListaCiudades": ("ciudad", sedes.ciudad.tolist()),
+              "tListaCanales": ("canal", ["Presencial", "Televentas", "E-commerce"]),
+              "tListaProductos": ("producto", productos.producto.tolist())}
+    col = 1
+    for nombre, (enc, vals) in listas.items():
+        ws.cell(row=1, column=col, value=enc).font = Font(name="Arial", bold=True)
+        for i, v in enumerate(vals, start=2):
+            ws.cell(row=i, column=col, value=v)
+        letra = get_column_letter(col)
+        t = Table(displayName=nombre, ref=f"{letra}1:{letra}{len(vals) + 1}")
+        t.tableStyleInfo = TableStyleInfo(name="TableStyleLight9", showRowStripes=True)
+        ws.add_table(t)
+        ws.column_dimensions[letra].width = 34 if enc == "producto" else 16
+        col += 2
+
+    ws = wb.create_sheet("Pedidos")
+    enc = ["fecha", "vendedor", "ciudad", "canal", "producto", "cantidad", "precio_unitario", "descuento_pct"]
+    ws.append(enc)
+    ejemplos = [
+        ["2026-02-02", "Laura Gómez", "Bogotá", "Presencial", "Resma carta 75 g", 40, 21900, 0.05],
+        ["2026-02-02", "Diego Rojas", "Bogota", "Televentas", "Silla ergonómica malla", 6, 689000, 0.10],
+        ["2026-02-03", "Laura Gómez", "Medellín", "E-commerce", "Monitor 24\" FHD", 0, 689000, 0],
+        ["2026-02-03", "Paula Ortiz", "B/quilla", "Presencial", "Tóner negro alto rendimiento", 12, 389000, 0.25],
+        ["2026-02-04", "Diego Rojas", "Cali", "Ecommerce", "Café molido 500 g", 30, 21900, 0.05],
+    ]
+    for fila in ejemplos:
+        ws.append(fila)
+    t = Table(displayName="tPedidos", ref=f"A1:H{len(ejemplos) + 1}")
+    t.tableStyleInfo = TableStyleInfo(name="TableStyleMedium2", showRowStripes=True)
+    ws.add_table(t)
+    for j, w in enumerate([12, 16, 14, 14, 30, 10, 15, 14], start=1):
+        ws.column_dimensions[get_column_letter(j)].width = w
+    for (c,) in ws.iter_rows(min_row=2, min_col=8, max_col=8):
+        c.number_format = "0%"
+    for (c,) in ws.iter_rows(min_row=2, min_col=7, max_col=7):
+        c.number_format = "#,##0"
+    ws["J1"] = "Clave 9: estas filas tienen errores típicos. Agrega validación de datos y formato condicional (ver el tablero)."
+    ws["J1"].font = Font(name="Arial", italic=True, color="566080")
 
 
 def hojas_fundamentos(wb, ventas, cartera, sedes) -> None:
@@ -643,7 +691,7 @@ def metas_planas(metas, sedes) -> pd.DataFrame:
     })
 
 
-def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool = False) -> None:
+def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool = False, informe: bool = False) -> None:
     """Escribe un libro con cada DataFrame como Tabla de Excel con nombre (tVentas, tMetas...)."""
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill
@@ -677,6 +725,34 @@ def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool
             if fmt:
                 for (c,) in ws.iter_rows(min_row=2, min_col=j, max_col=j):
                     c.number_format = fmt
+    if informe:
+        ws = wb.create_sheet("Informe_Mensual", 2 if panel else 1)
+        amarillo = PatternFill("solid", fgColor="FFF4CC")
+        ws["A1"] = "INFORME MENSUAL · venta neta por sede y canal (clave 6)"
+        ws["A1"].font = Font(name="Arial", size=14, bold=True, color="00006A")
+        ws["F1"], ws["G1"], ws["F2"], ws["G2"] = "Año", 2025, "Mes", 12
+        for c in ("G1", "G2"):
+            ws[c].fill = PatternFill("solid", fgColor="D9F9FF"); ws[c].font = Font(name="Arial", bold=True)
+        ws["A4"] = "Sede"
+        for j, canal in enumerate(["Presencial", "Televentas", "E-commerce"], start=2):
+            ws.cell(row=4, column=j, value=canal)
+        ws["E4"] = "Total"
+        for i, ciudad in enumerate(["Bogotá", "Medellín", "Cali", "Barranquilla", "Bucaramanga", "Pereira"], start=5):
+            ws.cell(row=i, column=1, value=ciudad)
+            for j in range(2, 6):
+                c = ws.cell(row=i, column=j); c.fill = amarillo; c.number_format = "#,##0"
+        ws["A11"] = "Total"
+        for j in range(2, 6):
+            c = ws.cell(row=11, column=j); c.fill = amarillo; c.number_format = "#,##0"
+        for c in ["A4", "B4", "C4", "D4", "E4", "A11", "F1", "F2"]:
+            ws[c].font = Font(name="Arial", bold=True)
+        ws["A13"] = ('Escribe en B5 una sola fórmula y cópiala a B5:D10: '
+                     '=SUMAR.SI.CONJUNTO(tVentas[subtotal];tVentas[ciudad];$A5;tVentas[canal];B$4;tVentas[anio];$G$1;tVentas[mes];$G$2;tVentas[estado];"<>Anulada")')
+        ws["A14"] = "Cambia el año o el mes en G1:G2: todo el informe se recalcula. Comprueba el total contra una tabla dinámica."
+        for r in (13, 14):
+            ws[f"A{r}"].font = Font(name="Arial", italic=True, color="566080")
+        for col, w in zip("ABCDEFG", [16, 18, 18, 18, 18, 8, 10]):
+            ws.column_dimensions[col].width = w
     if panel:
         ws = wb.create_sheet("Panel", 1)
         ws.sheet_view.showGridLines = False
@@ -688,6 +764,30 @@ def escribir_tablas_excel(ruta: Path, hojas: dict, leeme: list[str], panel: bool
         ws["B3"].font = Font(name="Arial", italic=True, color="566080")
         ws.column_dimensions["A"].width = 2
     wb.save(ruta)
+
+
+def erp_pq(sucio, clientes) -> dict:
+    """14 filas de la exportación con todos los defectos que limpia Power Query (clave 8)."""
+    s = sucio.reset_index(drop=True)
+    ids = set(clientes.id_cliente)
+    cod = s["Cod Cliente"]
+    dup = s[s.duplicated(keep=False)].head(2)
+    grupos = [
+        s[cod.isin(ids) & s["Fecha"].str.contains("/") & s["Valor Neto"].map(lambda x: not isinstance(x, str))].head(3),
+        s[cod.str.endswith(" ")].head(2), s[cod.str.islower()].head(1),
+        s[~cod.str.strip().str.upper().isin(ids)].head(1),
+        s[s["Valor Neto"].map(lambda x: isinstance(x, str))].head(2),
+        s[s["Fecha"].str.fullmatch(r"\d{5}")].head(1), s[s["Fecha"].str.contains("-")].head(1),
+        s[s["Cantidad"].str.contains("und")].head(1), dup,
+    ]
+    m = pd.concat(grupos)
+    m = m.loc[~m.index.duplicated()].sort_values("Linea")
+    filas = [[int(r.Linea), r.Factura, str(r.Fecha), r._4, r.Ciudad, str(r.Cantidad),
+              "" if r._9 is None or (isinstance(r._9, float) and np.isnan(r._9)) else (r._9 if isinstance(r._9, str) else int(r._9)), r.Estado]
+             for r in m.itertuples()]
+    seg = clientes.set_index("id_cliente")["segmento"]
+    codigos = {c.strip().upper() for c in m["Cod Cliente"]}
+    return {"filas": filas, "segmento": {c: seg[c] for c in codigos if c in seg.index}}
 
 
 def erp_tipos(sucio) -> list:
@@ -777,6 +877,9 @@ def exportar_muestra_web(ruta: Path, ventas, clientes, productos, vendedores, se
             "filas": [[r.id_factura, r.razon_social, r.ciudad, int(r.dias_credito), r.fecha.strftime("%Y-%m-%d"),
                        r.fecha_vencimiento.strftime("%Y-%m-%d"), int(r.total)] for r in cartera.itertuples()]},
         "erp_tipos": erp_tipos(sucio),
+        "erp_pq": erp_pq(sucio, clientes),
+        "ciudad_variantes": {k: int(v) for k, v in sucio["Ciudad"].value_counts().items()},
+        "productos_lista": productos.producto.tolist(),
     }
     ruta.write_text("window.DATA_ANDINA = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n",
                     encoding="utf-8")
@@ -830,7 +933,7 @@ def main(salida: Path) -> None:
          "Filtra estado = Anulada antes de responder cualquier pregunta comercial.",
          "subtotal es la venta neta sin IVA: es la cifra que se compara con la meta.",
          "Datos ficticios generados por scripts/generar_dataset.py (semilla 2026)."],
-        panel=True)
+        panel=True, informe=True)
 
     # --- Laboratorio: un mes nuevo para practicar la actualización (Taller 3) ----------------
     rng_nuevo = np.random.default_rng(SEMILLA + 1)          # semilla aparte: no altera 2024-2025
